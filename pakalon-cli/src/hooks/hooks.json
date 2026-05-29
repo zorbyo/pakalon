@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json.schemastore.org/pakalon-hooks.json",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": ["Bash"],
+        "hooks": [
+          {
+            "id": "pre:bash:git-verify",
+            "type": "command",
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());const cmd=i.tool_input?.command||'';if(/git\\s+(commit|push|rebase|-i|add|-A)/.test(cmd)&&!/git\\s+(status|log|diff|branch)/.test(cmd)){console.error('[Hook] Git operation detected: make sure changes are verified');}console.log(JSON.stringify(i))});\"",
+            "description": "Remind to verify changes before git operations"
+          }
+        ],
+        "description": "Git operation reminders"
+      },
+      {
+        "matcher": ["Bash"],
+        "hooks": [
+          {
+            "id": "pre:bash:dev-server-check",
+            "type": "command",
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());const cmd=i.tool_input?.command||'';if(/npm\\s+(run\\s+)?dev|npm\\s+(run\\s+)?start| bun\\s+(run\\s+)?dev|yarn\\s+(run\\s+)?dev/.test(cmd)){console.error('[Hook] Dev server starting - logs will be needed for debugging');}console.log(JSON.stringify(i))});\"",
+            "description": "Remind about dev server logging"
+          }
+        ],
+        "description": "Dev server startup reminder"
+      },
+      {
+        "matcher": ["Edit", "Write", "MultiEdit"],
+        "hooks": [
+          {
+            "id": "pre:edit:file-size-check",
+            "type": "command",
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());const content=i.tool_input?.content||'';const lines=content.split('\\n').length;if(lines>500){console.error('[Hook] Large file ('+lines+' lines) - consider splitting into smaller modules');}console.log(JSON.stringify(i))});\"",
+            "description": "Warn about large file creation"
+          }
+        ],
+        "description": "Large file warnings"
+      },
+      {
+        "matcher": ["*"],
+        "hooks": [
+          {
+            "id": "pre:observe",
+            "type": "command",
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());const key='pakalon_hook_'+Date.now();process.stdout.write(JSON.stringify({...i,_hook_key:key}));});\"",
+            "async": true,
+            "timeout": 5,
+            "description": "Track tool usage for continuous learning"
+          }
+        ],
+        "description": "Tool usage tracking"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": ["Edit"],
+        "hooks": [
+          {
+            "id": "post:edit:console-warn",
+            "type": "command",
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());const newStr=i.tool_input?.new_string||'';if(/console\\.(log|debug|info|warn|error)\\s*\\(/.test(newStr)){console.error('[Hook] console.log/debug/info/warn/error detected - remove before committing');}console.log(JSON.stringify(i))});\"",
+            "description": "Warn about console.log statements"
+          }
+        ],
+        "description": "Console statement warnings"
+      },
+      {
+        "matcher": ["Edit"],
+        "hooks": [
+          {
+            "id": "post:edit:todo-warn",
+            "type": "command",
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());const newStr=i.tool_input?.new_string||'';if(/TODO|FIXME|HACK|XXX/.test(newStr)){console.error('[Hook] TODO/FIXME/HACK/XXX detected - consider creating an issue');}console.log(JSON.stringify(i))});\"",
+            "description": "Warn about TODO comments"
+          }
+        ],
+        "description": "TODO comment reminders"
+      },
+      {
+        "matcher": ["Edit"],
+        "hooks": [
+          {
+            "id": "post:edit:format-check",
+            "type": "command",
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());const path=i.tool_input?.file_path||'';if(/\\.(ts|tsx|js|jsx)$/.test(path)){console.error('[Hook] Consider running type checker after edits');}console.log(JSON.stringify(i))});\"",
+            "description": "TypeScript/JS format reminders"
+          }
+        ],
+        "description": "Format/type check reminders"
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": ["*"],
+        "hooks": [
+          {
+            "id": "post:failure:track",
+            "type": "command",
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());console.error('[Hook] Tool failure tracked: '+i.tool_name);console.log(JSON.stringify(i))});\"",
+            "description": "Track tool failures for analysis"
+          }
+        ],
+        "description": "Tool failure tracking"
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": ["*"],
+        "hooks": [
+          {
+            "id": "pre:compact:save-state",
+            "type": "command",
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());console.log(JSON.stringify(i));process.stderr.write('[Hook] Saving session state before compact');});\"",
+            "description": "Save state before context compaction"
+          }
+        ],
+        "description": "Pre-compaction state save"
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": ["*"],
+        "hooks": [
+          {
+            "id": "session:start:init",
+            "type": "command",
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());console.log(JSON.stringify(i));process.stderr.write('[Hook] Session started');});\"",
+            "description": "Session initialization"
+          }
+        ],
+        "description": "Session start initialization"
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": ["*"],
+        "hooks": [
+          {
+            "id": "session:end:cleanup",
+            "type": "command",
+            "async": true,
+            "timeout": 10,
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());console.log(JSON.stringify(i));process.stderr.write('[Hook] Session cleanup');});\"",
+            "description": "Session cleanup"
+          }
+        ],
+        "description": "Session end cleanup"
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": ["*"],
+        "hooks": [
+          {
+            "id": "stop:session-summary",
+            "type": "command",
+            "async": true,
+            "timeout": 10,
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());console.log(JSON.stringify(i));});\"",
+            "description": "Session summary on stop"
+          }
+        ],
+        "description": "Session summary"
+      },
+      {
+        "matcher": ["*"],
+        "hooks": [
+          {
+            "id": "stop:cost-tracker",
+            "type": "command",
+            "async": true,
+            "timeout": 5,
+            "command": "node -e \"const d=[];process.stdin.on('data',c=>d.push(c));process.stdin.on('end',()=>{const i=JSON.parse(Buffer.concat(d).toString());console.log(JSON.stringify(i));});\"",
+            "description": "Track token usage on stop"
+          }
+        ],
+        "description": "Cost tracking"
+      }
+    ]
+  }
+}

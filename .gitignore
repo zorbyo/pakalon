@@ -1,0 +1,72 @@
+# Python build artifacts + venv
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+dist/
+build/
+*.egg-info/
+
+# Node/Bun
+node_modules/
+pakalon-cli/dist/
+pakalon-web/.next/
+pakalon-web/out/
+
+# Hidden folders
+.antigravitycli/
+.claude/
+.sisyphus/
+.worktrees/
+
+# Temporary
+tmp/
+.nul
+errors.txt
+help.txt
+logo*.txt
+
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+!**/.env.example
+
+# Logs
+*.log
+logs/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
+.pytest_cache/
+htmlcov/
+playwright-report/
+test-results/
+
+# Alembic compiled
+pakalon-backend/alembic/versions/__pycache__/
+
+# SQLite (self-hosted databases)
+.local/
+.pakalon/
+*.db
+
+# Bun
+bun.lockb
+
+# TypeScript
+*.tsbuildinfo
+
+# Git worktrees (for isolated development)
+.worktrees/

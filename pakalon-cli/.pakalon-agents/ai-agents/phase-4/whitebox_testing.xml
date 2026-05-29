@@ -1,0 +1,1392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Pakalon Phase-4 White-Box Testing
+     Tests examine internal structure, code paths, and architecture.
+     Generated: 2026-05-16T04:21:47.614Z
+     Schema Version: 1.0 -->
+<whitebox-tests
+  xmlns="https://pakalon.ai/schema/testing/whitebox"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  schemaVersion="1.0">
+  <metadata>
+    <timestamp>2026-05-16T04:21:47.614Z</timestamp>
+    <project>D:\pakalon\pakalon-cli</project>
+    <phase>4</phase>
+    <generator>pakalon-cli/testing/xmlGenerator</generator>
+    <schemaVersion>1.0</schemaVersion>
+  </metadata>
+  <test-suite id="WB-UNIT" name="Unit Tests" type="whitebox">
+    <description>Internal code structure and logic tests</description>
+    <code-analysis>
+      <static-analysis>
+        <analysis tool="eslint" status="pending">
+          <description>ESLint static analysis</description>
+          <issuesFound>0</issuesFound>
+          <rulesApplied>0</rulesApplied>
+        </analysis>
+        <analysis tool="typescript" status="pending">
+          <description>TypeScript type checking</description>
+          <issuesFound>0</issuesFound>
+          <rulesApplied>0</rulesApplied>
+        </analysis>
+      </static-analysis>
+      <coverage-targets>
+        <target module="agents" percentage="80" />
+        <target module="ai" percentage="80" />
+        <target module="analytics" percentage="80" />
+        <target module="api" percentage="80" />
+        <target module="auth" percentage="80" />
+        <target module="automations" percentage="80" />
+        <target module="bootstrap" percentage="80" />
+        <target module="bridge" percentage="80" />
+        <target module="cicd" percentage="80" />
+        <target module="cleanup" percentage="80" />
+      </coverage-targets>
+    </code-analysis>
+    <dependency-analysis>
+      <scan tool="npm-audit" status="pending">
+        <description>NPM dependency vulnerability scan</description>
+        <vulnerabilities>0</vulnerabilities>
+        <outdatedPackages>0</outdatedPackages>
+      </scan>
+      <scan tool="depcheck" status="pending">
+        <description>Unused dependency detection</description>
+        <vulnerabilities>0</vulnerabilities>
+        <outdatedPackages>0</outdatedPackages>
+      </scan>
+    </dependency-analysis>
+    <architecture-validation>
+      <check name="No circular dependencies" status="pending">
+        <description>Verify the module dependency graph has no cycles</description>
+      </check>
+      <check name="Layer separation" status="pending">
+        <description>Verify UI, business logic, and data layers are separated</description>
+      </check>
+      <check name="Interface contracts" status="pending">
+        <description>Verify all interface contracts are satisfied</description>
+      </check>
+      <check name="Entry point isolation" status="pending">
+        <description>Verify entry points don&apos;t expose internal modules</description>
+      </check>
+    </architecture-validation>
+    <subsection id="WB-AGENTS" name="agents Unit Tests">
+      <description>Unit tests for the agents module</description>
+      <test id="WT-1" name="agents module exports" severity="high" status="pending" component="agents" codePath="src/agents/">
+        <description>Verify agents module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/agents/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>agents</tag>
+        </tags>
+      </test>
+      <test id="WT-2" name="agents error handling" severity="critical" status="pending" component="agents" codePath="src/agents/">
+        <description>Verify agents handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>agents</tag>
+        </tags>
+      </test>
+      <test id="WT-3" name="agents input validation" severity="high" status="pending" component="agents" codePath="src/agents/">
+        <description>Verify agents validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>agents</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-AI" name="ai Unit Tests">
+      <description>Unit tests for the ai module</description>
+      <test id="WT-4" name="ai module exports" severity="high" status="pending" component="ai" codePath="src/ai/">
+        <description>Verify ai module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/ai/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>ai</tag>
+        </tags>
+      </test>
+      <test id="WT-5" name="ai error handling" severity="critical" status="pending" component="ai" codePath="src/ai/">
+        <description>Verify ai handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>ai</tag>
+        </tags>
+      </test>
+      <test id="WT-6" name="ai input validation" severity="high" status="pending" component="ai" codePath="src/ai/">
+        <description>Verify ai validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>ai</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-ANALYTICS" name="analytics Unit Tests">
+      <description>Unit tests for the analytics module</description>
+      <test id="WT-7" name="analytics module exports" severity="high" status="pending" component="analytics" codePath="src/analytics/">
+        <description>Verify analytics module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/analytics/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>analytics</tag>
+        </tags>
+      </test>
+      <test id="WT-8" name="analytics error handling" severity="critical" status="pending" component="analytics" codePath="src/analytics/">
+        <description>Verify analytics handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>analytics</tag>
+        </tags>
+      </test>
+      <test id="WT-9" name="analytics input validation" severity="high" status="pending" component="analytics" codePath="src/analytics/">
+        <description>Verify analytics validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>analytics</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-API" name="api Unit Tests">
+      <description>Unit tests for the api module</description>
+      <test id="WT-10" name="api module exports" severity="high" status="pending" component="api" codePath="src/api/">
+        <description>Verify api module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/api/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>api</tag>
+        </tags>
+      </test>
+      <test id="WT-11" name="api error handling" severity="critical" status="pending" component="api" codePath="src/api/">
+        <description>Verify api handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>api</tag>
+        </tags>
+      </test>
+      <test id="WT-12" name="api input validation" severity="high" status="pending" component="api" codePath="src/api/">
+        <description>Verify api validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>api</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-AUTH" name="auth Unit Tests">
+      <description>Unit tests for the auth module</description>
+      <test id="WT-13" name="auth module exports" severity="high" status="pending" component="auth" codePath="src/auth/">
+        <description>Verify auth module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/auth/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>auth</tag>
+        </tags>
+      </test>
+      <test id="WT-14" name="auth error handling" severity="critical" status="pending" component="auth" codePath="src/auth/">
+        <description>Verify auth handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>auth</tag>
+        </tags>
+      </test>
+      <test id="WT-15" name="auth input validation" severity="high" status="pending" component="auth" codePath="src/auth/">
+        <description>Verify auth validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>auth</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-AUTOMATIONS" name="automations Unit Tests">
+      <description>Unit tests for the automations module</description>
+      <test id="WT-16" name="automations module exports" severity="high" status="pending" component="automations" codePath="src/automations/">
+        <description>Verify automations module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/automations/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>automations</tag>
+        </tags>
+      </test>
+      <test id="WT-17" name="automations error handling" severity="critical" status="pending" component="automations" codePath="src/automations/">
+        <description>Verify automations handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>automations</tag>
+        </tags>
+      </test>
+      <test id="WT-18" name="automations input validation" severity="high" status="pending" component="automations" codePath="src/automations/">
+        <description>Verify automations validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>automations</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-BOOTSTRAP" name="bootstrap Unit Tests">
+      <description>Unit tests for the bootstrap module</description>
+      <test id="WT-19" name="bootstrap module exports" severity="high" status="pending" component="bootstrap" codePath="src/bootstrap/">
+        <description>Verify bootstrap module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/bootstrap/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>bootstrap</tag>
+        </tags>
+      </test>
+      <test id="WT-20" name="bootstrap error handling" severity="critical" status="pending" component="bootstrap" codePath="src/bootstrap/">
+        <description>Verify bootstrap handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>bootstrap</tag>
+        </tags>
+      </test>
+      <test id="WT-21" name="bootstrap input validation" severity="high" status="pending" component="bootstrap" codePath="src/bootstrap/">
+        <description>Verify bootstrap validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>bootstrap</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-BRIDGE" name="bridge Unit Tests">
+      <description>Unit tests for the bridge module</description>
+      <test id="WT-22" name="bridge module exports" severity="high" status="pending" component="bridge" codePath="src/bridge/">
+        <description>Verify bridge module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/bridge/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>bridge</tag>
+        </tags>
+      </test>
+      <test id="WT-23" name="bridge error handling" severity="critical" status="pending" component="bridge" codePath="src/bridge/">
+        <description>Verify bridge handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>bridge</tag>
+        </tags>
+      </test>
+      <test id="WT-24" name="bridge input validation" severity="high" status="pending" component="bridge" codePath="src/bridge/">
+        <description>Verify bridge validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>bridge</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-CICD" name="cicd Unit Tests">
+      <description>Unit tests for the cicd module</description>
+      <test id="WT-25" name="cicd module exports" severity="high" status="pending" component="cicd" codePath="src/cicd/">
+        <description>Verify cicd module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/cicd/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>cicd</tag>
+        </tags>
+      </test>
+      <test id="WT-26" name="cicd error handling" severity="critical" status="pending" component="cicd" codePath="src/cicd/">
+        <description>Verify cicd handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>cicd</tag>
+        </tags>
+      </test>
+      <test id="WT-27" name="cicd input validation" severity="high" status="pending" component="cicd" codePath="src/cicd/">
+        <description>Verify cicd validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>cicd</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-CLEANUP" name="cleanup Unit Tests">
+      <description>Unit tests for the cleanup module</description>
+      <test id="WT-28" name="cleanup module exports" severity="high" status="pending" component="cleanup" codePath="src/cleanup/">
+        <description>Verify cleanup module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/cleanup/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>cleanup</tag>
+        </tags>
+      </test>
+      <test id="WT-29" name="cleanup error handling" severity="critical" status="pending" component="cleanup" codePath="src/cleanup/">
+        <description>Verify cleanup handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>cleanup</tag>
+        </tags>
+      </test>
+      <test id="WT-30" name="cleanup input validation" severity="high" status="pending" component="cleanup" codePath="src/cleanup/">
+        <description>Verify cleanup validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>cleanup</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-CLOUD" name="cloud Unit Tests">
+      <description>Unit tests for the cloud module</description>
+      <test id="WT-31" name="cloud module exports" severity="high" status="pending" component="cloud" codePath="src/cloud/">
+        <description>Verify cloud module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/cloud/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>cloud</tag>
+        </tags>
+      </test>
+      <test id="WT-32" name="cloud error handling" severity="critical" status="pending" component="cloud" codePath="src/cloud/">
+        <description>Verify cloud handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>cloud</tag>
+        </tags>
+      </test>
+      <test id="WT-33" name="cloud input validation" severity="high" status="pending" component="cloud" codePath="src/cloud/">
+        <description>Verify cloud validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>cloud</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-COMMANDS" name="commands Unit Tests">
+      <description>Unit tests for the commands module</description>
+      <test id="WT-34" name="commands module exports" severity="high" status="pending" component="commands" codePath="src/commands/">
+        <description>Verify commands module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/commands/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>commands</tag>
+        </tags>
+      </test>
+      <test id="WT-35" name="commands error handling" severity="critical" status="pending" component="commands" codePath="src/commands/">
+        <description>Verify commands handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>commands</tag>
+        </tags>
+      </test>
+      <test id="WT-36" name="commands input validation" severity="high" status="pending" component="commands" codePath="src/commands/">
+        <description>Verify commands validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>commands</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-COMPONENTS" name="components Unit Tests">
+      <description>Unit tests for the components module</description>
+      <test id="WT-37" name="components module exports" severity="high" status="pending" component="components" codePath="src/components/">
+        <description>Verify components module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/components/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>components</tag>
+        </tags>
+      </test>
+      <test id="WT-38" name="components error handling" severity="critical" status="pending" component="components" codePath="src/components/">
+        <description>Verify components handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>components</tag>
+        </tags>
+      </test>
+      <test id="WT-39" name="components input validation" severity="high" status="pending" component="components" codePath="src/components/">
+        <description>Verify components validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>components</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-COMPONENTS-CC" name="components-cc Unit Tests">
+      <description>Unit tests for the components-cc module</description>
+      <test id="WT-40" name="components-cc module exports" severity="high" status="pending" component="components-cc" codePath="src/components-cc/">
+        <description>Verify components-cc module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/components-cc/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>components-cc</tag>
+        </tags>
+      </test>
+      <test id="WT-41" name="components-cc error handling" severity="critical" status="pending" component="components-cc" codePath="src/components-cc/">
+        <description>Verify components-cc handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>components-cc</tag>
+        </tags>
+      </test>
+      <test id="WT-42" name="components-cc input validation" severity="high" status="pending" component="components-cc" codePath="src/components-cc/">
+        <description>Verify components-cc validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>components-cc</tag>
+        </tags>
+      </test>
+    </subsection>
+    <subsection id="WB-CONFIG" name="config Unit Tests">
+      <description>Unit tests for the config module</description>
+      <test id="WT-43" name="config module exports" severity="high" status="pending" component="config" codePath="src/config/">
+        <description>Verify config module has valid exports</description>
+        <preconditions>
+          <condition>Module directory exists</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Import all exports from src/config/</step>
+          <step index="2">Verify each export is defined</step>
+          <step index="3">Verify type signatures match declarations</step>
+        </steps>
+        <expected-results>
+          <result index="1">All exports are defined</result>
+          <result index="2">Type signatures are correct</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>module</tag>
+          <tag>config</tag>
+        </tags>
+      </test>
+      <test id="WT-44" name="config error handling" severity="critical" status="pending" component="config" codePath="src/config/">
+        <description>Verify config handles errors gracefully</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Invoke functions with invalid inputs</step>
+          <step index="2">Verify error objects are thrown/returned</step>
+          <step index="3">Verify error messages are descriptive</step>
+        </steps>
+        <expected-results>
+          <result index="1">Errors are caught and handled</result>
+          <result index="2">Error messages are user-friendly</result>
+          <result index="3">No unhandled exceptions</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>error-handling</tag>
+          <tag>config</tag>
+        </tags>
+      </test>
+      <test id="WT-45" name="config input validation" severity="high" status="pending" component="config" codePath="src/config/">
+        <description>Verify config validates all inputs</description>
+        <preconditions>
+          <condition>Module is loaded</condition>
+        </preconditions>
+        <steps>
+          <step index="1">Pass null/undefined inputs</step>
+          <step index="2">Pass malformed data</step>
+          <step index="3">Pass boundary values</step>
+        </steps>
+        <expected-results>
+          <result index="1">Invalid inputs are rejected</result>
+          <result index="2">Validation errors are clear</result>
+          <result index="3">No type coercion bugs</result>
+        </expected-results>
+        <tags>
+          <tag>unit</tag>
+          <tag>validation</tag>
+          <tag>config</tag>
+        </tags>
+      </test>
+    </subsection>
+  </test-suite>
+  <test-suite id="WB-INT" name="Integration Tests" type="whitebox">
+    <description>Cross-module integration and data flow tests</description>
+    <test id="WT-INT-001" name="Module dependency graph" severity="critical" status="pending" component="architecture">
+      <description>Verify no circular dependencies exist between modules</description>
+      <preconditions>
+        <condition>All modules are compiled</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Build the dependency graph</step>
+        <step index="2">Detect cycles using DFS</step>
+        <step index="3">Report any circular references</step>
+      </steps>
+      <expected-results>
+        <result index="1">No circular dependencies</result>
+        <result index="2">Clean DAG structure</result>
+      </expected-results>
+      <tags>
+        <tag>integration</tag>
+        <tag>architecture</tag>
+      </tags>
+    </test>
+    <test id="WT-INT-002" name="Cross-module type compatibility" severity="high" status="pending" component="types">
+      <description>Verify types are compatible across module boundaries</description>
+      <preconditions>
+        <condition>TypeScript compiler is available</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run tsc --noEmit</step>
+        <step index="2">Check for type errors</step>
+        <step index="3">Verify interface contracts</step>
+      </steps>
+      <expected-results>
+        <result index="1">Zero type errors</result>
+        <result index="2">All interfaces satisfied</result>
+      </expected-results>
+      <tags>
+        <tag>integration</tag>
+        <tag>types</tag>
+      </tags>
+    </test>
+    <test id="WT-INT-003" name="Event flow integrity" severity="high" status="pending" component="events">
+      <description>Verify event emitters and listeners are properly connected</description>
+      <preconditions>
+        <condition>Event system is initialized</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Register event listeners</step>
+        <step index="2">Emit events from producers</step>
+        <step index="3">Verify all listeners receive events</step>
+      </steps>
+      <expected-results>
+        <result index="1">All events are received</result>
+        <result index="2">No orphaned listeners</result>
+      </expected-results>
+      <tags>
+        <tag>integration</tag>
+        <tag>events</tag>
+      </tags>
+    </test>
+    <test id="WT-INT-004" name="State management consistency" severity="critical" status="pending" component="state">
+      <description>Verify state transitions are valid and atomic</description>
+      <preconditions>
+        <condition>State store is initialized</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Trigger state transitions</step>
+        <step index="2">Verify intermediate states are valid</step>
+        <step index="3">Verify rollback on failure</step>
+      </steps>
+      <expected-results>
+        <result index="1">State transitions are atomic</result>
+        <result index="2">No invalid intermediate states</result>
+        <result index="3">Rollback works correctly</result>
+      </expected-results>
+      <tags>
+        <tag>integration</tag>
+        <tag>state</tag>
+      </tags>
+    </test>
+    <test id="WT-INT-005" name="Pipeline phase handoff" severity="critical" status="pending" component="pipeline">
+      <description>Verify data flows correctly between pipeline phases</description>
+      <preconditions>
+        <condition>Pipeline is configured</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Execute Phase 1, capture output</step>
+        <step index="2">Pass output to Phase 2</step>
+        <step index="3">Verify Phase 2 consumes correctly</step>
+        <step index="4">Repeat for all phases</step>
+      </steps>
+      <expected-results>
+        <result index="1">All phase outputs are valid inputs for next phase</result>
+        <result index="2">No data loss between phases</result>
+      </expected-results>
+      <tags>
+        <tag>integration</tag>
+        <tag>pipeline</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <test-suite id="WB-SEC" name="Security Tests" type="whitebox">
+    <description>Internal security analysis and vulnerability tests</description>
+    <dependency-analysis>
+      <scan tool="npm-audit" status="pending">
+        <description>NPM dependency vulnerability scan</description>
+        <vulnerabilities>0</vulnerabilities>
+        <outdatedPackages>0</outdatedPackages>
+      </scan>
+      <scan tool="depcheck" status="pending">
+        <description>Unused dependency detection</description>
+        <vulnerabilities>0</vulnerabilities>
+        <outdatedPackages>0</outdatedPackages>
+      </scan>
+    </dependency-analysis>
+    <test id="WT-SEC-DEFAULT-001" name="Input sanitization" severity="critical" status="pending" component="security">
+      <description>Verify all user inputs are sanitized before processing</description>
+      <preconditions>
+        <condition>Application is running</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Inject XSS payloads</step>
+        <step index="2">Inject SQL injection patterns</step>
+        <step index="3">Inject path traversal sequences</step>
+      </steps>
+      <expected-results>
+        <result index="1">All payloads are sanitized</result>
+        <result index="2">No injection succeeds</result>
+      </expected-results>
+      <tags>
+        <tag>security</tag>
+        <tag>sanitization</tag>
+      </tags>
+    </test>
+    <test id="WT-SEC-DEFAULT-002" name="Secret management" severity="critical" status="pending" component="security">
+      <description>Verify no hardcoded secrets in source code</description>
+      <preconditions>
+        <condition>Source code is accessible</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Scan for API keys patterns</step>
+        <step index="2">Scan for password literals</step>
+        <step index="3">Scan for token patterns</step>
+      </steps>
+      <expected-results>
+        <result index="1">No hardcoded secrets</result>
+        <result index="2">All secrets use env vars</result>
+      </expected-results>
+      <tags>
+        <tag>security</tag>
+        <tag>secrets</tag>
+      </tags>
+    </test>
+    <test id="WT-SEC-DEFAULT-003" name="Dependency vulnerabilities" severity="high" status="pending" component="dependencies">
+      <description>Verify dependencies have no known vulnerabilities</description>
+      <preconditions>
+        <condition>package.json exists</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run npm audit</step>
+        <step index="2">Check for critical vulnerabilities</step>
+        <step index="3">Verify patches available</step>
+      </steps>
+      <expected-results>
+        <result index="1">No critical vulnerabilities</result>
+        <result index="2">All deps are up to date</result>
+      </expected-results>
+      <tags>
+        <tag>security</tag>
+        <tag>dependencies</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <test-suite id="WB-ARCH" name="Architecture Tests" type="whitebox">
+    <description>Structural architecture validation tests</description>
+    <architecture-validation>
+      <check name="No circular dependencies" status="pending">
+        <description>Verify the module dependency graph has no cycles</description>
+      </check>
+      <check name="Layer separation" status="pending">
+        <description>Verify UI, business logic, and data layers are separated</description>
+      </check>
+      <check name="Interface contracts" status="pending">
+        <description>Verify all interface contracts are satisfied</description>
+      </check>
+      <check name="Entry point isolation" status="pending">
+        <description>Verify entry points don&apos;t expose internal modules</description>
+      </check>
+    </architecture-validation>
+    <test id="WT-ARCH-001" name="Layered architecture compliance" severity="medium" status="pending" component="architecture">
+      <description>Verify code follows layered architecture pattern</description>
+      <preconditions>
+        <condition>Source code is structured</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Identify presentation layer imports</step>
+        <step index="2">Identify business logic layer imports</step>
+        <step index="3">Identify data access layer imports</step>
+        <step index="4">Verify no cross-layer violations</step>
+      </steps>
+      <expected-results>
+        <result index="1">Presentation only imports from business logic</result>
+        <result index="2">Business logic only imports from data access</result>
+        <result index="3">No circular layer dependencies</result>
+      </expected-results>
+      <tags>
+        <tag>architecture</tag>
+        <tag>layers</tag>
+      </tags>
+    </test>
+    <test id="WT-ARCH-002" name="Module boundary enforcement" severity="high" status="pending" component="architecture">
+      <description>Verify modules respect their public API boundaries</description>
+      <preconditions>
+        <condition>Module boundaries are defined</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Identify internal vs exported symbols</step>
+        <step index="2">Check for internal symbol access from outside</step>
+        <step index="3">Verify barrel exports are correct</step>
+      </steps>
+      <expected-results>
+        <result index="1">No internal symbol leakage</result>
+        <result index="2">Public API is stable</result>
+        <result index="3">Barrel exports are intentional</result>
+      </expected-results>
+      <tags>
+        <tag>architecture</tag>
+        <tag>boundaries</tag>
+      </tags>
+    </test>
+    <test id="WT-ARCH-003" name="Dependency inversion principle" severity="medium" status="pending" component="architecture">
+      <description>Verify high-level modules don&apos;t depend on low-level modules</description>
+      <preconditions>
+        <condition>Dependency graph is built</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Identify high-level modules</step>
+        <step index="2">Identify low-level modules</step>
+        <step index="3">Check for direct dependencies</step>
+        <step index="4">Verify abstraction layers exist</step>
+      </steps>
+      <expected-results>
+        <result index="1">High-level modules depend on abstractions</result>
+        <result index="2">Low-level modules implement abstractions</result>
+        <result index="3">No direct high-to-low dependencies</result>
+      </expected-results>
+      <tags>
+        <tag>architecture</tag>
+        <tag>dip</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <test-suite id="WB-QUAL" name="Code Quality Tests" type="whitebox">
+    <description>Code quality, complexity, and coverage validation</description>
+    <test id="WT-QUAL-001" name="TypeScript strict mode compliance" severity="high" status="pending" component="types">
+      <description>Verify code compiles with strict TypeScript settings</description>
+      <preconditions>
+        <condition>tsconfig.json exists</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run tsc --strict --noEmit</step>
+        <step index="2">Check for any type errors</step>
+        <step index="3">Verify no implicit any</step>
+      </steps>
+      <expected-results>
+        <result index="1">Zero strict mode errors</result>
+        <result index="2">No implicit any usage</result>
+      </expected-results>
+      <tags>
+        <tag>quality</tag>
+        <tag>typescript</tag>
+      </tags>
+    </test>
+    <test id="WT-QUAL-002" name="Code complexity limits" severity="medium" status="pending" component="quality">
+      <description>Verify functions don&apos;t exceed complexity thresholds</description>
+      <preconditions>
+        <condition>Source code is accessible</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Calculate cyclomatic complexity per function</step>
+        <step index="2">Flag functions with complexity &gt; 10</step>
+        <step index="3">Flag functions with &gt; 50 lines</step>
+      </steps>
+      <expected-results>
+        <result index="1">No function exceeds complexity 10</result>
+        <result index="2">No function exceeds 50 lines</result>
+        <result index="3">Complex functions are documented</result>
+      </expected-results>
+      <tags>
+        <tag>quality</tag>
+        <tag>complexity</tag>
+      </tags>
+    </test>
+    <test id="WT-QUAL-003" name="Test coverage thresholds" severity="high" status="pending" component="testing">
+      <description>Verify test coverage meets minimum thresholds</description>
+      <preconditions>
+        <condition>Tests exist and can run</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run test coverage analysis</step>
+        <step index="2">Check line coverage &gt;= 80%</step>
+        <step index="3">Check branch coverage &gt;= 70%</step>
+        <step index="4">Check function coverage &gt;= 85%</step>
+      </steps>
+      <expected-results>
+        <result index="1">Line coverage &gt;= 80%</result>
+        <result index="2">Branch coverage &gt;= 70%</result>
+        <result index="3">Function coverage &gt;= 85%</result>
+      </expected-results>
+      <tags>
+        <tag>quality</tag>
+        <tag>coverage</tag>
+      </tags>
+    </test>
+    <test id="WT-QUAL-004" name="Documentation coverage" severity="low" status="pending" component="documentation">
+      <description>Verify public APIs have JSDoc documentation</description>
+      <preconditions>
+        <condition>Source code is accessible</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Identify all exported functions/classes</step>
+        <step index="2">Check for JSDoc comments</step>
+        <step index="3">Verify parameter documentation</step>
+        <step index="4">Verify return type documentation</step>
+      </steps>
+      <expected-results>
+        <result index="1">All exports have JSDoc</result>
+        <result index="2">Parameters are documented</result>
+        <result index="3">Return types are documented</result>
+      </expected-results>
+      <tags>
+        <tag>quality</tag>
+        <tag>documentation</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <summary>
+    <totalTests>60</totalTests>
+    <passed>0</passed>
+    <failed>0</failed>
+    <skipped>0</skipped>
+    <pending>60</pending>
+    <error>0</error>
+    <criticalFailures>0</criticalFailures>
+    <highFailures>0</highFailures>
+  </summary>
+</whitebox-tests>

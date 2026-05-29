@@ -1,0 +1,7 @@
+interface:
+  display_name: "Terse-Compress"
+  short_description: "Compress markdown files to reduce token usage by ~46%"
+  brand_color: "#10B981"
+  default_prompt: "Compress the file using terse-compress rules"
+  policy:
+    allow_implicit_invocation: true

@@ -1,0 +1,116 @@
+"""Pydantic schemas for auth endpoints."""
+
+from typing import Literal
+
+from pydantic import BaseModel, Field
+
+
+class DeviceCodeCreateRequest(BaseModel):
+    """Request to create a new device code."""
+    device_id: str | None = Field(
+        None,
+        max_length=255,
+        description="Stable per-machine identifier (generated server-side if omitted)",
+    )
+    machine_id: str | None = Field(None, max_length=512, description="Hashed machine fingerprint")
+
+
+class DeviceCodeCreateResponse(BaseModel):
+    """Response after creating a device code."""
+    code: str = Field(..., description="6-character alphanumeric code to display to the user")
+    device_id: str
+    expires_in: int = Field(..., description="TTL in seconds")
+    verification_url: str = Field(..., description="Canonical browser URL for device verification")
+    is_first_machine_run: bool = Field(..., description="Whether this machine appears new to Pakalon")
+    launch_experience: Literal["video", "text"] = Field(..., description="Startup experience selected by the backend")
+
+
+class DeviceCodePollResponse(BaseModel):
+    """Response from the polling endpoint."""
+    status: str = Field(..., description="pending | approved | expired")
+    token: str | None = Field(None, description="JWT — only present when status=approved")
+    access_token: str | None = Field(
+        None,
+        description="Backward-compatible alias for token",
+    )
+    token_type: str | None = Field(
+        None,
+        description="OAuth-style token type (legacy clients expect 'bearer')",
+    )
+    user_id: str | None = None
+    plan: str | None = None
+    github_login: str | None = None
+    display_name: str | None = None
+    trial_days_remaining: int | None = Field(
+        None,
+        description="Days left in free trial; None for pro/enterprise; 0 = expired",
+    )
+    billing_days_remaining: int | None = Field(
+        None,
+        description="Days remaining in the current paid billing cycle; None for free users",
+    )
+    trial_ends_at: str | None = Field(
+        None,
+        description="ISO-8601 date when trial ends (free accounts only)",
+    )
+
+
+class DeviceCodeConfirmRequest(BaseModel):
+    """Request to confirm a device code (from website with Supabase session)."""
+    code: str = Field(
+        ...,
+        pattern=r"^[A-HJ-NP-Za-hj-np-z2-9]{6}$",
+        description="6-character alphanumeric code shown in CLI",
+    )
+
+
+class DeviceCodeConfirmResponse(BaseModel):
+    """Response after confirming a device code."""
+    status: str = Field(..., description="approved")
+    token: str = Field(..., description="JWT issued for CLI session")
+    user_id: str
+    plan: str
+
+
+class DeviceCodeWebConfirmRequest(BaseModel):
+    """Request to confirm a device code from the web UI (no Clerk JWT required)."""
+    code: str = Field(
+        ...,
+        pattern=r"^[A-HJ-NP-Za-hj-np-z2-9]{6}$",
+        description="6-character alphanumeric code shown in CLI",
+    )
+    email: str | None = Field(None, description="User email address")
+    github_login: str | None = Field(None, description="GitHub username")
+    display_name: str | None = Field(None, description="User display name")
+
+
+class DeviceCodeWebConfirmResponse(BaseModel):
+    """Response after confirming via web UI (no Clerk)."""
+    status: str = Field(..., description="approved")
+    user_id: str
+    plan: str
+    token: str = Field(..., description="JWT for web dashboard authenticated session")
+    message: str = "Authentication successful"
+
+
+class WebSignInRequest(BaseModel):
+    """Request body for the web dashboard GitHub OAuth sign-in."""
+    github_login: str = Field(..., description="GitHub username from Supabase user profile")
+    email: str | None = Field(None, description="User email from Supabase")
+    display_name: str | None = Field(None, description="User display name from Supabase")
+
+
+class WebSignInResponse(BaseModel):
+    """Response after successful web dashboard sign-in via Supabase GitHub OAuth."""
+    token: str = Field(..., description="Pakalon JWT for subsequent API calls")
+    user_id: str
+    plan: str
+    github_login: str
+
+
+class LogoutResponse(BaseModel):
+    """Response payload for backend token logout/revocation."""
+
+    status: Literal["ok"] = "ok"
+    revoked: bool = Field(..., description="True when token revocation state was persisted")
+    message: str = Field(..., description="Human-readable logout status message")

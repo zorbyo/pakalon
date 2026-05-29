@@ -1,0 +1,22 @@
+{
+  "mode": "selfhosted",
+  "localProviders": {
+    "ollama": {
+      "baseUrl": "http://localhost:11434",
+      "enabled": true
+    },
+    "lmstudio": {
+      "baseUrl": "http://localhost:1234",
+      "enabled": true
+    }
+  },
+  "features": {
+    "telemetry": false,
+    "cloudSync": false,
+    "auth": false
+  },
+  "storage": {
+    "type": "sqlite",
+    "path": "~/.pakalon/local.db"
+  }
+}

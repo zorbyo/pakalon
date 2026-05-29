@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  body {
+    @apply bg-background-dark text-white;
+    selection-color: #161712;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    background-color: #d7e19d;
+    color: #161712;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #161712;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #34362b;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4d4f40;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(29, 30, 24, 0.7);
+    backdrop-filter: blur(12px);
+  }
+}

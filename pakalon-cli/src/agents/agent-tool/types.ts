@@ -1,0 +1,27 @@
+export type {
+  AgentColorName,
+  AgentMemoryScope,
+  PermissionMode,
+  EffortValue,
+  AgentIsolation,
+  AgentSource,
+  QuerySource,
+  AgentMcpServerSpec,
+  AgentHooksSettings,
+  BaseAgentDefinition,
+  BuiltInAgentDefinition,
+  CustomAgentDefinition,
+  PluginAgentDefinition,
+  AgentDefinition,
+  AgentToolInput,
+  AgentToolResult,
+  SpawnedAgent,
+  AgentContext,
+  AgentMessage,
+  AgentProgress,
+  AgentToolOptions,
+  ResolvedAgentTools,
+  AgentDefinitionsResult,
+} from '../types.js';
+
+export { isBuiltInAgent, isCustomAgent, isPluginAgent } from '../types.js';

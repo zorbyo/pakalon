@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Pakalon Phase-4 Black-Box Testing
+     Tests validate the application from the user's perspective (user stories).
+     Generated: 2026-05-16T04:21:47.620Z
+     Schema Version: 1.0 -->
+<blackbox-tests
+  xmlns="https://pakalon.ai/schema/testing/blackbox"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  schemaVersion="1.0">
+  <metadata>
+    <timestamp>2026-05-16T04:21:47.620Z</timestamp>
+    <project>D:\pakalon\pakalon-cli</project>
+    <phase>4</phase>
+    <generator>pakalon-cli/testing/xmlGenerator</generator>
+    <schemaVersion>1.0</schemaVersion>
+  </metadata>
+  <test-suite id="BB-AUTH" name="Authentication" type="blackbox">
+    <description>User authentication and authorization tests</description>
+    <user-stories>
+      <story id="US-AUTH-001" title="As a user, I want to authenticate via device code flow">
+        <acceptance-criteria>
+          <criterion>Device code is displayed on CLI</criterion>
+          <criterion>Browser opens auth URL</criterion>
+          <criterion>GitHub OAuth completes</criterion>
+          <criterion>JWT is stored locally</criterion>
+        </acceptance-criteria>
+        <test-count>1</test-count>
+      </story>
+    </user-stories>
+    <test id="BT-AUTH-001" name="Device code authentication flow" severity="critical" status="pending" component="auth" userStory="US-AUTH-001">
+      <description>User can authenticate via device code flow</description>
+      <preconditions>
+        <condition>User has valid GitHub account</condition>
+        <condition>Pakalon backend is running</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon login&apos;</step>
+        <step index="2">Note the 6-digit device code displayed</step>
+        <step index="3">Open https://pakalon.com/auth/device in browser</step>
+        <step index="4">Enter the device code</step>
+        <step index="5">Sign in with GitHub OAuth</step>
+        <step index="6">Verify JWT is stored at ~/.config/pakalon/storage.json</step>
+      </steps>
+      <expected-results>
+        <result index="1">Device code is displayed</result>
+        <result index="2">Browser opens auth page</result>
+        <result index="3">JWT token is stored after login</result>
+        <result index="4">User can use authenticated commands</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>auth</tag>
+        <tag>device-code</tag>
+      </tags>
+    </test>
+    <test id="BT-AUTH-002" name="Token-based CI/CD authentication" severity="high" status="pending" component="auth" userStory="US-AUTH-002">
+      <description>User can authenticate via PAKALON_TOKEN env var</description>
+      <preconditions>
+        <condition>PAKALON_TOKEN env var is set</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Set PAKALON_TOKEN environment variable</step>
+        <step index="2">Run &apos;pakalon setup-token&apos;</step>
+        <step index="3">Run an authenticated command</step>
+      </steps>
+      <expected-results>
+        <result index="1">Token is stored successfully</result>
+        <result index="2">Authenticated commands work</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>auth</tag>
+        <tag>ci-cd</tag>
+      </tags>
+    </test>
+    <test id="BT-AUTH-003" name="Logout clears credentials" severity="high" status="pending" component="auth" userStory="US-AUTH-003">
+      <description>User can logout and credentials are removed</description>
+      <preconditions>
+        <condition>User is logged in</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon logout&apos;</step>
+        <step index="2">Verify storage.json is removed</step>
+        <step index="3">Try authenticated command</step>
+      </steps>
+      <expected-results>
+        <result index="1">Credentials are removed</result>
+        <result index="2">Authenticated commands fail with auth error</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>auth</tag>
+        <tag>logout</tag>
+      </tags>
+    </test>
+    <test id="BT-AUTH-004" name="Status shows auth state" severity="medium" status="pending" component="auth" userStory="US-AUTH-004">
+      <description>User can check current authentication status</description>
+      <preconditions>
+        <condition>Pakalon CLI is installed</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon status&apos;</step>
+        <step index="2">Verify output shows auth state and plan</step>
+      </steps>
+      <expected-results>
+        <result index="1">Status shows current user and plan details</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>auth</tag>
+        <tag>status</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <test-suite id="BB-CHAT" name="Chat Interface" type="blackbox">
+    <description>Interactive chat interface behavioral tests</description>
+    <user-stories>
+      <story id="US-CHAT-001" title="As a user, I want an interactive chat with AI">
+        <acceptance-criteria>
+          <criterion>TUI loads with chat input</criterion>
+          <criterion>Messages can be sent and received</criterion>
+          <criterion>Responses stream in real-time</criterion>
+        </acceptance-criteria>
+        <test-count>1</test-count>
+      </story>
+    </user-stories>
+    <test id="BT-CHAT-001" name="Interactive chat mode starts" severity="critical" status="pending" component="chat" userStory="US-CHAT-001">
+      <description>User can start an interactive chat session</description>
+      <preconditions>
+        <condition>User is authenticated</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon&apos;</step>
+        <step index="2">Verify TUI loads</step>
+        <step index="3">Verify chat input is active</step>
+      </steps>
+      <expected-results>
+        <result index="1">TUI displays correctly</result>
+        <result index="2">Chat input accepts text</result>
+        <result index="3">Model responds</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>chat</tag>
+        <tag>tui</tag>
+      </tags>
+    </test>
+    <test id="BT-CHAT-002" name="Send and receive messages" severity="critical" status="pending" component="chat" userStory="US-CHAT-002">
+      <description>User can send messages and receive AI responses</description>
+      <preconditions>
+        <condition>Chat mode is active</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Type a message in the input</step>
+        <step index="2">Press Enter to send</step>
+        <step index="3">Verify streaming response appears</step>
+        <step index="4">Verify response is complete</step>
+      </steps>
+      <expected-results>
+        <result index="1">Message is sent to model</result>
+        <result index="2">Response streams in real-time</result>
+        <result index="3">Response is complete and coherent</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>chat</tag>
+        <tag>streaming</tag>
+      </tags>
+    </test>
+    <test id="BT-CHAT-003" name="Slash commands work" severity="high" status="pending" component="chat" userStory="US-CHAT-003">
+      <description>User can use slash commands in chat</description>
+      <preconditions>
+        <condition>Chat mode is active</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Type &apos;/plan&apos; and verify plan mode activates</step>
+        <step index="2">Type &apos;/edit&apos; and verify edit mode activates</step>
+        <step index="3">Type &apos;/compact&apos; and verify context compaction</step>
+        <step index="4">Type &apos;/clear&apos; and verify history clears</step>
+        <step index="5">Type &apos;/exit&apos; or &apos;q&apos; and verify exit</step>
+      </steps>
+      <expected-results>
+        <result index="1">Each slash command performs its expected action</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>chat</tag>
+        <tag>slash-commands</tag>
+      </tags>
+    </test>
+    <test id="BT-CHAT-004" name="Keyboard shortcuts work" severity="medium" status="pending" component="chat" userStory="US-CHAT-004">
+      <description>User can use keyboard shortcuts in chat</description>
+      <preconditions>
+        <condition>Chat mode is active</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Press Ctrl+C to cancel stream</step>
+        <step index="2">Press Ctrl+U to clear input</step>
+        <step index="3">Press Tab to cycle modes</step>
+        <step index="4">Press Up/Down to browse history</step>
+      </steps>
+      <expected-results>
+        <result index="1">Each shortcut performs its expected action</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>chat</tag>
+        <tag>shortcuts</tag>
+      </tags>
+    </test>
+    <test id="BT-CHAT-005" name="Single message mode" severity="high" status="pending" component="chat" userStory="US-CHAT-005">
+      <description>User can send a single message without interactive mode</description>
+      <preconditions>
+        <condition>User is authenticated</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon &quot;Hello, world&quot;&apos;</step>
+        <step index="2">Verify response is printed to stdout</step>
+      </steps>
+      <expected-results>
+        <result index="1">Response is printed</result>
+        <result index="2">CLI exits after response</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>chat</tag>
+        <tag>single-message</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <test-suite id="BB-AGENT" name="Agent Mode" type="blackbox">
+    <description>Autonomous build pipeline behavioral tests</description>
+    <user-stories>
+      <story id="US-AGENT-001" title="As a user, I want autonomous build with checkpoints">
+        <acceptance-criteria>
+          <criterion>6 phases execute in order</criterion>
+          <criterion>Each phase pauses for approval in HIL mode</criterion>
+          <criterion>Artifacts are generated per phase</criterion>
+        </acceptance-criteria>
+        <test-count>1</test-count>
+      </story>
+    </user-stories>
+    <test id="BT-AGENT-001" name="Agentic mode with human-in-the-loop" severity="critical" status="pending" component="agent" userStory="US-AGENT-001">
+      <description>User can run autonomous build with HIL checkpoints</description>
+      <preconditions>
+        <condition>User is authenticated</condition>
+        <condition>Project directory exists</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon /pakalon &quot;build a todo app&quot;&apos;</step>
+        <step index="2">Verify Phase 1 planning starts</step>
+        <step index="3">Approve Phase 1 at checkpoint</step>
+        <step index="4">Verify Phase 2 wireframes generate</step>
+        <step index="5">Approve each subsequent phase</step>
+        <step index="6">Verify all 6 phases complete</step>
+      </steps>
+      <expected-results>
+        <result index="1">All 6 phases execute in order</result>
+        <result index="2">Each phase pauses for approval</result>
+        <result index="3">Artifacts are generated per phase</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>agent</tag>
+        <tag>hil</tag>
+      </tags>
+    </test>
+    <test id="BT-AGENT-002" name="YOLO mode fully autonomous" severity="critical" status="pending" component="agent" userStory="US-AGENT-002">
+      <description>User can run fully autonomous build without prompts</description>
+      <preconditions>
+        <condition>User is authenticated</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon /pakalon &quot;build a todo app&quot; --permission-mode yolo&apos;</step>
+        <step index="2">Verify all phases run without interruption</step>
+        <step index="3">Verify final output is generated</step>
+      </steps>
+      <expected-results>
+        <result index="1">No approval prompts appear</result>
+        <result index="2">All phases complete automatically</result>
+        <result index="3">Final application is built</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>agent</tag>
+        <tag>yolo</tag>
+      </tags>
+    </test>
+    <test id="BT-AGENT-003" name="Phase 1 planning generates artifacts" severity="high" status="pending" component="phase1" userStory="US-AGENT-003">
+      <description>Planning phase creates plan.md, spec.md, and other files</description>
+      <preconditions>
+        <condition>Agent mode is running</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Start agent mode</step>
+        <step index="2">Wait for Phase 1 to complete</step>
+        <step index="3">Verify .pakalon/plan.md exists</step>
+        <step index="4">Verify .pakalon/spec.md exists</step>
+        <step index="5">Verify user-stories.md exists</step>
+      </steps>
+      <expected-results>
+        <result index="1">All Phase 1 artifacts are generated</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>agent</tag>
+        <tag>phase1</tag>
+      </tags>
+    </test>
+    <test id="BT-AGENT-004" name="Phase 3 generates frontend code" severity="critical" status="pending" component="phase3" userStory="US-AGENT-004">
+      <description>Development phase creates working frontend code</description>
+      <preconditions>
+        <condition>Phase 1 and 2 are complete</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Wait for Phase 3 to complete</step>
+        <step index="2">Verify source files are created</step>
+        <step index="3">Verify code compiles without errors</step>
+        <step index="4">Verify tests pass</step>
+      </steps>
+      <expected-results>
+        <result index="1">Frontend code is generated</result>
+        <result index="2">Code compiles successfully</result>
+        <result index="3">Tests pass</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>agent</tag>
+        <tag>phase3</tag>
+      </tags>
+    </test>
+    <test id="BT-AGENT-005" name="Phase 4 security scanning runs" severity="critical" status="pending" component="phase4" userStory="US-AGENT-005">
+      <description>Security phase runs SAST, DAST, and generates reports</description>
+      <preconditions>
+        <condition>Phase 3 is complete</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Wait for Phase 4 to complete</step>
+        <step index="2">Verify security-report.md exists</step>
+        <step index="3">Verify whitebox_testing.xml exists</step>
+        <step index="4">Verify blackbox_testing.xml exists</step>
+      </steps>
+      <expected-results>
+        <result index="1">Security scans complete</result>
+        <result index="2">Reports are generated</result>
+        <result index="3">XML test files are created</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>agent</tag>
+        <tag>phase4</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <test-suite id="BB-PIPE" name="Pipeline &amp; CLI" type="blackbox">
+    <description>CLI commands and pipeline behavioral tests</description>
+    <test id="BT-PIPE-001" name="CLI commands work" severity="high" status="pending" component="cli">
+      <description>All top-level CLI commands execute correctly</description>
+      <preconditions>
+        <condition>Pakalon CLI is installed</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon --version&apos; and verify output</step>
+        <step index="2">Run &apos;pakalon --help&apos; and verify help text</step>
+        <step index="3">Run &apos;pakalon doctor&apos; and verify system check</step>
+        <step index="4">Run &apos;pakalon models&apos; and verify model list</step>
+      </steps>
+      <expected-results>
+        <result index="1">Each command executes and produces expected output</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>cli</tag>
+        <tag>commands</tag>
+      </tags>
+    </test>
+    <test id="BT-PIPE-002" name="Model management works" severity="medium" status="pending" component="models">
+      <description>User can list and set AI models</description>
+      <preconditions>
+        <condition>User is authenticated</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon models&apos; to list available models</step>
+        <step index="2">Run &apos;pakalon models set &lt;model-id&gt;&apos; to set default</step>
+        <step index="3">Verify model is persisted</step>
+      </steps>
+      <expected-results>
+        <result index="1">Models are listed</result>
+        <result index="2">Default model is set and persisted</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>models</tag>
+      </tags>
+    </test>
+    <test id="BT-PIPE-003" name="Session management works" severity="medium" status="pending" component="sessions">
+      <description>User can manage chat sessions</description>
+      <preconditions>
+        <condition>User is authenticated</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon sessions&apos; to list sessions</step>
+        <step index="2">Run &apos;pakalon sessions new&apos; to create new session</step>
+        <step index="3">Run &apos;pakalon history&apos; to view history</step>
+      </steps>
+      <expected-results>
+        <result index="1">Sessions are listed, created, and browsed correctly</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>sessions</tag>
+      </tags>
+    </test>
+    <test id="BT-PIPE-004" name="Privacy mode suppresses data" severity="high" status="pending" component="privacy">
+      <description>Privacy mode prevents data storage in external services</description>
+      <preconditions>
+        <condition>User is authenticated</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run &apos;pakalon --privacy&apos;</step>
+        <step index="2">Send a message containing personal data</step>
+        <step index="3">Verify Mem0 is not called</step>
+        <step index="4">Verify telemetry is suppressed</step>
+      </steps>
+      <expected-results>
+        <result index="1">Personal data is not stored externally</result>
+        <result index="2">X-Privacy-Mode header is sent</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>privacy</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <test-suite id="BB-SEC" name="Security Behavior" type="blackbox">
+    <description>External security behavior and vulnerability tests</description>
+    <user-stories>
+      <story id="US-SEC-001" title="As a user, I want the application to be secure">
+        <acceptance-criteria>
+          <criterion>No XSS vulnerabilities</criterion>
+          <criterion>No SQL injection vulnerabilities</criterion>
+          <criterion>No path traversal vulnerabilities</criterion>
+          <criterion>Rate limiting is enforced</criterion>
+        </acceptance-criteria>
+        <test-count>1</test-count>
+      </story>
+    </user-stories>
+    <test id="BT-SEC-DEFAULT-001" name="XSS protection" severity="critical" status="pending" component="security" userStory="US-SEC-001">
+      <description>Verify application is not vulnerable to cross-site scripting</description>
+      <preconditions>
+        <condition>Application is running</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Submit input with &lt;script&gt;alert(&apos;xss&apos;)&lt;/script&gt;</step>
+        <step index="2">Verify script is not executed</step>
+        <step index="3">Verify input is escaped in output</step>
+      </steps>
+      <expected-results>
+        <result index="1">Script tags are escaped</result>
+        <result index="2">No XSS execution</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>security</tag>
+        <tag>xss</tag>
+      </tags>
+    </test>
+    <test id="BT-SEC-DEFAULT-002" name="SQL injection protection" severity="critical" status="pending" component="security" userStory="US-SEC-002">
+      <description>Verify application is not vulnerable to SQL injection</description>
+      <preconditions>
+        <condition>Application with database is running</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Submit input with SQL injection payload</step>
+        <step index="2">Verify query executes safely</step>
+        <step index="3">Verify no data leakage</step>
+      </steps>
+      <expected-results>
+        <result index="1">SQL injection fails safely</result>
+        <result index="2">No data is leaked</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>security</tag>
+        <tag>sqli</tag>
+      </tags>
+    </test>
+    <test id="BT-SEC-DEFAULT-003" name="Path traversal protection" severity="high" status="pending" component="security" userStory="US-SEC-003">
+      <description>Verify application is not vulnerable to path traversal</description>
+      <preconditions>
+        <condition>Application with file access is running</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Request file with ../../etc/passwd path</step>
+        <step index="2">Verify access is denied</step>
+        <step index="3">Verify file outside allowed directory is not accessible</step>
+      </steps>
+      <expected-results>
+        <result index="1">Path traversal is blocked</result>
+        <result index="2">Only allowed files are accessible</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>security</tag>
+        <tag>path-traversal</tag>
+      </tags>
+    </test>
+    <test id="BT-SEC-DEFAULT-004" name="Rate limiting works" severity="medium" status="pending" component="security" userStory="US-SEC-004">
+      <description>Verify API has rate limiting to prevent abuse</description>
+      <preconditions>
+        <condition>API is running</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Send rapid successive requests</step>
+        <step index="2">Verify rate limit is enforced</step>
+        <step index="3">Verify 429 response is returned</step>
+      </steps>
+      <expected-results>
+        <result index="1">Rate limit is enforced after threshold</result>
+        <result index="2">429 status returned</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>security</tag>
+        <tag>rate-limiting</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <test-suite id="BB-API" name="API Tests" type="blackbox">
+    <description>REST API endpoint behavioral tests</description>
+    <api-tests>
+      <endpoint method="GET" path="/health">
+        <description>Health check endpoint</description>
+        <test-count>1</test-count>
+      </endpoint>
+      <endpoint method="GET" path="/models">
+        <description>Model catalog endpoint</description>
+        <test-count>1</test-count>
+      </endpoint>
+      <endpoint method="GET" path="/sessions">
+        <description>Session history endpoint</description>
+        <test-count>1</test-count>
+      </endpoint>
+    </api-tests>
+    <test id="BT-API-001" name="Backend health endpoint" severity="high" status="pending" component="api">
+      <description>Verify backend health check returns 200</description>
+      <preconditions>
+        <condition>Backend is running on localhost:8000</condition>
+      </preconditions>
+      <steps>
+        <step index="1">GET http://localhost:8000/health</step>
+        <step index="2">Verify response status is 200</step>
+        <step index="3">Verify response body contains health status</step>
+      </steps>
+      <expected-results>
+        <result index="1">Status 200</result>
+        <result index="2">Healthy response body</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>api</tag>
+        <tag>health</tag>
+      </tags>
+    </test>
+    <test id="BT-API-002" name="Model catalog endpoint" severity="high" status="pending" component="api">
+      <description>Verify model catalog returns available models</description>
+      <preconditions>
+        <condition>Backend is running</condition>
+        <condition>User is authenticated</condition>
+      </preconditions>
+      <steps>
+        <step index="1">GET /models with valid JWT</step>
+        <step index="2">Verify response contains model list</step>
+        <step index="3">Verify each model has required fields</step>
+      </steps>
+      <expected-results>
+        <result index="1">Model list is returned</result>
+        <result index="2">Models have id, name, provider fields</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>api</tag>
+        <tag>models</tag>
+      </tags>
+    </test>
+    <test id="BT-API-003" name="Session history endpoint" severity="medium" status="pending" component="api">
+      <description>Verify session history returns chat sessions</description>
+      <preconditions>
+        <condition>Backend is running</condition>
+        <condition>User has chat sessions</condition>
+      </preconditions>
+      <steps>
+        <step index="1">GET /sessions with valid JWT</step>
+        <step index="2">Verify response contains session list</step>
+        <step index="3">Verify sessions have id, created_at fields</step>
+      </steps>
+      <expected-results>
+        <result index="1">Session list is returned</result>
+        <result index="2">Sessions have required fields</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>api</tag>
+        <tag>sessions</tag>
+      </tags>
+    </test>
+    <test id="BT-API-004" name="Unauthorized access is rejected" severity="critical" status="pending" component="api">
+      <description>Verify API rejects requests without valid JWT</description>
+      <preconditions>
+        <condition>Backend is running</condition>
+      </preconditions>
+      <steps>
+        <step index="1">GET /models without JWT</step>
+        <step index="2">GET /sessions without JWT</step>
+        <step index="3">Verify both return 401</step>
+      </steps>
+      <expected-results>
+        <result index="1">Both endpoints return 401 Unauthorized</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>api</tag>
+        <tag>auth</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <test-suite id="BB-FLOW" name="Integration Flows" type="blackbox">
+    <description>End-to-end integration flow tests</description>
+    <user-stories>
+      <story id="US-FLOW-001" title="As a user, I want to build an app from a single prompt">
+        <acceptance-criteria>
+          <criterion>All 6 phases complete</criterion>
+          <criterion>Working application is generated</criterion>
+          <criterion>Documentation is created</criterion>
+        </acceptance-criteria>
+        <test-count>1</test-count>
+      </story>
+    </user-stories>
+    <integration-flows>
+      <flow name="Full build pipeline">
+        <description>End-to-end test of the 6-phase autonomous build</description>
+        <steps>
+          <step testCaseId="BT-AGENT-001">
+            <action>Start agent mode with a prompt</action>
+            <expectedOutcome>Phase 1 planning begins</expectedOutcome>
+          </step>
+          <step testCaseId="BT-AGENT-001">
+            <action>Approve Phase 1 output</action>
+            <expectedOutcome>Phase 2 wireframe generation begins</expectedOutcome>
+          </step>
+          <step testCaseId="BT-AGENT-001">
+            <action>Approve Phase 2 wireframes</action>
+            <expectedOutcome>Phase 3 frontend development begins</expectedOutcome>
+          </step>
+          <step testCaseId="BT-AGENT-001">
+            <action>Approve Phase 3 code</action>
+            <expectedOutcome>Phase 4 security scanning begins</expectedOutcome>
+          </step>
+          <step testCaseId="BT-AGENT-001">
+            <action>Review Phase 4 security report</action>
+            <expectedOutcome>Phase 5 CI/CD setup begins</expectedOutcome>
+          </step>
+          <step testCaseId="BT-AGENT-001">
+            <action>Approve Phase 5 pipeline</action>
+            <expectedOutcome>Phase 6 documentation generation begins</expectedOutcome>
+          </step>
+          <step testCaseId="BT-AGENT-001">
+            <action>Complete Phase 6</action>
+            <expectedOutcome>Full application is built and documented</expectedOutcome>
+          </step>
+        </steps>
+      </flow>
+      <flow name="Chat to code workflow">
+        <description>User asks for code changes in chat mode</description>
+        <steps>
+          <step testCaseId="BT-CHAT-003">
+            <action>Enter edit mode via /edit</action>
+            <expectedOutcome>File selection interface appears</expectedOutcome>
+          </step>
+          <step testCaseId="BT-CHAT-003">
+            <action>Select a file to edit</action>
+            <expectedOutcome>File content is loaded into editor</expectedOutcome>
+          </step>
+          <step testCaseId="BT-CHAT-002">
+            <action>Request a code change</action>
+            <expectedOutcome>AI generates the code change</expectedOutcome>
+          </step>
+          <step testCaseId="BT-CHAT-002">
+            <action>Apply the change</action>
+            <expectedOutcome>File is updated on disk</expectedOutcome>
+          </step>
+        </steps>
+      </flow>
+      <flow name="Security feedback loop">
+        <description>Security scan finds and fixes vulnerabilities</description>
+        <steps>
+          <step testCaseId="BT-AGENT-005">
+            <action>Run Phase 4 security scan</action>
+            <expectedOutcome>Vulnerabilities are identified</expectedOutcome>
+          </step>
+          <step testCaseId="BT-AGENT-005">
+            <action>Review security findings</action>
+            <expectedOutcome>Critical and high issues are listed</expectedOutcome>
+          </step>
+          <step testCaseId="BT-AGENT-005">
+            <action>Apply automated patches</action>
+            <expectedOutcome>Fixable vulnerabilities are patched</expectedOutcome>
+          </step>
+          <step testCaseId="BT-AGENT-005">
+            <action>Re-scan after patches</action>
+            <expectedOutcome>Patched vulnerabilities no longer appear</expectedOutcome>
+          </step>
+        </steps>
+      </flow>
+    </integration-flows>
+    <test id="BT-FLOW-001" name="End-to-end build pipeline" severity="critical" status="pending" component="pipeline" userStory="US-FLOW-001">
+      <description>Complete 6-phase autonomous build from prompt to deployment</description>
+      <preconditions>
+        <condition>User is authenticated</condition>
+        <condition>Target project directory exists</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Start agent mode with a prompt</step>
+        <step index="2">Approve Phase 1 output</step>
+        <step index="3">Approve Phase 2 wireframes</step>
+        <step index="4">Approve Phase 3 code</step>
+        <step index="5">Review Phase 4 security report</step>
+        <step index="6">Approve Phase 5 pipeline</step>
+        <step index="7">Complete Phase 6</step>
+      </steps>
+      <expected-results>
+        <result index="1">Phase 1 planning begins</result>
+        <result index="2">Phase 2 wireframe generation begins</result>
+        <result index="3">Phase 3 frontend development begins</result>
+        <result index="4">Phase 4 security scanning begins</result>
+        <result index="5">Phase 5 CI/CD setup begins</result>
+        <result index="6">Phase 6 documentation generation begins</result>
+        <result index="7">Full application is built and documented</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>e2e</tag>
+        <tag>pipeline</tag>
+      </tags>
+    </test>
+    <test id="BT-FLOW-002" name="Chat-to-code workflow" severity="high" status="pending" component="chat" userStory="US-FLOW-002">
+      <description>User edits code through chat interface</description>
+      <preconditions>
+        <condition>User is authenticated</condition>
+        <condition>Project has source files</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Enter edit mode via /edit</step>
+        <step index="2">Select a file to edit</step>
+        <step index="3">Request a code change</step>
+        <step index="4">Apply the change</step>
+      </steps>
+      <expected-results>
+        <result index="1">File selection interface appears</result>
+        <result index="2">File content is loaded into editor</result>
+        <result index="3">AI generates the code change</result>
+        <result index="4">File is updated on disk</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>e2e</tag>
+        <tag>chat</tag>
+      </tags>
+    </test>
+    <test id="BT-FLOW-003" name="Security feedback loop" severity="critical" status="pending" component="security" userStory="US-FLOW-003">
+      <description>Vulnerabilities are found, patched, and verified</description>
+      <preconditions>
+        <condition>Phase 3 code is generated</condition>
+      </preconditions>
+      <steps>
+        <step index="1">Run Phase 4 security scan</step>
+        <step index="2">Review security findings</step>
+        <step index="3">Apply automated patches</step>
+        <step index="4">Re-scan after patches</step>
+      </steps>
+      <expected-results>
+        <result index="1">Vulnerabilities are identified</result>
+        <result index="2">Critical and high issues are listed</result>
+        <result index="3">Fixable vulnerabilities are patched</result>
+        <result index="4">Patched vulnerabilities no longer appear</result>
+      </expected-results>
+      <tags>
+        <tag>blackbox</tag>
+        <tag>e2e</tag>
+        <tag>security</tag>
+      </tags>
+    </test>
+  </test-suite>
+  <summary>
+    <totalTests>29</totalTests>
+    <passed>0</passed>
+    <failed>0</failed>
+    <skipped>0</skipped>
+    <pending>29</pending>
+    <error>0</error>
+    <criticalFailures>0</criticalFailures>
+    <highFailures>0</highFailures>
+  </summary>
+</blackbox-tests>

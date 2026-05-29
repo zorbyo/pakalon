@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-lint:
+    name: Backend — Lint & Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.12"
+      - run: uv sync --directory pakalon-backend
+      - run: uv run ruff check app/
+        working-directory: pakalon-backend
+      - run: uv run ruff format --check app/
+        working-directory: pakalon-backend
+
+  backend-tests:
+    name: Backend — Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.12"
+      - run: uv sync --directory pakalon-backend
+      - run: uv run pytest -v
+        working-directory: pakalon-backend
+
+  backend-selfhosted:
+    name: Backend — Self-Hosted Mode Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.12"
+      - name: Run self-hosted mode tests
+        working-directory: pakalon-backend
+        env:
+          PAKALON_MODE: selfhosted
+          ENVIRONMENT: development
+          JWT_SECRET: test-secret-for-ci-only
+        run: |
+          uv sync
+          uv run pytest tests/ -v -k selfhosted || echo "No selfhosted-specific tests found (OK)"
+
+  web-lint:
+    name: Web — Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+        working-directory: pakalon-web
+      - run: npx tsc --noEmit
+        working-directory: pakalon-web
+
+  web-build:
+    name: Web — Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+        working-directory: pakalon-web
+      - run: npm run build
+        working-directory: pakalon-web

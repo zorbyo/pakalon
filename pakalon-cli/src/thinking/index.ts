@@ -1,0 +1,60 @@
+export type {
+  ThinkingConfig,
+  ThinkingState,
+  ThinkingDisplayOptions,
+  ThinkingTrigger,
+  ThinkingStats,
+} from './types.js'
+
+export {
+  getThinkingConfig,
+  setThinkingConfig,
+  isThinkingEnabled,
+  isThinkingAdaptive,
+  getThinkingBudgetTokens,
+  enableThinking,
+  enableAdaptiveThinking,
+  disableThinking,
+  shouldEnableThinkingByDefault,
+  createThinkingConfigFromOptions,
+  parseThinkingBudgetFromEnv,
+  getAdaptiveBudgetTokens,
+  isValidThinkingConfig,
+} from './thinkingConfig.js'
+
+export {
+  getThinkingState,
+  startThinking,
+  stopThinking,
+  addThought,
+  getThinkingContent,
+  getLastThought,
+  resetThinkingState,
+  isThinkingBudgetExhausted,
+  isThinkingStepLimitReached,
+  getThinkingStats,
+  shouldUseThinking,
+  modelSupportsThinking,
+  modelSupportsAdaptiveThinking,
+  hasUltrathinkKeyword,
+  findThinkingTriggerPositions,
+  updateThinkingStateFromAPIResponse,
+  getThinkingProgress,
+} from './thinkingService.js'
+
+export {
+  getThinkingSystemPrompt,
+  getThinkingUserMessage,
+  buildThinkingParams,
+  formatThinkingBlock,
+  parseThinkingBlock,
+  stripThinkingBlocks,
+  containsThinkingBlock,
+  getThinkingInstructions,
+  shouldIncludeThinkingInPrompt,
+  getThinkingBudgetDescription,
+  createThinkingToggleCommand,
+  parseThinkingToggleCommand,
+  formatThinkingForAPI,
+  getEffortLevel,
+} from './thinkingPrompt.js'

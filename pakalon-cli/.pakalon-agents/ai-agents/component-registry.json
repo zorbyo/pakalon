@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-05-02T00:00:00.000Z",
+  "components": [
+    {
+      "id": "button-primary-react",
+      "name": "Primary Button",
+      "description": "A compact primary action button with loading and disabled states.",
+      "category": "ui",
+      "framework": "react",
+      "tags": ["button", "cta", "primary", "interactive"],
+      "sourceUrl": "pakalon://bundled/button-primary-react",
+      "code": "export function PrimaryButton({ children, loading = false, disabled = false, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { loading?: boolean }) {\n  return (\n    <button\n      {...props}\n      disabled={disabled || loading}\n      className=\"inline-flex items-center justify-center rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60\"\n    >\n      {loading ? \"Loading...\" : children}\n    </button>\n  );\n}",
+      "complexity": "simple",
+      "dependencies": ["react"]
+    }
+  ]
+}

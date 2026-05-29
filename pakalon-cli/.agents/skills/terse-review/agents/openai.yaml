@@ -1,0 +1,7 @@
+interface:
+  display_name: "Terse-Review"
+  short_description: "Generate one-line code review comments with severity prefixes"
+  brand_color: "#EF4444"
+  default_prompt: "Generate a terse code review comment"
+  policy:
+    allow_implicit_invocation: true

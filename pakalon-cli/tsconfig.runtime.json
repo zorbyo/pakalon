@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/index.tsx",
+    "src/**/*.d.ts",
+    "assets/**/*.ts",
+    "assets/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "python",
+    "src/**/__tests__/**",
+    "src/__tests__/**"
+  ]
+}

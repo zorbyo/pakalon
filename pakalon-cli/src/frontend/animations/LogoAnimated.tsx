@@ -1,0 +1,51 @@
+/**
+ * LogoAnimated — first-launch video animation.
+ *
+ * Plays the @assets/video-animation Pakalon logo on the very first time
+ * the user opens the CLI (during the SplashLoginScreen animation stage).
+ *
+ * Uses MiniLogoAnimation as the Ink-compatible renderer for the video frames
+ * (the asset files use non-Ink JSX and require this chalk-based wrapper).
+ */
+import MiniLogoAnimation from "@/frontend/animations/MiniLogoAnimation.js";
+import React from "react";
+
+export interface LogoAnimatedProps {
+  /** Loop the animation (default false — plays once then holds last frame) */
+  loop?: boolean;
+  /** Whether terminal has dark background (default true) */
+  hasDarkBackground?: boolean;
+  /** Called when the animation finishes its first pass */
+  onFinished?: () => void;
+}
+
+const LogoAnimated: React.FC<LogoAnimatedProps> = ({
+  loop = false,
+  hasDarkBackground = true,
+  onFinished,
+}) => {
+  const handleReady = React.useCallback(
+    (api: { play: () => void; pause: () => void; restart: () => void }) => {
+      api.play();
+    },
+    []
+  );
+
+  // onDone fires via MiniLogoAnimation's own onDone callback when the last frame completes.
+  // This is timing-accurate regardless of SPEED_MULTIPLIER.
+  const handleDone = React.useCallback(() => {
+    onFinished?.();
+  }, [onFinished]);
+
+  return (
+    <MiniLogoAnimation
+      hasDarkBackground={hasDarkBackground}
+      autoPlay
+      loop={loop}
+      onReady={handleReady}
+      onDone={handleDone}
+    />
+  );
+};
+
+export default LogoAnimated;

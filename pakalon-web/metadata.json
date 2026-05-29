@@ -1,0 +1,8 @@
+{
+  "name": "Pakalon - webapp",
+  "description": "A comprehensive developer portal for Pakalon, featuring usage analytics, billing management, documentation, and profile settings with a sleek dark-themed aesthetic.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

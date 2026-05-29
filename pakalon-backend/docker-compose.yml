@@ -1,0 +1,22 @@
+services:
+  chrome:
+    image: browserless/chrome:latest
+    container_name: pakalon-chrome
+    restart: unless-stopped
+    ports:
+      - "3002:3000"
+      - "9222:9222"
+    volumes:
+      - chrome_data:/workspace
+    environment:
+      - CONNECTION_TIMEOUT=60000
+      - MAX_CONCURRENT_SESSIONS=10
+      - PREBOOT_CHROME=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  chrome_data:

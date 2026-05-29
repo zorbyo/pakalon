@@ -1,0 +1,7 @@
+interface:
+  display_name: "Terse-Commit"
+  short_description: "Generate terse Conventional Commits messages with ≤50 char subjects"
+  brand_color: "#F59E0B"
+  default_prompt: "Generate a terse conventional commit message"
+  policy:
+    allow_implicit_invocation: true

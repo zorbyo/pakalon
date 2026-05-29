@@ -1,0 +1,40 @@
+# Docker Compose — Self-Hosted Mode
+#
+# Minimal stack for running Pakalon locally with Ollama/LM Studio.
+# No PostgreSQL, Redis, or external services required.
+#
+# Usage:
+#   docker compose -f docker-compose.selfhosted.yml up -d
+#
+
+services:
+  backend:
+    build:
+      context: ./pakalon-backend
+      dockerfile: Dockerfile
+    container_name: pakalon-selfhosted
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PAKALON_MODE=selfhosted
+      - ENVIRONMENT=production
+      - PAKALON_OLLAMA_URL=http://host.docker.internal:11434
+      - PAKALON_LMSTUDIO_URL=http://host.docker.internal:1234
+      - ALLOWED_ORIGINS=http://localhost:3000
+      - JWT_SECRET=change-me-for-self-hosted-deployment
+    extra_hosts:
+      # Allow container to reach Ollama/LM Studio running on the host machine
+      - "host.docker.internal:host-gateway"
+    volumes:
+      # Persist SQLite database across container restarts
+      - pakalon-data:/app/.pakalon
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/local/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  pakalon-data:
+    driver: local

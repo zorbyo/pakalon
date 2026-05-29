@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/ai/tokens.ts"],
+  "exclude": ["node_modules", "dist", "python"]
+}
