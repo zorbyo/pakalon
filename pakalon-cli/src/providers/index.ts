@@ -376,3 +376,9 @@ export function getProviderConfig(providerName: string): ProviderConfig {
 
   return config;
 }
+
+// Re-export new modules
+export { healthChecker, checkProviderHealth, checkAllProvidersHealth, getProviderHealth, isProviderHealthy } from './health.js';
+export { modelSelector, selectModel, getModelSelectorStatus } from './selector.js';
+export { gracefulDegradation, executeWithFallback, chatWithFallback, streamChatWithFallback, getFallbackChain } from './degradation.js';
+export { metricsCollector, recordMetric, recordProviderLatency, recordTokenUsage, recordProviderHealth, recordError, recordFeatureUsage, flushMetrics } from './metrics.js';

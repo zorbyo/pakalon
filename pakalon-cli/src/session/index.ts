@@ -112,6 +112,22 @@ import { SessionManager, sessionManager } from './sessionManager.js';
 // Tree-based session branching
 export * from './tree-session.js';
 
+// Session Summary (diff tracking)
+export { sessionSummaryService, SessionSummaryService } from './sessionSummary.js';
+export type { SessionSummary, FileDiff, DiffResult } from './sessionSummary.js';
+
+// Session Overflow Detection
+export { calculateUsableTokens, isOverflow, getOverflowStatus, getOverflowPercentage, COMPACTION_BUFFER } from './sessionOverflow.js';
+export type { OverflowConfig, OverflowResult } from './sessionOverflow.js';
+
+// Session Retry Logic
+export { calculateDelay, isRetryable, createRetryPolicy, withRetry, RETRY_INITIAL_DELAY, RETRY_BACKOFF_FACTOR, RETRY_MAX_DELAY_NO_HEADERS, RETRY_MAX_DELAY, RETRY_MAX_ATTEMPTS } from './sessionRetry.js';
+export type { RetryError, RetryResult, RetryPolicy } from './sessionRetry.js';
+
+// Session Instructions
+export { findInstructionFiles, readInstructionFiles, getSystemInstructions, resolveNearbyInstructions, clearInstructionCache, INSTRUCTION_FILES, GLOBAL_INSTRUCTION_DIRS } from './sessionInstructions.js';
+export type { InstructionFile, InstructionResult } from './sessionInstructions.js';
+
 export { SessionManager, sessionManager };
 
 // Re-export SessionStore interface
