@@ -18,6 +18,8 @@ jobs:
           python-version: "3.12"
       - run: uv sync
         working-directory: pakalon-backend
+      - run: uv run pip install ruff
+        working-directory: pakalon-backend
       - run: uv run ruff check app/
         working-directory: pakalon-backend
 
@@ -43,6 +45,8 @@ jobs:
         with:
           bun-version: latest
       - run: bun install
+        working-directory: pakalon-cli
+      - run: mkdir -p dist
         working-directory: pakalon-cli
       - run: bun run build
         working-directory: pakalon-cli

@@ -25,6 +25,10 @@ jobs:
         working-directory: pakalon-cli
         run: bun run type-check || true
         
+      - name: Create dist directory
+        working-directory: pakalon-cli
+        run: mkdir -p dist
+        
       - name: Build CLI
         working-directory: pakalon-cli
         run: bun run build
