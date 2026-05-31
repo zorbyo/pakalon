@@ -32,7 +32,22 @@ export type SessionEventType =
   | "permission.decided"
   | "extension.loaded"
   | "extension.unloaded"
-  | "extension.error";
+  | "extension.error"
+  // New events from harness.md implementation
+  | "harness.queue_update"
+  | "harness.save_point"
+  | "harness.abort"
+  | "harness.settled"
+  | "harness.model_select"
+  | "harness.thinking_level_select"
+  | "harness.resources_update"
+  | "harness.session_before_compact"
+  | "harness.session_compact"
+  | "harness.session_before_tree"
+  | "harness.session_tree"
+  | "provider.before_request"
+  | "provider.before_payload"
+  | "provider.after_response";
 
 // ---------------------------------------------------------------------------
 // Event Data Types
@@ -161,6 +176,108 @@ export interface TurnEndEvent {
   sessionId?: string;
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// New Events from harness.md implementation
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface QueueUpdateEvent {
+  type: "harness.queue_update";
+  steer: Array<{ id: string; role: string; content: string }>;
+  followUp: Array<{ id: string; role: string; content: string }>;
+  nextTurn: Array<{ id: string; role: string; content: string }>;
+  sessionId?: string;
+}
+
+export interface SavePointEvent {
+  type: "harness.save_point";
+  hadPendingMutations: boolean;
+  sessionId?: string;
+}
+
+export interface AbortEvent {
+  type: "harness.abort";
+  clearedSteer: Array<{ id: string; role: string; content: string }>;
+  clearedFollowUp: Array<{ id: string; role: string; content: string }>;
+  sessionId?: string;
+}
+
+export interface SettledEvent {
+  type: "harness.settled";
+  nextTurnCount: number;
+  sessionId?: string;
+}
+
+export interface ModelSelectEvent {
+  type: "harness.model_select";
+  model: { id: string; name: string; provider: string };
+  previousModel?: { id: string; name: string; provider: string };
+  source: "set" | "restore";
+  sessionId?: string;
+}
+
+export interface ThinkingLevelSelectEvent {
+  type: "harness.thinking_level_select";
+  level: string;
+  previousLevel: string;
+  sessionId?: string;
+}
+
+export interface ResourcesUpdateEvent {
+  type: "harness.resources_update";
+  resources: { skills?: unknown[]; promptTemplates?: unknown[] };
+  previousResources: { skills?: unknown[]; promptTemplates?: unknown[] };
+  sessionId?: string;
+}
+
+export interface SessionBeforeCompactEvent {
+  type: "harness.session_before_compact";
+  preparation: unknown;
+  branchEntries: unknown[];
+  customInstructions?: string;
+  sessionId?: string;
+}
+
+export interface SessionCompactEvent {
+  type: "harness.session_compact";
+  compactionEntry: unknown;
+  fromHook: boolean;
+  sessionId?: string;
+}
+
+export interface SessionBeforeTreeEvent {
+  type: "harness.session_before_tree";
+  preparation: unknown;
+  sessionId?: string;
+}
+
+export interface SessionTreeEvent {
+  type: "harness.session_tree";
+  newLeafId: string | null;
+  oldLeafId: string | null;
+  summaryEntry?: unknown;
+  fromHook?: boolean;
+  sessionId?: string;
+}
+
+export interface ProviderBeforeRequestEvent {
+  type: "provider.before_request";
+  model: { id: string; provider: string };
+  sessionId: string;
+  streamOptions: unknown;
+}
+
+export interface ProviderBeforePayloadEvent {
+  type: "provider.before_payload";
+  model: { id: string; provider: string };
+  payload: unknown;
+}
+
+export interface ProviderAfterResponseEvent {
+  type: "provider.after_response";
+  status: number;
+  headers: Record<string, string>;
+}
+
 // Union type for all events
 export type SessionEvent =
   | AssistantMessageEvent
@@ -179,7 +296,22 @@ export type SessionEvent =
   | ExtensionLoadedEvent
   | ExtensionUnloadedEvent
   | ExtensionErrorEvent
-  | SessionCompactionEvent;
+  | SessionCompactionEvent
+  // New events
+  | QueueUpdateEvent
+  | SavePointEvent
+  | AbortEvent
+  | SettledEvent
+  | ModelSelectEvent
+  | ThinkingLevelSelectEvent
+  | ResourcesUpdateEvent
+  | SessionBeforeCompactEvent
+  | SessionCompactEvent
+  | SessionBeforeTreeEvent
+  | SessionTreeEvent
+  | ProviderBeforeRequestEvent
+  | ProviderBeforePayloadEvent
+  | ProviderAfterResponseEvent;
 
 // ---------------------------------------------------------------------------
 // Event Listener Types
@@ -312,6 +444,21 @@ export class SessionEventBus {
       "extension.loaded",
       "extension.unloaded",
       "extension.error",
+      // New events
+      "harness.queue_update",
+      "harness.save_point",
+      "harness.abort",
+      "harness.settled",
+      "harness.model_select",
+      "harness.thinking_level_select",
+      "harness.resources_update",
+      "harness.session_before_compact",
+      "harness.session_compact",
+      "harness.session_before_tree",
+      "harness.session_tree",
+      "provider.before_request",
+      "provider.before_payload",
+      "provider.after_response",
     ];
   }
 }

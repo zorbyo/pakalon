@@ -115,6 +115,91 @@ export {
   webSearchToolDefinition,
 } from "./web-search.js";
 
+// GitHub Filesystem Tool (pr:// and issue:// URL schemes)
+export {
+  readGitHubURL,
+  readPR,
+  readPRDiff,
+  readPRFullDiff,
+  readIssue,
+  listIssues,
+  parseGitHubURL,
+  githubFSToolDefinition,
+} from "./github-fs.js";
+
+// AST Edit Tool (structural code rewrites)
+export {
+  astGrepSearch,
+  astGrepReplace,
+  stageChange,
+  getStagedChange,
+  applyStagedChange,
+  discardStagedChange,
+  clearStagedChanges,
+  astEditToolDefinition,
+  resolveToolDefinition,
+} from "./ast-edit.js";
+
+// Stream Rules Tool (time-traveling course correction)
+export {
+  StreamRuleManager,
+  StreamInterceptor,
+  DEFAULT_RULES,
+  streamRuleToolDefinition,
+} from "./stream-rules.js";
+
+// IRC Tool (inter-agent communication)
+export {
+  IRCManager,
+  getIRCManager,
+  resetIRCManager,
+  ircToolDefinition,
+} from "./irc.js";
+
+// Debug Tool (Debug Adapter Protocol)
+export {
+  DebugAdapter,
+  debugToolDefinition,
+} from "./debug.js";
+
+// Hashline Tool (edit by content hash)
+export {
+  parseFile,
+  parseContent,
+  findLineByHash,
+  findLinesByPattern,
+  generateAnchor,
+  parseAnchor,
+  createEdit,
+  validateEdit,
+  applyEdit,
+  applyEdits,
+  generateDiff,
+  formatDiff,
+  hashlineToolDefinition,
+} from "./hashline.js";
+
+// ACP Tool (editor-drivable agent)
+export {
+  ACPServer,
+  acpToolDefinition,
+} from "./acp.js";
+
+// Code Execution Tool (Python/Bun worker bridge)
+export {
+  CodeExecutionBridge,
+  getCodeExecutionBridge,
+  codeExecutionToolDefinition,
+} from "./code-execution.js";
+
+// Bundled Agents (7 pre-configured subagents)
+export {
+  AGENT_CONFIGS,
+  AgentManager,
+  getAgentManager,
+  agentToolDefinition,
+} from "./bundled-agents.js";
+
 // Notebook Edit Tool (Jupyter notebook editing)
 export {
   readNotebook,

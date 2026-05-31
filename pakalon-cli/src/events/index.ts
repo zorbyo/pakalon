@@ -23,6 +23,21 @@ export type {
   SessionCompactionEvent,
   TurnStartEvent,
   TurnEndEvent,
+  // New events from harness.md implementation
+  QueueUpdateEvent,
+  SavePointEvent,
+  AbortEvent,
+  SettledEvent,
+  ModelSelectEvent,
+  ThinkingLevelSelectEvent,
+  ResourcesUpdateEvent,
+  SessionBeforeCompactEvent,
+  SessionCompactEvent,
+  SessionBeforeTreeEvent,
+  SessionTreeEvent,
+  ProviderBeforeRequestEvent,
+  ProviderBeforePayloadEvent,
+  ProviderAfterResponseEvent,
 } from "./session-events.js";
 
 export {

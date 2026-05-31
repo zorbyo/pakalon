@@ -15,6 +15,184 @@ export interface SkillImportResult {
   targetDir: string;
 }
 
+// ---------------------------------------------------------------------------
+// External Tool Format Importers
+// ---------------------------------------------------------------------------
+
+export interface ExternalRule {
+  name: string;
+  content: string;
+  source: string;
+  scope?: string;
+}
+
+/**
+ * Import Cursor MDC rules (.cursorrules files)
+ */
+export function importCursorRules(projectPath?: string): ExternalRule[] {
+  const rules: ExternalRule[] = [];
+  const targetPath = projectPath ?? process.cwd();
+  
+  // Look for .cursorrules files
+  const cursorRulesFiles = [
+    path.join(targetPath, '.cursorrules'),
+    path.join(targetPath, '.cursor', 'rules'),
+    path.join(os.homedir(), '.cursor', 'rules'),
+  ];
+  
+  for (const filePath of cursorRulesFiles) {
+    if (fs.existsSync(filePath)) {
+      try {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        rules.push({
+          name: path.basename(filePath),
+          content,
+          source: 'cursor',
+          scope: filePath.startsWith(targetPath) ? 'project' : 'global',
+        });
+      } catch {
+        // Skip unreadable files
+      }
+    }
+  }
+  
+  return rules;
+}
+
+/**
+ * Import Cline rules (.clinerules files)
+ */
+export function importClineRules(projectPath?: string): ExternalRule[] {
+  const rules: ExternalRule[] = [];
+  const targetPath = projectPath ?? process.cwd();
+  
+  // Look for .clinerules files
+  const clinerulesFiles = [
+    path.join(targetPath, '.clinerules'),
+    path.join(targetPath, '.cline', 'rules'),
+    path.join(os.homedir(), '.cline', 'rules'),
+  ];
+  
+  for (const filePath of clinerulesFiles) {
+    if (fs.existsSync(filePath)) {
+      try {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        rules.push({
+          name: path.basename(filePath),
+          content,
+          source: 'cline',
+          scope: filePath.startsWith(targetPath) ? 'project' : 'global',
+        });
+      } catch {
+        // Skip unreadable files
+      }
+    }
+  }
+  
+  return rules;
+}
+
+/**
+ * Import Codex AGENTS.md rules
+ */
+export function importCodexRules(projectPath?: string): ExternalRule[] {
+  const rules: ExternalRule[] = [];
+  const targetPath = projectPath ?? process.cwd();
+  
+  // Look for AGENTS.md files
+  const agentsFiles = [
+    path.join(targetPath, 'AGENTS.md'),
+    path.join(targetPath, '.codex', 'AGENTS.md'),
+    path.join(os.homedir(), '.codex', 'AGENTS.md'),
+  ];
+  
+  for (const filePath of agentsFiles) {
+    if (fs.existsSync(filePath)) {
+      try {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        rules.push({
+          name: path.basename(filePath),
+          content,
+          source: 'codex',
+          scope: filePath.startsWith(targetPath) ? 'project' : 'global',
+        });
+      } catch {
+        // Skip unreadable files
+      }
+    }
+  }
+  
+  return rules;
+}
+
+/**
+ * Import Copilot applyTo rules
+ */
+export function importCopilotRules(projectPath?: string): ExternalRule[] {
+  const rules: ExternalRule[] = [];
+  const targetPath = projectPath ?? process.cwd();
+  
+  // Look for .github/copilot-instructions.md files
+  const copilotFiles = [
+    path.join(targetPath, '.github', 'copilot-instructions.md'),
+    path.join(targetPath, '.copilot', 'instructions.md'),
+    path.join(os.homedir(), '.copilot', 'instructions.md'),
+  ];
+  
+  for (const filePath of copilotFiles) {
+    if (fs.existsSync(filePath)) {
+      try {
+        const content = fs.readFileSync(filePath, 'utf-8');
+        rules.push({
+          name: path.basename(filePath),
+          content,
+          source: 'copilot',
+          scope: filePath.startsWith(targetPath) ? 'project' : 'global',
+        });
+      } catch {
+        // Skip unreadable files
+      }
+    }
+  }
+  
+  return rules;
+}
+
+/**
+ * Import rules from all supported external tools
+ */
+export function importAllExternalRules(projectPath?: string): ExternalRule[] {
+  const rules: ExternalRule[] = [];
+  
+  rules.push(...importCursorRules(projectPath));
+  rules.push(...importClineRules(projectPath));
+  rules.push(...importCodexRules(projectPath));
+  rules.push(...importCopilotRules(projectPath));
+  
+  return rules;
+}
+
+/**
+ * Convert external rules to skill format
+ */
+export function convertExternalRulesToSkills(rules: ExternalRule[]): string {
+  let output = '# External Rules Import\n\n';
+  
+  for (const rule of rules) {
+    output += `## ${rule.name} (${rule.source})\n\n`;
+    output += `**Source:** ${rule.source}\n`;
+    output += `**Scope:** ${rule.scope || 'unknown'}\n\n`;
+    output += rule.content;
+    output += '\n\n---\n\n';
+  }
+  
+  return output;
+}
+
+// ---------------------------------------------------------------------------
+// Skill Import
+// ---------------------------------------------------------------------------
+
 function getSkillImportTargetDir(
   scope: "global" | "project",
   cwd = process.cwd(),

@@ -31,9 +31,15 @@ export const LSP_COMPLETION = 'lsp_completion';
 export const LSP_DOCUMENT_SYMBOLS = 'lsp_document_symbols';
 export const LSP_FIND_IMPLEMENTATIONS = 'lsp_find_implementations';
 export const LSP_CALL_HIERARCHY = 'lsp_call_hierarchy';
+export const LSP_RENAME = 'lsp_rename';
+export const LSP_TYPE_DEFINITION = 'lsp_type_definition';
+export const LSP_CODE_ACTIONS = 'lsp_code_actions';
+export const LSP_STATUS = 'lsp_status';
+export const LSP_CAPABILITIES = 'lsp_capabilities';
+export const LSP_RELOAD = 'lsp_reload';
 export const MAX_LSP_FILE_SIZE_BYTES = 10_000_000;
 
-// Language server configurations
+// Language server configurations - expanded to support more languages
 const LSP_SERVERS: Record<string, { command: string; args: string[]; filetypes: string[] }> = {
   typescript: {
     command: 'typescript-language-server',
@@ -55,9 +61,239 @@ const LSP_SERVERS: Record<string, { command: string; args: string[]; filetypes: 
     args: ['--stdio'],
     filetypes: ['.rs'],
   },
+  java: {
+    command: 'jdtls',
+    args: ['-data', '${workspaceFolder}/.jdtls'],
+    filetypes: ['.java'],
+  },
+  csharp: {
+    command: 'omnisharp',
+    args: ['--languageserver', '--hostPID', '${pid}'],
+    filetypes: ['.cs'],
+  },
+  cpp: {
+    command: 'clangd',
+    args: ['--header-insertion=never'],
+    filetypes: ['.cpp', '.c', '.cc', '.h', '.hpp'],
+  },
+  ruby: {
+    command: 'solargraph',
+    args: ['stdio'],
+    filetypes: ['.rb'],
+  },
+  php: {
+    command: 'intelephense',
+    args: ['--stdio'],
+    filetypes: ['.php'],
+  },
+  swift: {
+    command: 'sourcekit-lsp',
+    args: [],
+    filetypes: ['.swift'],
+  },
+  kotlin: {
+    command: 'kotlin-language-server',
+    args: [],
+    filetypes: ['.kt', '.kts'],
+  },
+  scala: {
+    command: 'metals',
+    args: ['stdin'],
+    filetypes: ['.scala'],
+  },
+  elixir: {
+    command: 'elixir-ls',
+    args: [],
+    filetypes: ['.ex', '.exs'],
+  },
+  erlang: {
+    command: 'erlang_ls',
+    args: [],
+    filetypes: ['.erl', '.hrl'],
+  },
+  dart: {
+    command: 'dart',
+    args: ['language-server'],
+    filetypes: ['.dart'],
+  },
+  haskell: {
+    command: 'haskell-language-server-wrapper',
+    args: ['--lsp'],
+    filetypes: ['.hs', '.lhs'],
+  },
+  lua: {
+    command: 'lua-language-server',
+    args: [],
+    filetypes: ['.lua'],
+  },
+  yaml: {
+    command: 'yaml-language-server',
+    args: ['--stdio'],
+    filetypes: ['.yaml', '.yml'],
+  },
+  xml: {
+    command: 'lemminx',
+    args: [],
+    filetypes: ['.xml'],
+  },
+  css: {
+    command: 'css-languageserver',
+    args: ['--stdio'],
+    filetypes: ['.css', '.scss', '.less'],
+  },
+  html: {
+    command: 'html-languageserver',
+    args: ['--stdio'],
+    filetypes: ['.html', '.htm'],
+  },
+  json: {
+    command: 'json-languageserver',
+    args: ['--stdio'],
+    filetypes: ['.json'],
+  },
+  markdown: {
+    command: 'marksman',
+    args: [],
+    filetypes: ['.md', '.markdown'],
+  },
+  terraform: {
+    command: 'terraform-ls',
+    args: ['serve'],
+    filetypes: ['.tf', '.tfvars'],
+  },
+  dockerfile: {
+    command: 'docker-langserver',
+    args: ['--stdio'],
+    filetypes: ['Dockerfile', '.dockerfile'],
+  },
+  bash: {
+    command: 'bash-language-server',
+    args: ['start'],
+    filetypes: ['.sh', '.bash'],
+  },
+  powershell: {
+    command: 'pwsh',
+    args: ['-NoLogo', '-NoProfile', '-Command', "Import-Module PowerShellEditorServices; Start-EditorServices ..."],
+    filetypes: ['.ps1', '.psm1', '.psd1'],
+  },
+  verilog: {
+    command: 'verible',
+    args: ['--lspServer', 'stdin'],
+    filetypes: ['.v', '.sv', '.svh'],
+  },
+  vhdl: {
+    command: 'vhdl_ls',
+    args: [],
+    filetypes: ['.vhd', '.vhdl'],
+  },
+  solidity: {
+    command: 'solc',
+    args: ['--language-server'],
+    filetypes: ['.sol'],
+  },
+  zig: {
+    command: 'zls',
+    args: [],
+    filetypes: ['.zig'],
+  },
+  nim: {
+    command: 'nimlsp',
+    args: [],
+    filetypes: ['.nim', '.nims'],
+  },
+  r: {
+    command: 'languageserver',
+    args: [],
+    filetypes: ['.R', '.r'],
+  },
+  julia: {
+    command: 'julia',
+    args: ['--project', '-e', 'using LanguageServer; runserver()'],
+    filetypes: ['.jl'],
+  },
+  clojure: {
+    command: 'clojure-lsp',
+    args: [],
+    filetypes: ['.clj', '.cljs', '.cljc', '.edn'],
+  },
+  fsharp: {
+    command: 'fsautocomplete',
+    args: ['--mode', 'lsp'],
+    filetypes: ['.fs', '.fsx', '.fsi', '.fsscript'],
+  },
+  groovy: {
+    command: 'groovy-language-server',
+    args: [],
+    filetypes: ['.groovy'],
+  },
+  objective_c: {
+    command: 'clangd',
+    args: ['--header-insertion=never'],
+    filetypes: ['.m', '.mm'],
+  },
+  fortran: {
+    command: 'fortls',
+    args: [],
+    filetypes: ['.f', '.for', '.f90', '.f95', '.f03', '.f08'],
+  },
+  pascal: {
+    command: 'pascal-language-server',
+    args: [],
+    filetypes: ['.pas', '.pp', '.inc'],
+  },
+  cmake: {
+    command: 'cmake-language-server',
+    args: [],
+    filetypes: ['CMakeLists.txt', '.cmake'],
+  },
+  makefile: {
+    command: 'makefile-language-server',
+    args: [],
+    filetypes: ['Makefile', '.make'],
+  },
+  sql: {
+    command: 'sql-language-server',
+    args: ['up', '--method', 'stdio'],
+    filetypes: ['.sql'],
+  },
+  graphql: {
+    command: 'graphql-lsp',
+    args: ['server', '-m', 'stdio'],
+    filetypes: ['.graphql', '.gql'],
+  },
+  proto: {
+    command: 'buf',
+    args: ['lsp'],
+    filetypes: ['.proto'],
+  },
+  vim: {
+    command: 'vimls',
+    args: [],
+    filetypes: ['.vim', '.vimrc'],
+  },
+  nix: {
+    command: 'rnix-lsp',
+    args: [],
+    filetypes: ['.nix'],
+  },
+  dart_flutter: {
+    command: 'dart',
+    args: ['language-server'],
+    filetypes: ['.dart'],
+  },
+  vue: {
+    command: 'vue-language-server',
+    args: ['--stdio'],
+    filetypes: ['.vue'],
+  },
+  svelte: {
+    command: 'svelteserver',
+    args: ['--stdio'],
+    filetypes: ['.svelte'],
+  },
 };
 
-// File extension to language mapping
+// File extension to language mapping - expanded
 const EXT_TO_LANG: Record<string, string> = {
   '.ts': 'typescript',
   '.tsx': 'typescript',
@@ -66,6 +302,85 @@ const EXT_TO_LANG: Record<string, string> = {
   '.py': 'python',
   '.go': 'go',
   '.rs': 'rust',
+  '.java': 'java',
+  '.cs': 'csharp',
+  '.cpp': 'cpp',
+  '.c': 'cpp',
+  '.cc': 'cpp',
+  '.h': 'cpp',
+  '.hpp': 'cpp',
+  '.rb': 'ruby',
+  '.php': 'php',
+  '.swift': 'swift',
+  '.kt': 'kotlin',
+  '.kts': 'kotlin',
+  '.scala': 'scala',
+  '.ex': 'elixir',
+  '.exs': 'elixir',
+  '.erl': 'erlang',
+  '.hrl': 'erlang',
+  '.dart': 'dart',
+  '.hs': 'haskell',
+  '.lhs': 'haskell',
+  '.lua': 'lua',
+  '.yaml': 'yaml',
+  '.yml': 'yaml',
+  '.xml': 'xml',
+  '.css': 'css',
+  '.scss': 'css',
+  '.less': 'css',
+  '.html': 'html',
+  '.htm': 'html',
+  '.json': 'json',
+  '.md': 'markdown',
+  '.markdown': 'markdown',
+  '.tf': 'terraform',
+  '.tfvars': 'terraform',
+  '.sh': 'bash',
+  '.bash': 'bash',
+  '.ps1': 'powershell',
+  '.psm1': 'powershell',
+  '.psd1': 'powershell',
+  '.v': 'verilog',
+  '.sv': 'verilog',
+  '.svh': 'verilog',
+  '.vhd': 'vhdl',
+  '.vhdl': 'vhdl',
+  '.sol': 'solidity',
+  '.zig': 'zig',
+  '.nim': 'nim',
+  '.nims': 'nim',
+  '.R': 'r',
+  '.r': 'r',
+  '.jl': 'julia',
+  '.clj': 'clojure',
+  '.cljs': 'clojure',
+  '.cljc': 'clojure',
+  '.edn': 'clojure',
+  '.fs': 'fsharp',
+  '.fsx': 'fsharp',
+  '.fsi': 'fsharp',
+  '.fsscript': 'fsharp',
+  '.groovy': 'groovy',
+  '.m': 'objective_c',
+  '.mm': 'objective_c',
+  '.f': 'fortran',
+  '.for': 'fortran',
+  '.f90': 'fortran',
+  '.f95': 'fortran',
+  '.f03': 'fortran',
+  '.f08': 'fortran',
+  '.pas': 'pascal',
+  '.pp': 'pascal',
+  '.inc': 'pascal',
+  '.sql': 'sql',
+  '.graphql': 'graphql',
+  '.gql': 'graphql',
+  '.proto': 'proto',
+  '.vim': 'vim',
+  '.nix': 'nix',
+  '.vue': 'vue',
+  '.svelte': 'svelte',
 };
 
 interface LSPClient {
@@ -597,6 +912,269 @@ class LSPClientManager {
   }
 
   // ========== MISSING LSP OPERATIONS ==========
+
+  /**
+   * textDocument/rename
+   * Rename a symbol across all files
+   */
+  async rename(
+    language: string,
+    filePath: string,
+    line: number,
+    character: number,
+    newName: string
+  ): Promise<{
+    success: boolean;
+    changes?: Array<{ uri: string; range: { start: { line: number; character: number }; end: { line: { line: number; character: number } } } }>;
+    error?: string;
+  }> {
+    const client = this.getClient(language);
+    if (!client || !client.initialized) {
+      return { success: false, error: 'Language server not initialized' };
+    }
+
+    const resolvedFilePath = this.checkLocalFileSecurity(filePath);
+
+    const params = {
+      textDocument: { uri: localPathToFileUri(resolvedFilePath) },
+      position: { line: line - 1, character: character - 1 },
+      newName,
+    };
+
+    try {
+      const result = await this.sendRequest(client, 'textDocument/rename', params);
+      if (!result) {
+        return { success: false, error: 'No rename changes returned' };
+      }
+      // WorkspaceEdit contains changes map
+      const workspaceEdit = result as { changes?: Record<string, Array<{ range: { start: { line: number; character: number }; end: { line: number; character: number } }>> } };
+      if (!workspaceEdit.changes) {
+        return { success: false, error: 'No changes in workspace edit' };
+      }
+      const changes: Array<{ uri: string; range: { start: { line: number; character: number }; end: { line: number; character: number } } }> = [];
+      for (const [uri, edits] of Object.entries(workspaceEdit.changes)) {
+        for (const edit of edits) {
+          changes.push({ uri, range: edit.range });
+        }
+      }
+      return { success: true, changes };
+    } catch (error) {
+      if (error instanceof LspSecurityError) {
+        throw error;
+      }
+      return { success: false, error: String(error) };
+    }
+  }
+
+  /**
+   * textDocument/typeDefinition
+   * Go to the type definition of a symbol
+   */
+  async typeDefinition(
+    language: string,
+    filePath: string,
+    line: number,
+    character: number
+  ): Promise<Array<{
+    uri: string;
+    range: { start: { line: number; character: number }; end: { line: number; character: number } };
+  }>> {
+    const client = this.getClient(language);
+    if (!client || !client.initialized) {
+      return [];
+    }
+
+    const resolvedFilePath = this.checkLocalFileSecurity(filePath);
+
+    const params = {
+      textDocument: { uri: localPathToFileUri(resolvedFilePath) },
+      position: { line: line - 1, character: character - 1 },
+    };
+
+    try {
+      const result = await this.sendRequest(client, 'textDocument/typeDefinition', params);
+      if (!result) return [];
+      const locations = Array.isArray(result) ? result : [result];
+      return this.filterLocationResults(locations as Array<{ uri: string; range: { start: { line: number; character: number }; end: { line: number; character: number } } }>);
+    } catch (error) {
+      if (error instanceof LspSecurityError) {
+        throw error;
+      }
+      return [];
+    }
+  }
+
+  /**
+   * textDocument/codeAction
+   * Get code actions (quick fixes, refactorings) for a range
+   */
+  async codeActions(
+    language: string,
+    filePath: string,
+    startLine: number,
+    startCharacter: number,
+    endLine: number,
+    endCharacter: number,
+    only?: string[]
+  ): Promise<Array<{
+    title: string;
+    kind?: string;
+    diagnostics?: Array<{ severity: number; message: string }>;
+    edit?: unknown;
+    command?: unknown;
+  }>> {
+    const client = this.getClient(language);
+    if (!client || !client.initialized) {
+      return [];
+    }
+
+    const resolvedFilePath = this.checkLocalFileSecurity(filePath);
+
+    const params = {
+      textDocument: { uri: localPathToFileUri(resolvedFilePath) },
+      range: {
+        start: { line: startLine - 1, character: startCharacter },
+        end: { line: endLine - 1, character: endCharacter },
+      },
+      context: {
+        diagnostics: [],
+        only: only || ['quickfix', 'refactor'],
+      },
+    };
+
+    try {
+      const result = await this.sendRequest(client, 'textDocument/codeAction', params);
+      if (!result || !Array.isArray(result)) return [];
+      return result as Array<{
+        title: string;
+        kind?: string;
+        diagnostics?: Array<{ severity: number; message: string }>;
+        edit?: unknown;
+        command?: unknown;
+      }>;
+    } catch (error) {
+      if (error instanceof LspSecurityError) {
+        throw error;
+      }
+      return [];
+    }
+  }
+
+  /**
+   * Get status of all language servers
+   */
+  getStatus(): Array<{
+    language: string;
+    command: string;
+    status: 'running' | 'idle' | 'missing';
+    pid?: number;
+  }> {
+    const statuses: Array<{
+      language: string;
+      command: string;
+      status: 'running' | 'idle' | 'missing';
+      pid?: number;
+    }> = [];
+
+    for (const [language, config] of Object.entries(LSP_SERVERS)) {
+      const client = this.clients.get(language);
+      if (client && client.initialized) {
+        statuses.push({
+          language,
+          command: config.command,
+          status: 'running',
+          pid: client.process.pid,
+        });
+      } else if (client) {
+        statuses.push({
+          language,
+          command: config.command,
+          status: 'idle',
+        });
+      } else {
+        statuses.push({
+          language,
+          command: config.command,
+          status: 'missing',
+        });
+      }
+    }
+
+    return statuses;
+  }
+
+  /**
+   * Get capabilities of a language server
+   */
+  async getCapabilities(
+    language: string
+  ): Promise<Record<string, unknown> | null> {
+    const client = this.getClient(language);
+    if (!client || !client.initialized) {
+      return null;
+    }
+
+    // Send initialize request and capture the capabilities
+    const params = {
+      processId: process.pid,
+      rootUri: `file://${process.cwd()}`,
+      capabilities: {},
+    };
+
+    try {
+      const result = await this.sendRequest(client, 'initialize', params);
+      if (!result || typeof result !== 'object') return null;
+      const initResult = result as { capabilities?: Record<string, unknown> };
+      return initResult.capabilities || null;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Reload/restart a language server
+   */
+  async reload(
+    language?: string
+  ): Promise<{ reloaded: string[]; errors: string[] }> {
+    const reloaded: string[] = [];
+    const errors: string[] = [];
+
+    const languages = language ? [language] : Object.keys(LSP_SERVERS);
+
+    for (const lang of languages) {
+      const config = LSP_SERVERS[lang];
+      if (!config) {
+        errors.push(`Unknown language: ${lang}`);
+        continue;
+      }
+
+      // Kill existing client if any
+      const existingClient = this.clients.get(lang);
+      if (existingClient) {
+        try {
+          existingClient.process.kill();
+        } catch {
+          // Ignore kill errors
+        }
+        this.clients.delete(lang);
+      }
+
+      // Create new client
+      try {
+        const newClient = this.getClient(lang);
+        if (newClient) {
+          reloaded.push(lang);
+        } else {
+          errors.push(`Failed to start server for ${lang}`);
+        }
+      } catch (error) {
+        errors.push(`Failed to reload ${lang}: ${String(error)}`);
+      }
+    }
+
+    return { reloaded, errors };
+  }
 
   /**
    * textDocument/documentSymbol
@@ -1571,6 +2149,363 @@ export const callHierarchyTool = buildTool({
   },
 });
 
+// ========== RENAME TOOL ==========
+
+const renameInput = lazySchema(() =>
+  z.strictObject({
+    file_path: z.string().describe('File path containing the symbol to rename'),
+    line: z.number().int().positive().describe('Line number (1-based)'),
+    character: z.number().int().nonnegative().describe('Character position (0-based)'),
+    new_name: z.string().describe('New name for the symbol'),
+  }),
+);
+
+const renameOutput = lazySchema(() =>
+  z.object({
+    success: z.boolean(),
+    changes: z.array(
+      z.object({
+        file: z.string(),
+        line: z.number(),
+        character: z.number(),
+      })
+    ).optional(),
+    message: z.string().optional(),
+  }),
+);
+
+export const lspRenameTool = buildTool({
+  name: 'lsp_rename',
+  searchHint: 'rename symbol, rename function, rename variable, LSP rename',
+  maxResultSizeChars: 50_000,
+  async description() {
+    return 'Rename a symbol across all files using LSP';
+  },
+  get inputSchema() {
+    return renameInput();
+  },
+  get outputSchema() {
+    return renameOutput();
+  },
+  async checkPermissions(input, context) {
+    return fileAccessPermissionCheck(input, context, 'Use LSP rename');
+  },
+  async execute(input) {
+    const language = getLanguageForFile(input.file_path);
+    if (!language) {
+      return { success: false, message: 'Unsupported file type for LSP' };
+    }
+
+    try {
+      const result = await lspClientManager.rename(
+        language,
+        input.file_path,
+        input.line,
+        input.character,
+        input.new_name
+      );
+
+      if (!result.success) {
+        return { success: false, message: result.error || 'Rename failed' };
+      }
+
+      return {
+        success: true,
+        changes: result.changes?.map((c) => ({
+          file: c.uri.replace('file://', ''),
+          line: c.range.start.line + 1,
+          character: c.range.start.character + 1,
+        })),
+        message: `Renamed to '${input.new_name}' in ${result.changes?.length || 0} locations`,
+      };
+    } catch (error) {
+      if (isLspSecurityError(error)) {
+        return { success: false, message: securityMessage(error) };
+      }
+      throw error;
+    }
+  },
+});
+
+// ========== TYPE DEFINITION TOOL ==========
+
+const typeDefinitionInput = lazySchema(() =>
+  z.strictObject({
+    file_path: z.string().describe('File path to search in'),
+    line: z.number().int().positive().describe('Line number (1-based)'),
+    character: z.number().int().nonnegative().describe('Character position (0-based)'),
+  }),
+);
+
+const typeDefinitionOutput = lazySchema(() =>
+  z.object({
+    found: z.boolean(),
+    locations: z.array(
+      z.object({
+        file: z.string(),
+        line: z.number(),
+        character: z.number(),
+      })
+    ).optional(),
+    message: z.string().optional(),
+  }),
+);
+
+export const typeDefinitionTool = buildTool({
+  name: 'lsp_type_definition',
+  searchHint: 'type definition, go to type, type of symbol, LSP type definition',
+  maxResultSizeChars: 50_000,
+  async description() {
+    return 'Navigate to the type definition of a symbol using LSP';
+  },
+  get inputSchema() {
+    return typeDefinitionInput();
+  },
+  get outputSchema() {
+    return typeDefinitionOutput();
+  },
+  async checkPermissions(input, context) {
+    return fileAccessPermissionCheck(input, context, 'Use LSP type definition');
+  },
+  async execute(input) {
+    const language = getLanguageForFile(input.file_path);
+    if (!language) {
+      return { found: false, message: 'Unsupported file type for LSP' };
+    }
+
+    try {
+      const results = await lspClientManager.typeDefinition(
+        language,
+        input.file_path,
+        input.line,
+        input.character
+      );
+
+      if (results.length === 0) {
+        return { found: false, message: 'No type definition found' };
+      }
+
+      return {
+        found: true,
+        locations: results.map((loc) => ({
+          file: loc.uri.replace('file://', ''),
+          line: loc.range.start.line + 1,
+          character: loc.range.start.character + 1,
+        })),
+      };
+    } catch (error) {
+      if (isLspSecurityError(error)) {
+        return { found: false, message: securityMessage(error) };
+      }
+      throw error;
+    }
+  },
+});
+
+// ========== CODE ACTIONS TOOL ==========
+
+const codeActionsInput = lazySchema(() =>
+  z.strictObject({
+    file_path: z.string().describe('File path to get code actions for'),
+    start_line: z.number().int().positive().describe('Start line number (1-based)'),
+    start_character: z.number().int().nonnegative().describe('Start character position (0-based)'),
+    end_line: z.number().int().positive().describe('End line number (1-based)'),
+    end_character: z.number().int().nonnegative().describe('End character position (0-based)'),
+    only: z.array(z.string()).optional().describe('Filter by action kinds (e.g., ["quickfix", "refactor"])'),
+  }),
+);
+
+const codeActionsOutput = lazySchema(() =>
+  z.object({
+    count: z.number(),
+    actions: z.array(
+      z.object({
+        title: z.string(),
+        kind: z.string().optional(),
+        diagnostics: z.array(
+          z.object({
+            severity: z.string(),
+            message: z.string(),
+          })
+        ).optional(),
+      })
+    ),
+  }),
+);
+
+export const codeActionsTool = buildTool({
+  name: 'lsp_code_actions',
+  searchHint: 'code actions, quick fixes, refactoring, LSP code actions',
+  maxResultSizeChars: 50_000,
+  async description() {
+    return 'Get code actions (quick fixes, refactorings) for a code range using LSP';
+  },
+  get inputSchema() {
+    return codeActionsInput();
+  },
+  get outputSchema() {
+    return codeActionsOutput();
+  },
+  async checkPermissions(input, context) {
+    return fileAccessPermissionCheck(input, context, 'Use LSP code actions');
+  },
+  async execute(input) {
+    const language = getLanguageForFile(input.file_path);
+    if (!language) {
+      return { count: 0, actions: [], message: 'Unsupported file type for LSP' };
+    }
+
+    try {
+      const results = await lspClientManager.codeActions(
+        language,
+        input.file_path,
+        input.start_line,
+        input.start_character,
+        input.end_line,
+        input.end_character,
+        input.only
+      );
+
+      return {
+        count: results.length,
+        actions: results.map((action) => ({
+          title: action.title,
+          kind: action.kind,
+          diagnostics: action.diagnostics?.map((d) => ({
+            severity: severityToString(d.severity),
+            message: d.message,
+          })),
+        })),
+      };
+    } catch (error) {
+      if (isLspSecurityError(error)) {
+        return { count: 0, actions: [] };
+      }
+      throw error;
+    }
+  },
+});
+
+// ========== LSP STATUS TOOL ==========
+
+const statusOutput = lazySchema(() =>
+  z.object({
+    servers: z.array(
+      z.object({
+        language: z.string(),
+        command: z.string(),
+        status: z.enum(['running', 'idle', 'missing']),
+        pid: z.number().optional(),
+      })
+    ),
+  }),
+);
+
+export const lspStatusTool = buildTool({
+  name: 'lsp_status',
+  searchHint: 'LSP status, language server status, check LSP servers',
+  maxResultSizeChars: 10_000,
+  async description() {
+    return 'Check the status of all language servers';
+  },
+  get inputSchema() {
+    return lazySchema(() => z.strictObject({}))();
+  },
+  get outputSchema() {
+    return statusOutput();
+  },
+  async checkPermissions(_input, context) {
+    return fileAccessPermissionCheck({}, context, 'Check LSP status');
+  },
+  async execute() {
+    const statuses = lspClientManager.getStatus();
+    return { servers: statuses };
+  },
+});
+
+// ========== LSP CAPABILITIES TOOL ==========
+
+const capabilitiesInput = lazySchema(() =>
+  z.strictObject({
+    language: z.string().describe('Language to check capabilities for (e.g., "typescript", "python")'),
+  }),
+);
+
+const capabilitiesOutput = lazySchema(() =>
+  z.object({
+    language: z.string(),
+    capabilities: z.record(z.unknown()).nullable(),
+    message: z.string().optional(),
+  }),
+);
+
+export const lspCapabilitiesTool = buildTool({
+  name: 'lsp_capabilities',
+  searchHint: 'LSP capabilities, language server capabilities, what LSP supports',
+  maxResultSizeChars: 50_000,
+  async description() {
+    return 'Check the capabilities of a language server';
+  },
+  get inputSchema() {
+    return capabilitiesInput();
+  },
+  get outputSchema() {
+    return capabilitiesOutput();
+  },
+  async checkPermissions(input, context) {
+    return fileAccessPermissionCheck({}, context, 'Check LSP capabilities');
+  },
+  async execute(input) {
+    const capabilities = await lspClientManager.getCapabilities(input.language);
+    return {
+      language: input.language,
+      capabilities,
+      message: capabilities ? 'Capabilities retrieved' : 'Server not available or not initialized',
+    };
+  },
+});
+
+// ========== LSP RELOAD TOOL ==========
+
+const reloadInput = lazySchema(() =>
+  z.strictObject({
+    language: z.string().optional().describe('Language to reload (omit to reload all)'),
+  }),
+);
+
+const reloadOutput = lazySchema(() =>
+  z.object({
+    reloaded: z.array(z.string()),
+    errors: z.array(z.string()),
+    message: z.string(),
+  }),
+);
+
+export const lspReloadTool = buildTool({
+  name: 'lsp_reload',
+  searchHint: 'reload LSP, restart language server, LSP reload',
+  maxResultSizeChars: 10_000,
+  async description() {
+    return 'Reload or restart language servers';
+  },
+  get inputSchema() {
+    return reloadInput();
+  },
+  get outputSchema() {
+    return reloadOutput();
+  },
+  async checkPermissions(input, context) {
+    return fileAccessPermissionCheck({}, context, 'Reload LSP servers');
+  },
+  async execute(input) {
+    const result = await lspClientManager.reload(input.language);
+    return {
+      ...result,
+      message: `Reloaded ${result.reloaded.length} server(s), ${result.errors.length} error(s)`,
+    };
+  },
+});
+
 // Export all LSP tools
 export const lspTools = [
   gotoDefinitionTool,
@@ -1582,4 +2517,10 @@ export const lspTools = [
   documentSymbolsTool,
   findImplementationsTool,
   callHierarchyTool,
+  lspRenameTool,
+  typeDefinitionTool,
+  codeActionsTool,
+  lspStatusTool,
+  lspCapabilitiesTool,
+  lspReloadTool,
 ];

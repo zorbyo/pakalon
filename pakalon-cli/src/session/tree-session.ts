@@ -14,6 +14,7 @@ export class MessageNode {
   children: string[]
   state: MessageState
   timestamp: string
+  label?: string // Label for bookmarks/compaction survival
 
   constructor(params: {
     id?: string
@@ -23,6 +24,7 @@ export class MessageNode {
     children?: string[]
     state?: MessageState
     timestamp?: string
+    label?: string
   }) {
     this.id = params.id ?? randomUUID()
     this.content = params.content
@@ -31,6 +33,7 @@ export class MessageNode {
     this.children = [...(params.children ?? [])]
     this.state = params.state ?? 'pending'
     this.timestamp = params.timestamp ?? new Date().toISOString()
+    this.label = params.label
   }
 }
 
@@ -310,6 +313,137 @@ export class MessageTree {
 
     return result
   }
+
+  // ── Labels ────────────────────────────────────────────────────────────────
+
+  /**
+   * Set or clear a label on a node
+   */
+  setLabel(nodeId: string, label: string | undefined): boolean {
+    const node = this.nodes.get(nodeId)
+    if (!node) return false
+    node.label = label
+    return true
+  }
+
+  /**
+   * Get all labeled nodes
+   */
+  getLabeledNodes(): MessageNode[] {
+    return Array.from(this.nodes.values()).filter(n => n.label !== undefined)
+  }
+
+  /**
+   * Find nodes by label
+   */
+  findByLabel(label: string): MessageNode[] {
+    return Array.from(this.nodes.values()).filter(n => n.label === label)
+  }
+
+  // ── Fuzzy Search ──────────────────────────────────────────────────────────
+
+  /**
+   * Fuzzy search across all nodes
+   */
+  fuzzySearch(query: string, options: { maxResults?: number; includeToolResults?: boolean } = {}): Array<{
+    node: MessageNode
+    score: number
+    matchedText: string
+  }> {
+    const { maxResults = 20, includeToolResults = true } = options
+    const queryLower = query.toLowerCase()
+    const queryWords = queryLower.split(/\s+/).filter(w => w.length > 0)
+    
+    const results: Array<{
+      node: MessageNode
+      score: number
+      matchedText: string
+    }> = []
+
+    for (const node of this.nodes.values()) {
+      // Skip tool results if not wanted
+      if (!includeToolResults && node.role === 'tool') continue
+      
+      const contentLower = node.content.toLowerCase()
+      let score = 0
+      let matchedText = ''
+
+      // Exact match in content
+      if (contentLower.includes(queryLower)) {
+        score += 100
+        const idx = contentLower.indexOf(queryLower)
+        matchedText = node.content.slice(Math.max(0, idx - 20), idx + query.length + 20)
+      }
+
+      // Word matching
+      for (const word of queryWords) {
+        if (word.length < 2) continue
+        
+        // Match in content
+        const wordMatches = contentLower.split(word).length - 1
+        score += wordMatches * 10
+
+        // Match in label
+        if (node.label?.toLowerCase().includes(word)) {
+          score += 20
+        }
+
+        // Match in role
+        if (node.role.toLowerCase().includes(word)) {
+          score += 5
+        }
+      }
+
+      // Boost by recency
+      const age = Date.now() - new Date(node.timestamp).getTime()
+      const recencyBoost = Math.max(0, 1 - age / (7 * 24 * 60 * 60 * 1000)) // Decay over 7 days
+      score += recencyBoost * 5
+
+      // Boost if labeled
+      if (node.label) {
+        score += 15
+      }
+
+      if (score > 0) {
+        results.push({
+          node,
+          score,
+          matchedText: matchedText || node.content.slice(0, 100),
+        })
+      }
+    }
+
+    // Sort by score
+    results.sort((a, b) => b.score - a.score)
+
+    return results.slice(0, maxResults)
+  }
+
+  // ── Filtering ─────────────────────────────────────────────────────────────
+
+  /**
+   * Filter nodes by criteria
+   */
+  filterNodes(options: {
+    role?: MessageRole
+    hasLabel?: boolean
+    label?: string
+    afterDate?: string
+    beforeDate?: string
+    hasChildren?: boolean
+    isLeaf?: boolean
+  }): MessageNode[] {
+    return Array.from(this.nodes.values()).filter(node => {
+      if (options.role && node.role !== options.role) return false
+      if (options.hasLabel && node.label === undefined) return false
+      if (options.label && node.label !== options.label) return false
+      if (options.afterDate && node.timestamp < options.afterDate) return false
+      if (options.beforeDate && node.timestamp > options.beforeDate) return false
+      if (options.hasChildren && node.children.length === 0) return false
+      if (options.isLeaf && node.children.length > 0) return false
+      return true
+    })
+  }
 }
 
 export interface TreeSessionData {
@@ -326,6 +460,7 @@ export interface SerializedMessageNode {
   children: string[]
   state: MessageState
   timestamp: string
+  label?: string
 }
 
 export interface SerializedMessageTree {
@@ -359,6 +494,7 @@ function serializeTree(tree: MessageTree): SerializedMessageTree {
       children: [...node.children],
       state: node.state,
       timestamp: node.timestamp,
+      label: node.label,
     })),
   }
 }
@@ -522,5 +658,126 @@ export class TreeSessionNavigator {
     if (!parent) return false
     const idx = parent.children.indexOf(current.id)
     return idx > 0
+  }
+
+  // ── Fuzzy Search ──────────────────────────────────────────────────────────
+
+  /**
+   * Fuzzy search across all nodes in the tree
+   */
+  search(query: string, maxResults?: number): Array<{
+    node: MessageNode
+    score: number
+    matchedText: string
+  }> {
+    return this.tree.fuzzySearch(query, { maxResults })
+  }
+
+  // ── Labels ────────────────────────────────────────────────────────────────
+
+  /**
+   * Set a label on the current node
+   */
+  setLabel(label: string): boolean {
+    return this.tree.setLabel(this.tree.activeNodeId, label)
+  }
+
+  /**
+   * Clear the label on the current node
+   */
+  clearLabel(): boolean {
+    return this.tree.setLabel(this.tree.activeNodeId, undefined)
+  }
+
+  /**
+   * Get all labeled nodes
+   */
+  getLabeledNodes(): MessageNode[] {
+    return this.tree.getLabeledNodes()
+  }
+
+  // ── Filtering ─────────────────────────────────────────────────────────────
+
+  /**
+   * Get nodes filtered by criteria
+   */
+  filterNodes(options: {
+    role?: MessageRole
+    hasLabel?: boolean
+    label?: string
+    afterDate?: string
+    beforeDate?: string
+  }): MessageNode[] {
+    return this.tree.filterNodes(options)
+  }
+
+  // ── Tree Info ─────────────────────────────────────────────────────────────
+
+  /**
+   * Get tree statistics
+   */
+  getStats(): {
+    totalNodes: number
+    leafNodes: number
+    branchCount: number
+    maxDepth: number
+    labeledNodes: number
+  } {
+    const leaves = this.tree.getLeafNodes()
+    const labeled = this.tree.getLabeledNodes()
+    
+    let maxDepth = 0
+    for (const leaf of leaves) {
+      const depth = this.tree.getDepth(leaf.id)
+      if (depth > maxDepth) maxDepth = depth
+    }
+
+    return {
+      totalNodes: this.tree.getNodeCount(),
+      leafNodes: leaves.length,
+      branchCount: this.tree.getBranchCount(),
+      maxDepth,
+      labeledNodes: labeled.length,
+    }
+  }
+
+  /**
+   * Get the current node info
+   */
+  getCurrentNode(): MessageNode | undefined {
+    return this.tree.getNode(this.tree.activeNodeId)
+  }
+
+  /**
+   * Check if a node is the current node
+   */
+  isCurrentNode(nodeId: string): boolean {
+    return nodeId === this.tree.activeNodeId
+  }
+
+  /**
+   * Get children of a node
+   */
+  getChildren(nodeId?: string): MessageNode[] {
+    const targetId = nodeId ?? this.tree.activeNodeId
+    const node = this.tree.getNode(targetId)
+    if (!node) return []
+    return node.children
+      .map(id => this.tree.getNode(id))
+      .filter((n): n is MessageNode => n !== undefined)
+  }
+
+  /**
+   * Get siblings of the current node
+   */
+  getSiblings(): MessageNode[] {
+    const current = this.tree.getNode(this.tree.activeNodeId)
+    if (!current?.parentId) return []
+    const parent = this.tree.getNode(current.parentId)
+    if (!parent) return []
+    return parent.children
+      .filter(id => id !== current.id)
+      .map(id => this.tree.getNode(id))
+      .filter((n): n is MessageNode => n !== undefined)
   }
 }

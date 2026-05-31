@@ -132,3 +132,211 @@ export { SessionManager, sessionManager };
 
 // Re-export SessionStore interface
 export type { SessionStore } from './types.js';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Enhanced Session Features (from harness.md implementation)
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Typed Errors
+export {
+  // Result type
+  type Result,
+  ok,
+  err,
+  getOrThrow,
+  getOrUndefined,
+  toError,
+  
+  // Error classes
+  FileError,
+  ExecutionError,
+  SessionError,
+  CompactionError,
+  BranchSummaryError,
+  AgentHarnessError,
+  
+  // Error codes
+  type FileErrorCode,
+  type ExecutionErrorCode,
+  type SessionErrorCode,
+  type CompactionErrorCode,
+  type BranchSummaryErrorCode,
+  type AgentHarnessErrorCode,
+  
+  // Normalization helpers
+  normalizeHarnessError,
+  normalizeHookError,
+} from './errors.js';
+
+// JSONL Storage
+export {
+  JsonlSessionStorage,
+  loadJsonlSessionMetadata,
+  PendingWriteQueue,
+  type SessionHeader,
+  type SessionTreeEntryBase,
+  type MessageEntry,
+  type ThinkingLevelChangeEntry,
+  type ModelChangeEntry,
+  type CompactionEntry,
+  type BranchSummaryEntry,
+  type CustomEntry,
+  type CustomMessageEntry,
+  type LabelEntry,
+  type SessionInfoEntry,
+  type LeafEntry,
+  type SessionTreeEntry,
+  type JsonlSessionMetadata,
+  type SessionContext,
+  type PendingWriteType,
+  type PendingSessionWrite,
+} from './jsonl-storage.js';
+
+// Session Repository
+export {
+  SessionRepo,
+  type SessionCreateOptions,
+  type SessionListOptions,
+  type SessionForkOptions,
+} from './session-repo.js';
+
+// Tree Navigation
+export {
+  TreeNavigator,
+  type TreePreparation,
+  type NavigateTreeResult,
+  type BranchSummaryOptions,
+  type BranchSummaryResult,
+} from './tree-navigation.js';
+
+// Advanced Features
+export {
+  // Thinking budgets
+  DEFAULT_THINKING_BUDGETS,
+  getThinkingBudget,
+  type ThinkingBudgets,
+  
+  // Prompt templates
+  formatPromptTemplateInvocation,
+  type PromptTemplate,
+  
+  // Skills
+  formatSkillInvocation,
+  formatSkillsForSystemPrompt,
+  type Skill,
+  
+  // Resource management
+  ResourceManager,
+  type ResourceProvenance,
+  
+  // Session summary
+  calculateSessionSummary,
+  type SessionSummary,
+} from './advanced-features.js';
+
+// Enhanced AgentHarness
+export {
+  AgentHarnessEnhanced,
+  createEnhancedAgentHarness,
+  type AgentHarnessPhase,
+  type ThinkingLevel,
+  type ToolExecutionMode,
+  type QueueMode,
+  type StreamFn,
+  type ModelConfig,
+  type StreamContext,
+  type StreamOptions,
+  type StreamChunk,
+  type AgentMessage,
+  type ToolCall,
+  type AgentTool,
+  type ToolUseContext,
+  type ToolResult,
+  type StreamOptionsPatch,
+  type LifecycleEvent,
+  type Skill as AgentSkill,
+  type PromptTemplate as AgentPromptTemplate,
+  type AgentHarnessResources,
+  type BeforeProviderRequestResult,
+  type BeforeProviderPayloadResult,
+  type ToolCallResult,
+  type ToolResultPatch,
+  type AbortResult,
+  type TurnSnapshot,
+} from '../engine/AgentHarnessEnhanced.js';
+
+// Session Facade
+export {
+  SessionFacade,
+  createSessionFacade,
+  type SessionFacadeReadOptions,
+  type SessionFacadeWriteOptions,
+} from './session-facade.js';
+
+// Enhanced Compaction
+export {
+  DEFAULT_COMPACTION_SETTINGS,
+  prepareCompaction,
+  generateCompactionSummary,
+  collectEntriesForBranchSummary,
+  generateBranchSummary,
+  type CompactionSettings,
+  type CompactionPreparation,
+  type FileOperations,
+  type CompactResult,
+  type SessionBeforeCompactEvent,
+  type SessionCompactEvent,
+  type SessionBeforeCompactResult,
+  type BranchSummaryOptions,
+  type BranchSummaryResult,
+} from './compaction-enhanced.js';
+
+// Durable Harness Recovery
+export {
+  DurableHarness,
+  createDurableHarness,
+  DEFAULT_DURABLE_HARNESS_CONFIG,
+  type DurableHarnessConfig,
+  type RecoveryContext,
+  type RecoveryResult,
+  type OperationType,
+  type DurableEntry,
+} from './durable-harness.js';
+
+// Provider Hooks
+export {
+  ProviderHooksManager,
+  providerHooks,
+  type ProviderRequestContext,
+  type StreamOptions,
+  type StreamOptionsPatch,
+  type ProviderRequestResult,
+  type ProviderPayloadContext,
+  type ProviderPayloadResult,
+  type ProviderResponseContext,
+  type ProviderHookType,
+  type ProviderHookEvent,
+  type ProviderHookHandler,
+} from './provider-hooks.js';
+
+// Turn Snapshot System
+export {
+  TurnSnapshotManager,
+  turnSnapshotManager,
+  compareSnapshots,
+  type TurnSnapshot,
+  type TurnSnapshotOptions,
+  type SnapshotDiff,
+} from './turn-snapshot.js';
+
+// Pending Write Queue
+export {
+  PendingWriteQueue,
+  WriteQueueFlushHandler,
+  createPendingWriteQueue,
+  createWriteQueueFlushHandler,
+  DEFAULT_PENDING_WRITE_CONFIG,
+  type PendingWriteType,
+  type PendingSessionWrite,
+  type PendingWriteQueueConfig,
+} from './pending-write-queue.js';

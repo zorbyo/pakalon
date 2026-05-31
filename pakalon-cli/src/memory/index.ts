@@ -6,6 +6,7 @@
  * - Team memory (shared)
  * - Memory scanning and relevance search
  * - Memory age tracking
+ * - Hindsight: retain/recall/reflect for session-to-session persistence
  */
 
 export * from './types.js'
@@ -23,6 +24,7 @@ export * from './vector-store.js'
 export * from './hybrid-adapter.js'
 export * from './extractMemories.js'
 export * from './autoDream.js'
+export * from './hindsight.js'
 
 import {
   type MemoryType,
