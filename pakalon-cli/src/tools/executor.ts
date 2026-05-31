@@ -1,5 +1,6 @@
 import { z } from "zod";
 import logger from "@/utils/logger.js";
+import { getToolHookManager } from "./tool-hooks.js";
 
 export type PermissionState = "allow" | "deny" | "ask";
 
@@ -75,25 +76,70 @@ export function createToolExecutor(config: ToolExecutorConfig = {}) {
     async execute<T extends z.ZodSchema>(
       tool: ToolDefinition<T>,
       args: z.infer<T>,
-      _context?: ToolContext
+      _context?: ToolContext,
+      sessionId?: string,
+      agentId?: string
     ): Promise<ExecutionResult> {
       const startTime = Date.now();
       let lastError: Error | null = null;
+      const hookManager = getToolHookManager();
+
+      // Run beforeToolCall hooks
+      const beforeResult = await hookManager.runBeforeToolCall({
+        toolName: tool.name,
+        args: args as Record<string, unknown>,
+        sessionId,
+        agentId,
+        timestamp: startTime,
+      });
+
+      // Check if hook denied execution
+      if (beforeResult.action === 'deny') {
+        return {
+          output: "",
+          error: beforeResult.reason ?? "Tool call denied by hook",
+          exitCode: 2,
+          tool: tool.name,
+          duration: Date.now() - startTime,
+        };
+      }
+
+      // Use modified args if provided
+      const finalArgs = beforeResult.action === 'modify' && beforeResult.modifiedArgs
+        ? beforeResult.modifiedArgs as z.infer<T>
+        : args;
 
       for (let attempt = 0; attempt <= maxRetries; attempt++) {
         try {
           const result = await Promise.race([
-            tool.execute(args),
+            tool.execute(finalArgs),
             new Promise<never>((_, reject) =>
               setTimeout(() => reject(new Error(`Tool execution timed out after ${timeout}ms`)), timeout)
             ),
           ]);
 
+          const output = typeof result === "string" ? result : JSON.stringify(result, null, 2);
+          const duration = Date.now() - startTime;
+
+          // Run afterToolCall hooks
+          const afterResult = await hookManager.runAfterToolCall({
+            toolName: tool.name,
+            args: finalArgs as Record<string, unknown>,
+            result,
+            isError: false,
+            durationMs: duration,
+            sessionId,
+            agentId,
+            timestamp: startTime,
+          });
+
           return {
-            output: typeof result === "string" ? result : JSON.stringify(result, null, 2),
+            output: afterResult.result !== undefined
+              ? (typeof afterResult.result === "string" ? afterResult.result : JSON.stringify(afterResult.result, null, 2))
+              : output,
             exitCode: 0,
             tool: tool.name,
-            duration: Date.now() - startTime,
+            duration,
           };
         } catch (err) {
           lastError = err instanceof Error ? err : new Error(String(err));
@@ -104,12 +150,26 @@ export function createToolExecutor(config: ToolExecutorConfig = {}) {
         }
       }
 
+      const errorDuration = Date.now() - startTime;
+
+      // Run afterToolCall hooks for error case
+      await hookManager.runAfterToolCall({
+        toolName: tool.name,
+        args: finalArgs as Record<string, unknown>,
+        result: null,
+        isError: true,
+        durationMs: errorDuration,
+        sessionId,
+        agentId,
+        timestamp: startTime,
+      });
+
       return {
         output: "",
         error: lastError?.message ?? "Unknown error",
         exitCode: 2,
         tool: tool.name,
-        duration: Date.now() - startTime,
+        duration: errorDuration,
       };
     },
 
@@ -117,32 +177,89 @@ export function createToolExecutor(config: ToolExecutorConfig = {}) {
       tool: ToolDefinition<T>,
       args: z.infer<T>,
       onChunk: (chunk: string) => void,
-      _context?: ToolContext
+      _context?: ToolContext,
+      sessionId?: string,
+      agentId?: string
     ): Promise<ExecutionResult> {
       const startTime = Date.now();
+      const hookManager = getToolHookManager();
+
+      // Run beforeToolCall hooks
+      const beforeResult = await hookManager.runBeforeToolCall({
+        toolName: tool.name,
+        args: args as Record<string, unknown>,
+        sessionId,
+        agentId,
+        timestamp: startTime,
+      });
+
+      // Check if hook denied execution
+      if (beforeResult.action === 'deny') {
+        return {
+          output: "",
+          error: beforeResult.reason ?? "Tool call denied by hook",
+          exitCode: 2,
+          tool: tool.name,
+          duration: Date.now() - startTime,
+        };
+      }
+
+      // Use modified args if provided
+      const finalArgs = beforeResult.action === 'modify' && beforeResult.modifiedArgs
+        ? beforeResult.modifiedArgs as z.infer<T>
+        : args;
 
       try {
+        let result: unknown;
         if (tool.executeStream) {
-          await tool.executeStream(args, onChunk);
+          await tool.executeStream(finalArgs, onChunk);
         } else {
-          const result = await tool.execute(args);
+          result = await tool.execute(finalArgs);
           onChunk(typeof result === "string" ? result : JSON.stringify(result));
         }
+
+        const duration = Date.now() - startTime;
+
+        // Run afterToolCall hooks
+        await hookManager.runAfterToolCall({
+          toolName: tool.name,
+          args: finalArgs as Record<string, unknown>,
+          result: result ?? null,
+          isError: false,
+          durationMs: duration,
+          sessionId,
+          agentId,
+          timestamp: startTime,
+        });
 
         return {
           output: "",
           exitCode: 0,
           tool: tool.name,
-          duration: Date.now() - startTime,
+          duration,
         };
       } catch (err) {
         const error = err instanceof Error ? err : new Error(String(err));
+        const duration = Date.now() - startTime;
+
+        // Run afterToolCall hooks for error case
+        await hookManager.runAfterToolCall({
+          toolName: tool.name,
+          args: finalArgs as Record<string, unknown>,
+          result: null,
+          isError: true,
+          durationMs: duration,
+          sessionId,
+          agentId,
+          timestamp: startTime,
+        });
+
         return {
           output: "",
           error: error.message,
           exitCode: 2,
           tool: tool.name,
-          duration: Date.now() - startTime,
+          duration,
         };
       }
     },

@@ -8,6 +8,7 @@ export * from "./executor.js";
 export { registerTool, getTool, getAllTools, getToolNames, getToolsByCategory, unregisterTool, clearRegistry, getToolMetadata } from "./registry.js";
 export * from "./permissions.js";
 export * from "./streaming.js";
+export * from "./tool-hooks.js";
 
 // In-process tool implementations (used by ai/tools.ts)
 export { executeBash, isSafeCommand, detectDangerousPatterns, isSelfKillCommand, getDestructiveWarnings } from "./bash.js";
@@ -161,6 +162,18 @@ export {
   DebugAdapter,
   debugToolDefinition,
 } from "./debug.js";
+
+// Image Analyzer Tool (vision AI analysis)
+export {
+  ImageAnalyzer,
+  getImageAnalyzer,
+  imageAnalyzerTool,
+  isSupportedImageFormat,
+  getImageMimeType,
+  getSupportedFormats,
+  type ImageAnalysisResult,
+  type ImageAnalyzerOptions,
+} from "./image-analyzer.js";
 
 // Hashline Tool (edit by content hash)
 export {

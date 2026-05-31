@@ -340,3 +340,18 @@ export {
   type PendingSessionWrite,
   type PendingWriteQueueConfig,
 } from './pending-write-queue.js';
+
+// Session Export to HTML
+export {
+  SessionHtmlExporter,
+  exportSessionToHtml,
+  type ExportOptions,
+} from './export-html.js';
+
+// Session Share via GitHub Gist
+export {
+  SessionGistSharer,
+  shareSessionAsGist,
+  type ShareOptions,
+  type ShareResult,
+} from './share-gist.js';

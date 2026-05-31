@@ -172,9 +172,10 @@ def create_app() -> FastAPI:
     app.include_router(system.router)
 
     if settings.is_selfhosted:
-        from app.routers import local
+        from app.routers import local, harness
 
         app.include_router(local.router)
+        app.include_router(harness.router)
     else:
         from app.routers import (
             admin,
@@ -186,6 +187,7 @@ def create_app() -> FastAPI:
             credits,
             dashboard,
             figma,
+            harness,
             media,
             models,
             notifications,
@@ -225,6 +227,7 @@ def create_app() -> FastAPI:
         app.include_router(automations.router)
         app.include_router(skills.router)
         app.include_router(security.router)
+        app.include_router(harness.router)
 
     # ── Global exception handler ──────────────────────────────
     @app.exception_handler(Exception)
