@@ -1,19 +1,55 @@
 <div align="center">
   <img src="pakalon-web/public/assets/Light_theme_TPBG.png" alt="Pakalon Logo" width="400">
-  
-  # Pakalon — AI-Powered CLI Code Editor
-  
-  > Build production-ready applications with one prompt. Pakalon is an AI-powered CLI that combines a streaming chat interface with a 6-phase autonomous build pipeline.
+
+  # Pakalon — AI-Powered CLI Code Editor (Self-Hosted)
+
+  > Build production-ready applications with one prompt. Pakalon is an AI-powered CLI that combines a streaming chat interface with a 6-phase autonomous build pipeline. **This README is for the self-hosted version — no cloud account, no login, fully local.**
 </div>
 
 ---
 
-## Quick Start
+## Quick Start (Self-Hosted)
+
+Self-hosted mode runs **completely offline** against your own LLM (Ollama or LM Studio). No GitHub OAuth, no Polar billing, no cloud telemetry.
 
 ```sh
-npm install -g pakalon
-pakalon
+# 1. Clone
+git clone https://github.com/Tarun-1516/Pakalon.git
+cd Pakalon
+
+# 2. Start a local LLM (pick one)
+#    Ollama:  https://ollama.com   (default: http://localhost:11434)
+ollama serve
+ollama pull llama3
+#    OR LM Studio: https://lmstudio.ai   (default: http://localhost:1234)
+#    Start the LM Studio application and load a model.
+
+# 3. Install the CLI
+cd pakalon-cli
+bun install
+bun run build
+
+# 4. Run
+bun run start
 ```
+
+The first time you launch, Pakalon auto-detects the self-hosted mode (no login prompt, no token window). Only local models are listed by `/models`.
+
+---
+
+## Self-Hosted vs Cloud
+
+| | Self-Hosted (this README) | Cloud |
+|---|---|---|
+| **Account required** | No | Yes (GitHub OAuth via Clerk) |
+| **Billing** | None | Polar, postpaid |
+| **Auth** | None | 6-digit device code |
+| **Models** | Ollama / LM Studio only | OpenRouter 550+ |
+| **Telemetry** | Local only | Sent to pakalon servers |
+| **Internet** | Optional | Required |
+| **Folder layout** | `.pakalon/` | `.pakalon-agents/` |
+
+> The application chooses between cloud and self-hosted **before** the login screen on the web UI. The CLI infers self-hosted by the presence of `~/.config/pakalon/selfhost.json` or the `--selfhost` flag.
 
 ---
 
@@ -23,7 +59,7 @@ Pakalon is an AI-powered code editor that operates in two main modes:
 
 ### 1. Normal Mode (Chat Mode)
 - Interactive streaming AI conversation
-- Plan, Edit, and Auto-accept modes
+- Plan, Edit, Auto-accept, Bypass modes
 - Real-time code generation and editing
 - No special initialization required
 
@@ -36,15 +72,15 @@ Pakalon is an AI-powered code editor that operates in two main modes:
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                      pakalon-web                            │
-│  Next.js · Tailwind · Supabase (GitHub OAuth) · Polar      │
-│  Marketing + Dashboard + Device Auth UI                     │
+│  Next.js · Tailwind                                          │
+│  Local dashboard + device code UI (optional)                │
 └─────────────────────────┬───────────────────────────────────┘
-                          │ HTTPS REST
+                          │ Optional HTTPS (skip in self-hosted)
                           ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    pakalon-backend                          │
-│  FastAPI · PostgreSQL · Redis · Supabase JWT                │
-│  Auth / Billing / Models / Telemetry                        │
+│  FastAPI · PostgreSQL · Redis                                │
+│  Auth / Billing / Models / Telemetry  (optional in self)    │
 └─────────────────────────┬───────────────────────────────────┘
                           │
                           ▼
@@ -52,7 +88,7 @@ Pakalon is an AI-powered code editor that operates in two main modes:
 │                    pakalon-cli                              │
 │  TypeScript · Bun · Ink TUI · Zustand · Drizzle ORM        │
 │                                                             │
-│  Chat mode → streams to OpenRouter                          │
+│  Chat mode → streams to local Ollama / LM Studio            │
 │  Agent mode → 6-phase autonomous build                     │
 │                                                             │
 │  Phase 1  Planning — research + Q&A + plan files           │
@@ -70,21 +106,13 @@ Pakalon is an AI-powered code editor that operates in two main modes:
 
 ### When Pakalon-Agents is NOT Initialized (Normal Mode)
 
-In this mode, Pakalon operates as a standard AI chat interface:
-
 | Feature | Description |
 |---------|-------------|
 | **Chat Mode** | Interactive streaming AI conversation |
 | **Plan Mode** | Switch to planning mode (`/plan`) |
 | **Edit Mode** | Switch to code editing mode (`/edit`) |
 | **Auto-accept Mode** | All tool calls automatically accepted |
-| **Bypass Mode** | YOLO mode - AI handles everything |
-
-**Use Cases:**
-- Quick code generation and editing
-- Exploring codebases
-- Getting explanations and suggestions
-- One-off tasks and experiments
+| **Bypass Mode** | YOLO mode — AI handles everything |
 
 ### When Pakalon-Agents is Initialized (Agent Mode)
 
@@ -95,8 +123,6 @@ pakalon
 /pakalon "Build a SaaS dashboard with Next.js and PostgreSQL"
 ```
 
-**Phase Structure:**
-
 | Phase | Name | Description |
 |-------|------|-------------|
 | 1 | Planning & Requirements | Research, Q&A, plan files, context management |
@@ -106,178 +132,169 @@ pakalon
 | 5 | Deployment | CI/CD, GitHub Actions, PR creation |
 | 6 | Documentation | API docs, README, CHANGELOG |
 
+---
+
+## Local Model Setup (Required for Self-Hosted)
+
+### Option A: Ollama
+
+```sh
+# 1. Install from https://ollama.com
+# 2. Start the server
+ollama serve
+# 3. Pull a model
+ollama pull llama3
+# 4. (Optional) Pull more
+ollama pull qwen2.5-coder:32b
+ollama pull deepseek-r1:14b
+```
+
+### Option B: LM Studio
+
+1. Download from https://lmstudio.ai
+2. Open the app and load a model
+3. Start the local server (default: `http://localhost:1234`)
+
+### Pakalon CLI — Local Model Commands
+
+```bash
+# List all local models (auto-detected from Ollama + LM Studio)
+pakalon local-models
+
+# Check provider health
+pakalon local-models status
+
+# Set default local model
+pakalon local-models set-default ollama:llama3
+
+# Start the chat (with --selfhost flag for explicit self-hosted mode)
+pakalon --selfhost
+```
 
 ---
 
-## Installation Options
+## Installation
 
-### Cloud Version (Recommended)
+### Prerequisites (Self-Hosted)
 
-```bash
-# Install globally
-npm install -g pakalon
+| Tool | Min Version | Required? |
+|------|-------------|-----------|
+| **Bun** | 1.0+ | Yes — for CLI build |
+| **Node.js** | 20+ | Optional — fallback runtime |
+| **Ollama** or **LM Studio** | Latest | Yes — for LLM |
+| **Docker** | Latest | Optional — for Penpot (Phase 2) and SAST/DAST (Phase 4) |
+| **Git** | 2.x | Yes — for Phase 5 PR creation |
 
-# Or with bun
-bun install -g pakalon
+### CLI Build
 
-# Start the application
-pakalon
-```
-
-**Requirements:** Node.js 20+ or Bun 1.0+
-
-### Self-Hosted Version
-
-For users who want to run Pakalon locally without cloud dependencies:
-
-```bash
-# Clone the repository
-git clone https://github.com/pakalon/pakalon.git
-cd pakalon
-
-# Setup backend (optional - for full features)
-cd pakalon-backend
-cp .env.example .env
-# Edit .env with your credentials
-docker compose up -d
-uv venv && uv sync
-uv run alembic upgrade head
-uv run uvicorn app.main:app --reload --port 8000
-
-# Setup web interface (optional - for dashboard)
-cd ../pakalon-web
-pnpm install
-pnpm dev
-
-# Build and run CLI (required)
-cd ../pakalon-cli
+```sh
+cd pakalon-cli
 bun install
 bun run build
 bun run start
 ```
 
-**Self-Hosted Features:**
-- Connect to local Ollama/LM Studio models
-- No cloud authentication required
-- Full offline capability
-- Custom API endpoints
-- Pure TypeScript - no Python required for CLI
+### Optional: Backend (for dashboard / advanced features)
 
-### Local Model Support
+The CLI works **without the backend** in self-hosted mode. Add it only if you want a local dashboard:
 
-Pakalon supports local LLM models via Ollama and LM Studio:
-
-```bash
-# Start Ollama (default: http://localhost:11434)
-ollama serve
-
-# Start LM Studio (default: http://localhost:1234)
-# Start the LM Studio application
-
-# List available local models
-pakalon local-models
-
-# Check provider status
-pakalon local-models status
-
-# Set default local model
-pakalon local-models set-default ollama:llama3
+```sh
+cd pakalon-backend
+cp .env.example .env
+# Edit .env (most fields can stay blank in self-hosted mode)
+docker compose up -d          # PostgreSQL + Redis
+uv venv && uv sync
+uv run alembic upgrade head
+uv run uvicorn app.main:app --reload --port 8000
 ```
 
----
+### Optional: Web UI
 
-## Features
-
-### Core Features
-
-| Feature | Description |
-|---------|-------------|
-| **AI Chat** | Streaming AI conversation with model selection |
-| **Code Editing** | Real-time code generation and modification |
-| **Plan Mode** | Planning and architecture discussions |
-| **Undo** | Revert code changes with `/undo` |
-| **Sessions** | Save and resume conversations |
-| **Multi-session** | Run multiple sessions simultaneously |
-| **Voice Input** | Voice-to-text transcription |
-| **Context Window** | Token usage tracking and optimization |
-
-### Agent Features
-
-| Feature | Description |
-|---------|-------------|
-| **6-Phase Pipeline** | Autonomous build from planning to deployment |
-| **Human-in-Loop** | Approval checkpoints at each phase |
-| **YOLO Mode** | Fully autonomous - no user intervention |
-| **Sub-agents** | Specialized agents for frontend, backend, testing |
-| **Auditor** | Code review and quality assurance |
-| **Security Scanning** | SAST/DAST with 15+ tools |
-| **CI/CD** | GitHub Actions workflow generation |
-| **Documentation** | Auto-generated API docs and README |
-
-### Integration Features
-
-| Feature | Description |
-|---------|-------------|
-| **Penpot** | Wireframe design and sync |
-| **Figma** | Import Figma designs |
-| **Telegram** | Connect via Telegram bot |
-| **MCP Servers** | Model Context Protocol integration |
-| **Browser Automation** | Playwright and Chrome DevTools |
-| **Web Scraping** | Firecrawl and agent browser |
-
-### Billing & Models
-
-| Feature | Description |
-|---------|-------------|
-| **Free Tier** | 30 days full access, then free models only |
-| **Pro Plan** | Access to all models, pay-per-use |
-| **OpenRouter** | 550+ AI models available |
-| **Auto Model Selection** | Automatic model optimization |
-| **Token Tracking** | Usage analytics and cost management |
+```sh
+cd pakalon-web
+pnpm install
+pnpm dev
+```
 
 ---
 
 ## Commands Reference
 
-### Top-Level Commands
+### Top-Level Commands (Self-Hosted)
 
 ```bash
-pakalon [message]              # Start interactive chat
-pakalon --version              # Show version
-pakalon --help                 # Show help
-pakalon login                  # Authenticate (device code flow)
-pakalon logout                 # Remove credentials
-pakalon doctor                 # System requirements check
-pakalon install                # Install dependencies
-pakalon init                   # Initialize .pakalon/ config
-pakalon /pakalon <prompt>      # Launch 6-phase agentic builder
+pakalon                          # Start interactive chat
+pakalon --version                # Show version
+pakalon --help                   # Show help
+pakalon --selfhost               # Force self-hosted mode
+pakalon doctor                   # System requirements check
+pakalon install                  # Install dependencies
+pakalon init                     # Initialize .pakalon/ config
+pakalon local-models             # Manage local LLM models
+pakalon /pakalon "<prompt>"      # Launch 6-phase agentic builder
 ```
 
 ### Slash Commands (Inside Chat)
 
 | Command | Description |
 |---------|-------------|
-| `/pakalon` | Initialize agent mode |
+| `/init` | Initialize `.pakalon/` folder with `skills.md` |
+| `/pakalon` | Initialize agent mode (creates `.pakalon-agents/`) |
 | `/plan` | Switch to Plan mode |
 | `/edit` | Switch to Edit mode |
-| `/undo` | Undo last code change |
+| `/undo` | Undo last code/conversation change |
 | `/compact` | Compact conversation context |
 | `/clear` | Clear chat history |
 | `/sessions` | Browse saved sessions |
 | `/resume` | Resume previous session |
-| `/new` | Create new session |
-| `/models` | List available models |
+| `/resume <session_id>` | Resume a specific session |
+| `/session` | List sessions in current project |
+| `/new` | Start a new session |
+| `/history` | Show prompts + line-changes history |
+| `/models` | List available models (local-only in self-hosted) |
 | `/agents` | Manage agent teams |
+| `/auditor` | Run code audit (loops Phase 3 ↔ Auditor until clean) |
+| `/update` | Apply design changes (e.g. `/update navbar rounded`) |
 | `/penpot` | Open Penpot design tool |
 | `/connect` | Connect Telegram bot |
-| `/auditor` | Run code audit |
-| `/update` | Apply design changes |
-| `/ans` | Q&A without interrupting agent |
-| `/multi-session` | Manage multiple sessions |
-| `/local-models` | Manage local LLM models |
-| `/automations` | Manage automation workflows |
+| `/connect-end` | Disconnect Telegram bot |
+| `/ans` | Side Q&A without interrupting running agent |
+| `/multi-session` | Multi-session manager with blinking indicators |
+| `/local-models` | Manage local LLM models (alias of `pakalon local-models`) |
+| `/automations` | Manage automation workflows (cron + GitHub + Slack) |
+| `/workflows` | List saved workflows |
+| `/plugins` | Manage plugins |
+| `/phase-1` | Run only Phase 1 (planning + Q&A) |
+| `/phase-2` | Run only Phase 2 (wireframes + Penpot) |
+| `/phase-3` | Run only Phase 3 (5 sub-agents + auditor) |
+| `/phase-4` | Run only Phase 4 (SAST/DAST + security tests) |
+| `/phase-5` | Run only Phase 5 (CI/CD + GitHub PR) |
+| `/phase-6` | Run only Phase 6 (documentation) |
+| `/web` | Web command (search a URL and act on it) |
+| `/directory` | Directory management |
+| `@<agent-name>` | Mention an agent in chat |
 | `/help` | Show available commands |
 | `/exit` or `q` | Quit |
+
+### CLI Flags (Self-Hosted)
+
+```bash
+--selfhost                     # Force self-hosted mode (skip cloud checks)
+--add-dir <dir>...             # Add directories to agent scope
+--allowed-tools <tools>...     # Whitelist tools for this session
+--disallowed-tools <tools>...  # Blacklist tools for this session
+--max-budget-usd <amount>      # Cap session spend (0 for unlimited in self-host)
+--model <model>                # Override default model
+--fallback-model <model>       # Fallback model if primary fails
+--mcp-config <configs>...      # MCP server config
+--permission-mode <mode>       # plan | edit | auto-accept | bypass-permissions
+--session-id <uuid>            # Resume specific session
+--settings <file-or-json>      # Apply settings file
+--tools <tools>...             # Restrict available tools
+--verbose                      # Verbose output
+-v, --version                  # Show version
+-h, --help                     # Show help
+```
 
 ### Keyboard Shortcuts
 
@@ -288,93 +305,192 @@ pakalon /pakalon <prompt>      # Launch 6-phase agentic builder
 | `Ctrl+C` | Cancel stream / Quit |
 | `Ctrl+U` | Clear input |
 | `Ctrl+O` | Toggle verbose panel |
-| `Tab` | Cycle through modes (Chat / Plan / Edit) |
+| `Tab` | Cycle through modes (Plan / Edit / Auto-accept / Bypass) |
+| `Shift+Tab` | Toggle model thinking |
 | `↑ / ↓` | Browse input history |
+| `Ctrl+P` | Toggle privacy mode (no telemetry) |
+
+---
+
+## Project Layout
+
+### `.pakalon/` (Normal Mode)
+
+```
+.pakalon/
+├── agents/
+│   └── skills.md
+├── plan.md
+├── task.md
+├── user-stories.md
+└── context-management.md
+```
+
+### `.pakalon-agents/` (Agent Mode — initialized by `/pakalon`)
+
+```
+.pakalon-agents/
+└── ai-agents/
+    ├── sync.js                          # Penpot sync bridge
+    ├── phase-1/
+    │   ├── context_management.md
+    │   ├── plan.md
+    │   ├── tasks.md
+    │   ├── design.md
+    │   ├── phase-1.md
+    │   ├── agent-skills.md
+    │   ├── prd.md
+    │   ├── Database_schema.md
+    │   ├── API_reference.md
+    │   ├── risk-assessment.md
+    │   ├── user-stories.md
+    │   ├── technical-spec.md
+    │   ├── competitive-analysis.md
+    │   └── constraints-and-tradeoffs.md
+    ├── phase-2/
+    │   ├── phase-2.md
+    │   ├── Wireframe_generated.svg
+    │   ├── Wireframe_generated.json
+    │   ├── Wireframe_generated.penpot
+    │   └── tdd-screenshots/
+    ├── phase-3/
+    │   ├── auditor.md
+    │   ├── subagent-1.md                 # Frontend
+    │   ├── subagent-2.md                 # Backend
+    │   ├── subagent-3.md                 # Integration
+    │   ├── subagent-4.md                 # Debug + test
+    │   ├── subagent-5.md                 # Review
+    │   ├── execution_log.md
+    │   └── test-evidence/
+    ├── phase-4/
+    │   ├── subagent-1.md                 # SAST
+    │   ├── subagent-2.md                 # DAST
+    │   ├── subagent-3.md                 # Code review
+    │   ├── subagent-4.md                 # CI/CD review
+    │   ├── subagent-5.md                 # Cyber best-practices
+    │   ├── blackbox_testing.xml
+    │   └── whitebox_testing.xml
+    ├── phase-5/
+    │   └── phase-5.md
+    ├── phase-6/
+    │   └── phase-6.md
+    ├── mcp-servers/
+    ├── wireframes/
+    └── pakalon.db
+```
 
 ---
 
 ## Configuration
 
-### Environment Variables
+### Environment Variables (Self-Hosted — all optional)
 
 ```bash
-# Backend
-SUPABASE_URL=your_supabase_url
-SUPABASE_ANON_KEY=your_anon_key
-DATABASE_URL=your_database_url
-JWT_SECRET=your_jwt_secret
-OPENROUTER_MASTER_KEY=your_openrouter_key
+# Local LLM endpoints (auto-detected by default)
+OLLAMA_HOST=http://localhost:11434
+LMSTUDIO_HOST=http://localhost:1234
 
-# Optional
+# Optional: skip cloud checks even if remote is reachable
+PAKALON_SELFHOST=1
+
+# Optional: enable privacy mode (no telemetry at all)
+PAKALON_PRIVACY=1
+
+# Optional: Penpot (only needed for Phase 2 wireframes)
 PENPOT_HOST=http://localhost:3449
 PENPOT_API_TOKEN=your_penpot_token
 ```
 
-### Configuration Files
+### User Config
 
 ```
 ~/.config/pakalon/
-├── storage.json          # Authentication tokens
+├── storage.json          # Local auth state (empty in self-hosted)
 ├── settings.json         # User preferences
+├── selfhost.json         # Self-host marker file
 ├── telegram.json         # Telegram bot config
 ├── local-models.json     # Local model settings
 └── debug.log             # Debug logs (if enabled)
 ```
 
-### Project Configuration
+### Project Config
 
 ```
 .pakalon/
-├── plan.md               # Project context
-├── spec.md               # Technical specifications
-├── CLAUDE.md             # Agent instructions
+├── plan.md
+├── spec.md
+├── CLAUDE.md
 ├── settings.local.json   # Local permissions
 └── phase-N.md            # Phase outputs
 ```
 
 ---
 
-## Security Tools
+## Privacy Mode (Self-Hosted Default)
 
-Pakalon includes 15+ security tools for comprehensive testing:
+Self-hosted mode **disables all cloud telemetry by default**. The machine IDs (`telemetry.machineId`, `macMachineId`, `devDeviceId`) are still generated locally for session continuity but are never sent off-device.
 
-### Static Analysis (SAST)
-- **Semgrep** - Multi-language code scanning
-- **Gitleaks** - Secret detection
-- **Bandit** - Python security
-- **ESLint** - Code quality
-
-### Dynamic Analysis (DAST)
-- **OWASP ZAP** - Web application scanner
-- **Nikto** - Web server scanner
-- **SQLMap** - SQL injection testing
-- **Nmap** - Network scanner
+To explicitly enable privacy mode:
 
 ```bash
-# Run baseline security scans
+pakalon --privacy
+# or toggle in chat with Ctrl+P
+```
+
+To reset local machine IDs (creates a "new machine" locally, useful for clean slate):
+
+```bash
+pakalon privacy reset-machine-id
+# or use Ctrl+Shift+P > "Fake Pakalon" if mapped in your editor
+```
+
+---
+
+## Local Sandbox
+
+For larger builds, Pakalon spins up a local Docker sandbox for the first run and testing. The sandbox is **only active when `.pakalon-agents` is initialized** (Agent Mode). After Phase 4 confirms no errors/bugs/vulnerabilities, the sandbox is torn down and the code moves to your local project folder.
+
+```bash
+# Sandbox is auto-managed. To inspect:
+docker ps | grep pakalon-sandbox
+```
+
+---
+
+## Security Tools (Self-Hosted)
+
+Self-hosted mode runs the free-tier security toolset by default. To run the full suite (Pro), use the security compose profile:
+
+```bash
 cd pakalon-cli
 docker compose -f docker-compose.security.yml up -d
-
-# Run full security suite
 docker compose -f docker-compose.security.yml --profile full up -d
 ```
+
+### Static Analysis (SAST) — included
+- Semgrep
+- SonarQube Community
+- Gitleaks
+- Bandit
+- FindSecBugs
+- Brakeman
+- ESLint with security plugins
+
+### Dynamic Analysis (DAST) — included
+- OWASP ZAP
+- Nikto
+- sqlmap
+- Wapiti
+- XSStrike
+- nmap
 
 ---
 
 ## Architecture Details
 
-### Authentication Flow
-
-1. User runs `pakalon login`
-2. Backend generates 6-digit device code
-3. User opens `https://pakalon.com/auth/device`
-4. User enters code and signs in with GitHub
-5. Backend validates and issues JWT
-6. JWT stored in `~/.config/pakalon/storage.json`
-
 ### Agent Pipeline (Pure TypeScript)
 
-The entire agent pipeline runs in **pure TypeScript** — no Python required:
+The entire agent pipeline runs in **pure TypeScript** — no Python required for the CLI:
 
 ```
 User Prompt → Phase 1 (Planning) → Phase 2 (Wireframes)
@@ -387,77 +503,31 @@ Phase 5 (CI/CD) → Phase 6 (Documentation) → Complete
 - **Phase 1**: Research, Q&A, plan files, context management
 - **Phase 2**: Penpot wireframes, TDD verification
 - **Phase 3**: 5 sub-agents for frontend, backend, integration, debugging, review
-- **Phase 4**: SAST/DAST security scanning with 15+ tools
+- **Phase 4**: SAST/DAST security scanning with the free-tier toolset
 - **Phase 5**: GitHub Actions workflows, PR creation
 - **Phase 6**: Auto-generated documentation
 
 ### Token Management
 
-- **Context Window**: Tracks token usage per session
+- **Context Window**: Tracks token usage per session (local only in self-hosted)
 - **Auto-Compact**: Automatically compacts when nearing limits
 - **Budget Allocation**: Tokens allocated per phase with 10% buffer
 - **Model Selection**: Automatic model optimization based on task
 
 ---
 
-## Deployment
-
-### Docker Deployment
-
-```bash
-# Build backend image
-cd pakalon-backend
-docker build -t pakalon-backend .
-
-# Run with production settings
-docker run -d \
-  -p 8000:8000 \
-  --env-file .env \
-  --name pakalon-backend \
-  pakalon-backend
-```
-
-### Cloud Deployment
-
-```bash
-# Deploy to Vercel/Netlify
-cd pakalon-web
-pnpm build
-# Connect repository to Vercel/Netlify
-
-# Deploy backend to AWS/GCP/Azure
-docker tag pakalon-backend your-registry/pakalon-backend:latest
-docker push your-registry/pakalon-backend:latest
-```
-
-### CLI Distribution
-
-```bash
-# Build standalone binary
-cd pakalon-cli
-bun run build
-
-# Publish to npm
-npm publish
-
-# Or distribute binary directly
-./dist/index.js
-```
-
----
-
 ## Troubleshooting
-
-### Common Issues
 
 | Problem | Solution |
 |---------|----------|
 | Bun not found | Install Bun: `curl -fsSL https://bun.sh/install \| bash` |
-| Port 8000 in use | Change port: `--port 8001` |
-| Database connection failed | Check PostgreSQL: `docker ps` |
-| Missing environment variables | Copy `.env.example` to `.env` |
-| Docker not running | Docker only needed for Penpot (Phase 2) |
+| `ollama: command not found` | Install from https://ollama.com |
+| `connection refused` on `localhost:11434` | Run `ollama serve` in another terminal |
+| Port 8000 in use (optional backend) | Change port: `--port 8001` |
+| Docker not running | Docker only needed for Penpot (Phase 2) and SAST/DAST (Phase 4) |
 | Build fails | Run `bun install` then `bun run build` |
+| `models list is empty` in `/models` | Verify Ollama/LM Studio is running and Pakalon can reach it |
+| Phase 2 needs Penpot | `docker run -d -p 3449:3449 penpot/penpot` |
 
 ### Debug Mode
 
@@ -469,52 +539,44 @@ pakalon --debug
 tail -f ~/.config/pakalon/debug.log
 ```
 
-### Privacy Mode
-
-```bash
-# Enable privacy mode (no data storage)
-pakalon --privacy
-
-# Or toggle with Ctrl+P in chat
-```
-
 ---
 
 ## FAQ
 
-**Can I use Pakalon without a Pro plan?**
-Yes — free users get 30 days of full access. After that, free models remain accessible.
+**Can I use Pakalon self-hosted without an account?**
+Yes — that's the default. No GitHub OAuth, no email, no telemetry.
 
-**How do I use it in CI/CD?**
-Set `PAKALON_TOKEN` env var to your JWT, then run `pakalon setup-token` or pass `--token` flag.
+**How do I add more local models?**
+Pull them with Ollama (`ollama pull <model>`) or load them in LM Studio. They appear automatically in `/models`.
 
-**What AI models are supported?**
-Pakalon supports 550+ models via OpenRouter, including GPT-4, Claude, Gemini, and local models via Ollama/LM Studio.
+**Can I switch between self-hosted and cloud?**
+Yes. Run `pakalon --selfhost` for self-hosted, or `pakalon login` to link a cloud account. The choice is per-session.
 
-**Can I run Pakalon offline?**
-Yes — with local models via Ollama/LM Studio, Pakalon works completely offline.
+**What AI models are supported in self-hosted?**
+Anything that speaks the Ollama API or LM Studio's OpenAI-compatible API. That includes Llama, Qwen, DeepSeek, Mistral, Phi, Gemma, CodeLlama, and any other local model.
 
-**How do I connect Telegram?**
-Run `/connect` in chat, enter your bot token, and Pakalon will bridge to Telegram.
+**Do I need Docker?**
+Only if you want Penpot wireframes (Phase 2) or the SAST/DAST security suite (Phase 4). Everything else runs natively.
 
-**Is Python required?**
-No — Pakalon CLI is built entirely in TypeScript with Bun. No Python installation is needed.
+**Is the project open source?**
+Yes — MIT. See [LICENSE](LICENSE).
 
 ---
 
 ## Additional Resources
 
-- **Backend README:** `./pakalon-backend/README.md`
+- **Backend README:** `./pakalon-backend/README.md` (cloud features; optional in self-host)
 - **CLI README:** `./pakalon-cli/README.md`
-- **Web README:** `./pakalon-web/README.md`
+- **Web README:** `./pakalon-web/README.md` (cloud features; optional in self-host)
 - **Penpot Docs:** https://penpot.app/docs
-- **FastAPI Docs:** https://fastapi.tiangolo.com/
-- **Next.js Docs:** https://nextjs.org/docs
+- **Ollama:** https://ollama.com
+- **LM Studio:** https://lmstudio.ai
+- **Bun:** https://bun.sh
 
 ---
 
 <div align="center">
   <img src="pakalon-web/public/assets/Dark_theme_TPBG.png" alt="Pakalon Logo" width="200">
-  
+
   **MIT © Pakalon**
 </div>
