@@ -71,6 +71,11 @@ import {
   sendMessageSchema,
 } from "@/tools/team-tools.js";
 import { executeREPLTool, replToolSchema } from "@/tools/repl-tool.js";
+import { EnterWorktreeTool } from "@/tools/enter-worktree-tool/EnterWorktreeTool.js";
+import { ExitWorktreeTool } from "@/tools/exit-worktree-tool/ExitWorktreeTool.js";
+import { SyntheticOutputTool } from "@/tools/synthetic-output-tool/SyntheticOutputTool.js";
+import { RemoteTriggerTool } from "@/tools/remote-trigger-tool/RemoteTriggerTool.js";
+import { DESCRIPTION as RemoteTriggerToolDescription } from "@/tools/remote-trigger-tool/prompt.js";
 import { scrapeUrl } from "@/scrape/scraper.js";
 import { webSearch } from "@/search/web.js";
 import { kvGet, kvSet } from "@/memory/kv-store.js";
@@ -1264,6 +1269,30 @@ export const replTool = tool({
     "Supports persistent contexts, history inspection, and safe evaluation with timeouts.",
   inputSchema: replToolSchema,
   execute: async (input) => executeREPLTool(input),
+});
+
+export const syntheticOutputTool = tool({
+  description: "Return structured output in the requested format.",
+  inputSchema: SyntheticOutputTool.inputSchema,
+  execute: async (input) => SyntheticOutputTool.call(input as never, {} as never),
+});
+
+export const remoteTriggerTool = tool({
+  description: RemoteTriggerToolDescription,
+  inputSchema: RemoteTriggerTool.inputSchema,
+  execute: async (input) => RemoteTriggerTool.call(input as never, {} as never),
+});
+
+export const enterWorktreeTool = tool({
+  description: EnterWorktreeTool.description,
+  inputSchema: EnterWorktreeTool.inputSchema,
+  execute: async (input) => EnterWorktreeTool.call(input as never, {} as never),
+});
+
+export const exitWorktreeTool = tool({
+  description: ExitWorktreeTool.description,
+  inputSchema: ExitWorktreeTool.inputSchema,
+  execute: async (input) => ExitWorktreeTool.call(input as never, {} as never),
 });
 
 // ---------------------------------------------------------------------------
@@ -3959,6 +3988,10 @@ export const allTools: ToolSet = {
   notebookRead: notebookReadTool,
   notebookEdit: notebookEditTool,
   repl: replTool,
+  syntheticOutput: syntheticOutputTool,
+  remoteTrigger: remoteTriggerTool,
+  EnterWorktree: enterWorktreeTool,
+  ExitWorktree: exitWorktreeTool,
 
   // User interaction
   askUser: askUserTool,
