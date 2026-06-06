@@ -3,7 +3,7 @@
 import uuid
 from datetime import datetime, timezone
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String
+from sqlalchemy import DateTime, Float, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -48,6 +48,8 @@ class ModelUsage(Base):
     context_window_used: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     # Lines of code written (estimated from completion delta)
     lines_written: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    # Cost in USD for this inference call (used by billing service)
+    cost_usd: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,

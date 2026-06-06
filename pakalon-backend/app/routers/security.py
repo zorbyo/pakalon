@@ -9,12 +9,16 @@ Provides:
 - Injection detection logs
 """
 
+import logging
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Depends, Query
+from fastapi import APIRouter, Body, HTTPException, Depends, Query
 from pydantic import BaseModel, Field
 import datetime
 
 from ..dependencies import get_current_user, get_db
+from app.models.user import User
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/security", tags=["security"])
 
@@ -268,7 +272,7 @@ async def reset_budget(
 
 @router.post("/injection/check", response_model=InjectionDetectionResponse)
 async def check_injection(
-    input_text: str = Field(..., description="Input text to check"),
+    input_text: str = Body(..., description="Input text to check"),
     current_user: dict = Depends(get_current_user),
     db=Depends(get_db),
 ):

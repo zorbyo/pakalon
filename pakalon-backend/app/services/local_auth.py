@@ -20,7 +20,7 @@ import sqlite3
 import json
 from pathlib import Path
 
-from ..config import settings
+from ..config import get_settings
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Types
@@ -546,6 +546,7 @@ def get_auth_service() -> LocalAuthService:
     global _auth_service
     if _auth_service is None:
         # Check if self-hosted mode is enabled
+        settings = get_settings()
         backend = getattr(settings, "AUTH_BACKEND", "sqlite")
         _auth_service = LocalAuthService(backend=backend)
     return _auth_service
