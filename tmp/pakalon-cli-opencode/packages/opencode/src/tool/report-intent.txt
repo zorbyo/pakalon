@@ -1,0 +1,7 @@
+Report your planned actions before executing them. Use this tool at the start of complex tasks to communicate your plan to the user, improving transparency and allowing the user to course-correct before work begins.
+
+Best practices:
+- Use this BEFORE making changes to explain what you intend to do
+- Be specific about which files will be modified and how
+- Break complex tasks into numbered steps
+- This helps the user understand and potentially redirect your approach

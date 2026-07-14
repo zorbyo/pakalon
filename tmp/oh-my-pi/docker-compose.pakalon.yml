@@ -1,0 +1,104 @@
+# Pakalon Core Services
+# Start with: docker compose -f docker-compose.pakalon.yml up -d
+# Stop with:  docker compose -f docker-compose.pakalon.yml down
+#
+# These services are OPTIONAL and only needed for specific phases:
+#   - Mem0:    Phase 1 memory persistence (stateful conversation tracking)
+#   - Penpot:  Phase 2 & 3 wireframe/UI design tool
+#   - Firecrawl: Phase 1 research web scraping
+#
+# Pin image tags for production use.
+
+version: "3.8"
+
+services:
+  # ─── Mem0: Stateful Memory ───────────────────────────────────────
+  # Used by Phase 1 for persistent Q&A memory across sessions.
+  # API: http://localhost:8001
+  mem0:
+    image: mem0/mem0:latest # Pin to a specific version for production
+    container_name: pakalon-mem0
+    ports:
+      - "8001:8000"
+    volumes:
+      - mem0-data:/app/data
+    restart: unless-stopped
+    environment:
+      - MEM0_CONFIG_PATH=/app/data/config.yaml
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ─── Penpot: Design & Wireframes ────────────────────────────────
+  # Used by Phase 2 & 3 for wireframe generation and visual editing.
+  # UI: http://localhost:9001
+  penpot-frontend:
+    image: penpotapp/frontend:latest # Pin to a specific version for production
+    container_name: pakalon-penpot-frontend
+    ports:
+      - "9001:80"
+    volumes:
+      - penpot-assets:/opt/data/assets
+    environment:
+      - PENPOT_FLAGS=enable-registration enable-login-with-password
+    depends_on:
+      - penpot-backend
+    restart: unless-stopped
+
+  penpot-backend:
+    image: penpotapp/backend:latest # Pin to a specific version for production
+    container_name: pakalon-penpot-backend
+    volumes:
+      - penpot-data:/opt/data
+    environment:
+      - PENPOT_FLAGS=enable-registration enable-login-with-password
+      - PENPOT_PUBLIC_URI=http://localhost:9001
+      - PENPOT_STORAGE_ASSETS_FS_DIRECTORY=/opt/data/assets
+      - PENPOT_DATABASE_URI=postgresql://penpot:penpot@penpot-db:5432/penpot
+      - PENPOT_REDIS_URI=redis://penpot-redis:6379
+    depends_on:
+      - penpot-db
+      - penpot-redis
+    restart: unless-stopped
+
+  penpot-db:
+    image: postgres:16-alpine
+    container_name: pakalon-penpot-db
+    volumes:
+      - penpot-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=penpot
+      - POSTGRES_PASSWORD=penpot
+      - POSTGRES_DB=penpot
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U penpot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  penpot-redis:
+    image: redis:7-alpine
+    container_name: pakalon-penpot-redis
+    restart: unless-stopped
+
+  # ─── Firecrawl: Web Scraping ─────────────────────────────────────
+  # Used by Phase 1 for web research and data gathering.
+  # API: http://localhost:3002
+  firecrawl:
+    image: firecrawl/firecrawl:latest # Pin to a specific version for production
+    container_name: pakalon-firecrawl
+    ports:
+      - "3002:3002"
+    environment:
+      - FIRECRAWL_API_KEY=${FIRECRAWL_API_KEY:-}
+      - FIRECRAWL_RATE_LIMIT=10
+    restart: unless-stopped
+
+volumes:
+  mem0-data:
+  penpot-assets:
+  penpot-data:
+  penpot-db-data:

@@ -1,0 +1,6 @@
+Check the current progress of a background agent or subagent task. Use this tool to monitor what a subagent is currently doing, including its intent, completed tool calls, and current status.
+
+This is useful for:
+- Checking if a long-running subtask is still in progress
+- Understanding what tools a subagent has used so far
+- Getting a summary of work done by a background agent

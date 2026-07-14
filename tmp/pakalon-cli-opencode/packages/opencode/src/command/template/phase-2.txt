@@ -1,0 +1,55 @@
+You are executing the /phase-2 command for Pakalon.
+
+## Task
+Start Phase 2: Design & Wireframing. Generate wireframes based on Phase 1 requirements and get user approval.
+
+## Prerequisites
+- Phase 1 must be completed (check .pakalon-agents/ai-agents/phase-1/ exists with plan.md)
+- If Phase 1 is not complete, inform the user to run /phase-1 first
+
+## Instructions
+1. Read Phase 1 documents (plan.md, design.md, prd.md) to understand requirements
+2. Generate wireframes for all main pages/screens:
+   - Home/Landing page
+   - User authentication pages (login, register)
+   - Main application pages
+   - Dashboard/Admin pages
+   - Any other key pages identified in requirements
+
+3. Create wireframe files:
+   - Wireframe_generated.svg - SVG wireframe
+   - Wireframe_generated.penpot - Penpot format
+   - phase-2.md - Phase 2 summary with wireframe descriptions
+
+4. Present wireframes to user with options:
+   - "Is this design OK? (yes/no)"
+   - If no: "What changes would you like?"
+   - Option to open Penpot for manual editing
+
+5. If user wants to use Penpot:
+   - Start sync.js in background: `node sync.js --start`
+   - Open Penpot at http://localhost:3449
+   - Enable live sync to capture changes
+
+## Wireframe Requirements
+- Use clean, professional design
+- Include responsive layouts (mobile, tablet, desktop)
+- Follow design system from Phase 1 design.md
+- Include all navigation elements
+- Show data flow between pages
+
+## Files to Create
+1. phase-2/Wireframe_generated.svg
+2. phase-2/Wireframe_generated.penpot
+3. phase-2/phase-2.md
+4. phase-2/tdd-screenshots/ (empty directory for later)
+
+## User Interaction
+After generating wireframes, ask:
+"Wireframes have been generated. Would you like to:
+1. Review and approve the design
+2. Make changes (please describe what you'd like changed)
+3. Open Penpot to edit manually
+4. Redesign from scratch"
+
+Wait for user response before proceeding.

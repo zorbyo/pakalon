@@ -1,0 +1,59 @@
+Send a message to another agent or the team.
+
+Use this tool to communicate with other agents in a multi-agent setup.
+
+**PARAMETERS:**
+- to: Recipient identifier
+  - Agent name: Send to a specific agent
+  - "*": Broadcast to all teammates
+- summary: A 5-10 word summary shown as a preview in the UI
+- message: The message content (string or structured message)
+
+**MESSAGE TYPES:**
+
+Plain text message:
+```
+to: "agent-1"
+summary: "Status update on task"
+message: "I've completed the file changes."
+```
+
+Shutdown request:
+```
+to: "team-lead"
+message: { type: "shutdown_request", reason: "Task complete" }
+```
+
+Shutdown response:
+```
+to: "agent-1"
+message: { 
+  type: "shutdown_response", 
+  request_id: "req-123", 
+  approve: true, 
+  reason: "Approved" 
+}
+```
+
+**EXAMPLES:**
+
+Send status update to team lead:
+```
+to: "team-lead"
+summary: "Database migration complete"
+message: "Finished migrating all user tables to the new schema."
+```
+
+Broadcast to all agents:
+```
+to: "*"
+summary: "Dependency update needed"
+message: "Please update the lodash dependency before proceeding."
+```
+
+Request feedback:
+```
+to: "reviewer"
+summary: "Code review needed"
+message: "Please review the changes in src/auth/login.ts"
+```

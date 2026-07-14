@@ -1,0 +1,37 @@
+List available MCP (Model Context Protocol) resources.
+
+Use this tool to discover available resources from connected MCP servers.
+
+**USAGE:**
+
+List all resources:
+```
+(no parameters needed)
+```
+
+Filter by server:
+```
+server: "my-mcp-server"
+```
+
+**OUTPUT:**
+Returns a list of resources with:
+- uri: Resource URI
+- name: Human-readable name
+- description: Resource description
+- mimeType: Content MIME type
+- server: Source MCP server
+
+**EXAMPLES:**
+
+List all resources:
+```
+{}
+```
+
+List resources from specific server:
+```
+server: "database-server"
+```
+
+The output can be used with ReadMcpResource to fetch the actual content.

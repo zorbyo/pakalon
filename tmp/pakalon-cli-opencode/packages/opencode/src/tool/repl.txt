@@ -1,0 +1,52 @@
+Execute code in an interactive REPL (Read-Eval-Print-Loop) environment.
+
+**SUPPORTED LANGUAGES:**
+- JavaScript/Node.js
+- Python
+- TypeScript (via ts-node)
+
+**USAGE:**
+Provide code to execute in the specified language. The REPL maintains state across calls within the same session.
+
+**PARAMETERS:**
+- language: The programming language to use (javascript, python, typescript)
+- code: The code to execute
+- reset: Optional. Set to true to reset the REPL state
+
+**EXAMPLES:**
+
+Execute JavaScript:
+```
+language: "javascript"
+code: "const x = 5; console.log(x * 2);"
+```
+
+Execute Python:
+```
+language: "python"
+code: "import math; print(math.sqrt(16))"
+```
+
+Define a function and call it later:
+```
+language: "javascript"
+code: "function greet(name) { return `Hello, ${name}!`; }"
+```
+
+Then in a subsequent call:
+```
+language: "javascript"
+code: "console.log(greet('World'));"
+```
+
+Reset REPL state:
+```
+language: "javascript"
+reset: true
+```
+
+**NOTES:**
+- State persists within the same session
+- Each language has its own isolated REPL context
+- Imports and definitions carry over between calls
+- Use reset to start fresh if needed

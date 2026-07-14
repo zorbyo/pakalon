@@ -1,0 +1,464 @@
+{
+  "$schema": "registry-v1",
+  "entries": [
+    {
+      "id": "shadcn/button",
+      "name": "shadcn/ui Button",
+      "url": "https://ui.shadcn.com/r/styles/default/button.json",
+      "semantic": "accessible button with primary, secondary, ghost, outline and destructive variants",
+      "snippet": "import { Button } from \"@/components/ui/button\";\n\n<Button variant=\"default\">Click me</Button>",
+      "imports": ["@radix-ui/react-slot", "class-variance-authority", "clsx", "tailwind-merge"],
+      "tags": ["button", "form", "interactive", "shadcn"]
+    },
+    {
+      "id": "shadcn/dialog",
+      "name": "shadcn/ui Dialog (Modal)",
+      "url": "https://ui.shadcn.com/r/styles/default/dialog.json",
+      "semantic": "accessible modal dialog with overlay, header, footer, and trigger primitives",
+      "snippet": "import { Dialog, DialogContent, DialogTrigger } from \"@/components/ui/dialog\";\n\n<Dialog>\n  <DialogTrigger>Open</DialogTrigger>\n  <DialogContent>Hello</DialogContent>\n</Dialog>",
+      "imports": ["@radix-ui/react-dialog"],
+      "tags": ["modal", "dialog", "overlay", "shadcn"]
+    },
+    {
+      "id": "shadcn/card",
+      "name": "shadcn/ui Card",
+      "url": "https://ui.shadcn.com/r/styles/default/card.json",
+      "semantic": "card container with header, title, description, content and footer sections",
+      "snippet": "import { Card, CardHeader, CardTitle, CardContent } from \"@/components/ui/card\";",
+      "imports": [],
+      "tags": ["card", "container", "shadcn"]
+    },
+    {
+      "id": "shadcn/input",
+      "name": "shadcn/ui Input",
+      "url": "https://ui.shadcn.com/r/styles/default/input.json",
+      "semantic": "accessible form input with consistent styling and focus states",
+      "snippet": "import { Input } from \"@/components/ui/input\";",
+      "imports": [],
+      "tags": ["input", "form", "shadcn"]
+    },
+    {
+      "id": "shadcn/select",
+      "name": "shadcn/ui Select",
+      "url": "https://ui.shadcn.com/r/styles/default/select.json",
+      "semantic": "accessible select dropdown with searchable option list, powered by Radix",
+      "snippet": "import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\";\n\n<Select>\n  <SelectTrigger><SelectValue placeholder=\"Theme\" /></SelectTrigger>\n  <SelectContent>\n    <SelectItem value=\"light\">Light</SelectItem>\n    <SelectItem value=\"dark\">Dark</SelectItem>\n  </SelectContent>\n</Select>",
+      "imports": ["@radix-ui/react-select", "class-variance-authority", "clsx", "tailwind-merge", "lucide-react"],
+      "tags": ["select", "dropdown", "form", "shadcn"]
+    },
+    {
+      "id": "shadcn/table",
+      "name": "shadcn/ui Table",
+      "url": "https://ui.shadcn.com/r/styles/default/table.json",
+      "semantic": "accessible data table with header, body, row, cell semantic markup",
+      "snippet": "import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"@/components/ui/table\";",
+      "imports": [],
+      "tags": ["table", "data", "grid", "shadcn"]
+    },
+    {
+      "id": "shadcn/badge",
+      "name": "shadcn/ui Badge",
+      "url": "https://ui.shadcn.com/r/styles/default/badge.json",
+      "semantic": "small badge or pill indicator with secondary, outline, and destructive variants",
+      "snippet": "import { Badge } from \"@/components/ui/badge\";\n\n<Badge variant=\"outline\">New</Badge>",
+      "imports": ["class-variance-authority", "clsx", "tailwind-merge"],
+      "tags": ["badge", "pill", "status", "shadcn"]
+    },
+    {
+      "id": "shadcn/dropdown-menu",
+      "name": "shadcn/ui Dropdown Menu",
+      "url": "https://ui.shadcn.com/r/styles/default/dropdown-menu.json",
+      "semantic": "accessible dropdown menu with items, separators, checkboxes, radio groups, and sub-menus",
+      "snippet": "import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\";",
+      "imports": ["@radix-ui/react-dropdown-menu", "class-variance-authority", "clsx", "tailwind-merge", "lucide-react"],
+      "tags": ["dropdown", "menu", "context-menu", "shadcn"]
+    },
+    {
+      "id": "shadcn/tabs",
+      "name": "shadcn/ui Tabs",
+      "url": "https://ui.shadcn.com/r/styles/default/tabs.json",
+      "semantic": "accessible tabbed interface with content panels triggered by tab list",
+      "snippet": "import { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\";\n\n<Tabs defaultValue=\"account\">\n  <TabsList><TabsTrigger value=\"account\">Account</TabsTrigger></TabsList>\n  <TabsContent value=\"account\">...</TabsContent>\n</Tabs>",
+      "imports": ["@radix-ui/react-tabs", "class-variance-authority", "clsx", "tailwind-merge"],
+      "tags": ["tabs", "navigation", "panels", "shadcn"]
+    },
+    {
+      "id": "shadcn/toast",
+      "name": "shadcn/ui Toast (Sonner)",
+      "url": "https://ui.shadcn.com/r/styles/default/sonner.json",
+      "semantic": "toast notification system with success, error, info, loading variants and action buttons",
+      "snippet": "import { toast } from \"sonner\";\n\n<Toaster position=\"top-right\" />\ntoast.success(\"Saved!\");",
+      "imports": ["sonner", "lucide-react"],
+      "tags": ["toast", "notification", "alert", "shadcn"]
+    },
+    {
+      "id": "magicui/dock",
+      "name": "Magic UI Dock",
+      "url": "https://magicui.design/docs/components/dock",
+      "semantic": "macOS-style dock with magnification effect on hover, perfect for toolbars",
+      "snippet": "import { Dock, DockIcon } from \"@/components/magicui/dock\";",
+      "imports": ["framer-motion", "lucide-react"],
+      "tags": ["dock", "toolbar", "macos", "magicui"]
+    },
+    {
+      "id": "magicui/shimmer-button",
+      "name": "Magic UI Shimmer Button",
+      "url": "https://magicui.design/docs/components/shimmer-button",
+      "semantic": "button with animated shimmer effect, great for CTAs",
+      "snippet": "import { ShimmerButton } from \"@/components/magicui/shimmer-button\";",
+      "imports": ["framer-motion"],
+      "tags": ["button", "shimmer", "magicui", "cta"]
+    },
+    {
+      "id": "magicui/marquee",
+      "name": "Magic UI Marquee",
+      "url": "https://magicui.design/docs/components/marquee",
+      "semantic": "horizontal scrolling marquee animation for logos, testimonials, or infinite carousels",
+      "snippet": "import { Marquee } from \"@/components/magicui/marquee\";",
+      "imports": ["framer-motion"],
+      "tags": ["marquee", "carousel", "animation", "magicui"]
+    },
+    {
+      "id": "magicui/particles",
+      "name": "Magic UI Particles",
+      "url": "https://magicui.design/docs/components/particles",
+      "semantic": "animated particle background effect for hero sections and landing pages",
+      "snippet": "import { Particles } from \"@/components/magicui/particles\";\n\n<Particles className=\"absolute inset-0\" quantity={100} />",
+      "imports": ["framer-motion"],
+      "tags": ["particles", "background", "hero", "magicui"]
+    },
+    {
+      "id": "spline/embed",
+      "name": "Spline 3D Embed",
+      "url": "https://spline.design/",
+      "semantic": "embed interactive 3D scenes from Spline into a React component",
+      "snippet": "import Spline from '@splinetool/react-spline';\n\n<Spline scene=\"https://prod.spline.design/<id>/scene.splinecode\" />",
+      "imports": ["@splinetool/react-spline", "@splinetool/runtime"],
+      "tags": ["3d", "spline", "interactive", "hero"]
+    },
+    {
+      "id": "r3f/globe",
+      "name": "React Three Fiber Globe",
+      "url": "https://github.com/vasturiano/react-three-globe",
+      "semantic": "interactive 3D globe with arc animations, perfect for hero sections",
+      "snippet": "import Globe from 'react-globe.gl';",
+      "imports": ["react-globe.gl", "three"],
+      "tags": ["3d", "globe", "r3f", "hero"]
+    },
+    {
+      "id": "tailwindflex/navbar",
+      "name": "Tailwind Flex Responsive Navbar",
+      "url": "https://tailwindflex.com/@tailwindflex/navbar-1",
+      "semantic": "responsive top navigation with mobile drawer and CTA",
+      "snippet": "<nav class=\"flex items-center justify-between px-6 py-3 border-b\">...</nav>",
+      "imports": [],
+      "tags": ["navbar", "navigation", "tailwind"]
+    },
+    {
+      "id": "preline/datepicker",
+      "name": "Preline Datepicker",
+      "url": "https://preline.co/docs/datepicker.html",
+      "semantic": "accessible datepicker with range support and inline calendar",
+      "snippet": "<input type=\"text\" class=\"py-3 px-4 block w-full border\" data-datepicker />",
+      "imports": ["preline"],
+      "tags": ["datepicker", "form", "preline"]
+    },
+    {
+      "id": "shadcnstudio/hero-gradient",
+      "name": "shadcnstudio Hero Gradient",
+      "url": "https://shadcnstudio.com/theme/components/hero",
+      "semantic": "modern hero section with gradient background, headline, sub-copy, and CTA buttons",
+      "snippet": "<section class=\"relative isolate overflow-hidden bg-gradient-to-b from-primary/10 to-background py-24\">...</section>",
+      "imports": [],
+      "tags": ["hero", "landing", "shadcnstudio"]
+    },
+    {
+      "id": "tweakcn/buttons",
+      "name": "Tweakcn Button Variants",
+      "url": "https://tweakcn.com/editor/theme",
+      "semantic": "theming for button variants and component-level design tokens",
+      "snippet": "// tweakcn theme export applied via tailwind.config.ts",
+      "imports": ["tailwindcss"],
+      "tags": ["theme", "tweakcn", "design-tokens"]
+    },
+    {
+      "id": "daisyui/hero",
+      "name": "DaisyUI Hero",
+      "url": "https://daisyui.com/components/hero/",
+      "semantic": "hero block with content + image side-by-side responsive layout",
+      "snippet": "<div class=\"hero min-h-screen\"><div class=\"hero-content\">...</div></div>",
+      "imports": ["daisyui"],
+      "tags": ["hero", "daisyui", "landing"]
+    },
+    {
+      "id": "daisyui/modal",
+      "name": "DaisyUI Modal",
+      "url": "https://daisyui.com/components/modal/",
+      "semantic": "responsive modal dialog with backdrop blur, custom sizing, and interactive close behavior",
+      "snippet": "<dialog id=\"my_modal\" class=\"modal\">\n  <div class=\"modal-box\">\n    <h3 class=\"font-bold text-lg\">Hello!</h3>\n    <div class=\"modal-action\"><form method=\"dialog\"><button class=\"btn\">Close</button></form></div>\n  </div>\n</dialog>",
+      "imports": ["daisyui"],
+      "tags": ["modal", "dialog", "daisyui", "overlay"]
+    },
+    {
+      "id": "daisyui/tabs",
+      "name": "DaisyUI Tabs",
+      "url": "https://daisyui.com/components/tab/",
+      "semantic": "tabbed navigation with bottom-border active indicator, optional icons and various sizes",
+      "snippet": "<div role=\"tablist\" class=\"tabs tabs-bordered\">\n  <a role=\"tab\" class=\"tab tab-active\">Tab 1</a>\n  <a role=\"tab\" class=\"tab\">Tab 2</a>\n</div>",
+      "imports": ["daisyui"],
+      "tags": ["tabs", "navigation", "daisyui"]
+    },
+    {
+      "id": "reactbits/animated-text",
+      "name": "React Bits Animated Text",
+      "url": "https://www.reactbits.dev/text-animations",
+      "semantic": "split-text reveal animation triggered on scroll, perfect for headlines",
+      "snippet": "import SplitText from 'react-bits/SplitText';",
+      "imports": ["framer-motion"],
+      "tags": ["text", "animation", "reactbits"]
+    },
+    {
+      "id": "reactbits/particles",
+      "name": "React Bits Particles",
+      "url": "https://www.reactbits.dev/particles",
+      "semantic": "interactive particle system with mouse tracking for immersive backgrounds",
+      "snippet": "import Particles from 'react-bits/Particles';",
+      "imports": [],
+      "tags": ["particles", "background", "interactive", "reactbits"]
+    },
+    {
+      "id": "reactbits/carousel",
+      "name": "React Bits Carousel",
+      "url": "https://www.reactbits.dev/carousel",
+      "semantic": "performant image carousel with touch/swipe support, autoplay, and responsive breakpoints",
+      "snippet": "import Carousel from 'react-bits/Carousel';",
+      "imports": [],
+      "tags": ["carousel", "slider", "gallery", "reactbits"]
+    },
+    {
+      "id": "aceternity/sparkles",
+      "name": "Aceternity Sparkles",
+      "url": "https://ui.aceternity.com/components/sparkles",
+      "semantic": "animated sparkle particle effect for hero headings and decorative elements",
+      "snippet": "import { SparklesCore } from \"@/components/ui/sparkles\";\n\n<SparklesCore id=\"tsparticles\" background=\"transparent\" minSize={0.6} maxSize={1.4} particleColor=\"#000\" />",
+      "imports": ["framer-motion", "tsparticles"],
+      "tags": ["sparkles", "particles", "hero", "aceternity"]
+    },
+    {
+      "id": "aceternity/spotlight",
+      "name": "Aceternity Spotlight",
+      "url": "https://ui.aceternity.com/components/spotlight",
+      "semantic": "animated gradient spotlight effect that follows mouse movement, ideal for hero sections",
+      "snippet": "import { Spotlight } from \"@/components/ui/spotlight\";\n\n<Spotlight className=\"-top-40 left-0 md:left-60 md:-top-20\" fill=\"white\" />",
+      "imports": ["framer-motion"],
+      "tags": ["spotlight", "gradient", "hero", "aceternity"]
+    },
+    {
+      "id": "aceternity/moving-border",
+      "name": "Aceternity Moving Border",
+      "url": "https://ui.aceternity.com/components/moving-border",
+      "semantic": "animated gradient border that rotates around a card or button container",
+      "snippet": "import { MovingBorder } from \"@/components/ui/moving-border\";\n\n<MovingBorder duration={3000} rx=\"30%\" ry=\"30%\">\n  <button>Explore</button>\n</MovingBorder>",
+      "imports": ["framer-motion", "class-variance-authority"],
+      "tags": ["border", "animation", "card", "aceternity"]
+    },
+    {
+      "id": "aceternity/lamp",
+      "name": "Aceternity Lamp",
+      "url": "https://ui.aceternity.com/components/lamp",
+      "semantic": "lamp-shaped gradient light effect that illuminates text below, for dramatic hero headings",
+      "snippet": "import { LampContainer } from \"@/components/ui/lamp\";\n\n<LampContainer>\n  <h1 className=\"text-5xl font-bold\">Build products</h1>\n</LampContainer>",
+      "imports": ["framer-motion"],
+      "tags": ["lamp", "light", "hero", "aceternity"]
+    },
+    {
+      "id": "aceternity/floating-dock",
+      "name": "Aceternity Floating Dock",
+      "url": "https://ui.aceternity.com/components/floating-dock",
+      "semantic": "floating macOS-style dock with tooltip labels on hover, for app navigation",
+      "snippet": "import { FloatingDock } from \"@/components/ui/floating-dock\";\n\n<FloatingDock items={[{ title: \"Home\", icon: <Home />, href: \"/\" }]} />",
+      "imports": ["framer-motion", "lucide-react"],
+      "tags": ["dock", "navigation", "floating", "aceternity"]
+    },
+    {
+      "id": "tremor/card",
+      "name": "Tremor Card",
+      "url": "https://tremor.so/docs/components/ui-card",
+      "semantic": "dashboard card with header, content, footer sections and decorative accent bar",
+      "snippet": "import { Card, Title, Text, Metric } from \"@tremor/react\";\n\n<Card className=\"max-w-sm\">\n  <Title>Sales</Title>\n  <Metric>$12,699</Metric>\n  <Text>+5.4% from last month</Text>\n</Card>",
+      "imports": ["@tremor/react"],
+      "tags": ["card", "dashboard", "metric", "tremor"]
+    },
+    {
+      "id": "tremor/chart",
+      "name": "Tremor Chart",
+      "url": "https://tremor.so/docs/components/chart-area",
+      "semantic": "area, line, bar and donut chart components with responsive sizing and tooltips",
+      "snippet": "import { AreaChart } from \"@tremor/react\";\n\n<AreaChart data={data} index=\"date\" categories={[\"Sales\"]} valueFormatter={(v) => `$${v}`} />",
+      "imports": ["@tremor/react", "recharts"],
+      "tags": ["chart", "dashboard", "analytics", "tremor"]
+    },
+    {
+      "id": "tremor/table",
+      "name": "Tremor Table",
+      "url": "https://tremor.so/docs/components/table",
+      "semantic": "data table with sorting, pagination, row selection, and numeric formatting",
+      "snippet": "import { Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell } from \"@tremor/react\";",
+      "imports": ["@tremor/react"],
+      "tags": ["table", "data", "dashboard", "tremor"]
+    },
+    {
+      "id": "radix-ui/dropdown-menu",
+      "name": "Radix UI Dropdown Menu",
+      "url": "https://www.radix-ui.com/primitives/docs/components/dropdown-menu",
+      "semantic": "unstyled accessible dropdown menu root primitive with keyboard navigation",
+      "snippet": "import * as DropdownMenu from \"@radix-ui/react-dropdown-menu\";\n\n<DropdownMenu.Root>\n  <DropdownMenu.Trigger>Options</DropdownMenu.Trigger>\n  <DropdownMenu.Content>\n    <DropdownMenu.Item>Edit</DropdownMenu.Item>\n  </DropdownMenu.Content>\n</DropdownMenu.Root>",
+      "imports": ["@radix-ui/react-dropdown-menu"],
+      "tags": ["dropdown", "menu", "primitive", "radix"]
+    },
+    {
+      "id": "radix-ui/tooltip",
+      "name": "Radix UI Tooltip",
+      "url": "https://www.radix-ui.com/primitives/docs/components/tooltip",
+      "semantic": "unstyled accessible tooltip primitive with show delay, side, alignment, and arrow",
+      "snippet": "import * as Tooltip from \"@radix-ui/react-tooltip\";\n\n<Tooltip.Provider>\n  <Tooltip.Root>\n    <Tooltip.Trigger>Hover</Tooltip.Trigger>\n    <Tooltip.Content side=\"top\">Tooltip text</Tooltip.Content>\n  </Tooltip.Root>\n</Tooltip.Provider>",
+      "imports": ["@radix-ui/react-tooltip"],
+      "tags": ["tooltip", "primitive", "popover", "radix"]
+    },
+    {
+      "id": "radix-ui/accordion",
+      "name": "Radix UI Accordion",
+      "url": "https://www.radix-ui.com/primitives/docs/components/accordion",
+      "semantic": "unstyled accessible accordion with collapsible panels, single/multi mode, and animation",
+      "snippet": "import * as Accordion from \"@radix-ui/react-accordion\";\n\n<Accordion.Root type=\"single\" collapsible>\n  <Accordion.Item value=\"item-1\">\n    <Accordion.Header><Accordion.Trigger>Section 1</Accordion.Trigger></Accordion.Header>\n    <Accordion.Content>Content</Accordion.Content>\n  </Accordion.Item>\n</Accordion.Root>",
+      "imports": ["@radix-ui/react-accordion"],
+      "tags": ["accordion", "collapsible", "primitive", "radix"]
+    },
+    {
+      "id": "mantine/app-shell",
+      "name": "Mantine App Shell",
+      "url": "https://mantine.dev/core/app-shell/",
+      "semantic": "responsive app shell layout with navbar, header, aside, and footer with responsive breakpoints",
+      "snippet": "import { AppShell, Navbar, Header, Text } from \"@mantine/core\";\n\n<AppShell padding=\"md\" navbar={{ width: 300, breakpoint: \"sm\" }} header={{ height: 60 }}>\n  <AppShell.Header><Text>Header</Text></AppShell.Header>\n  <AppShell.Navbar>Nav</AppShell.Navbar>\n  <AppShell.Main>Content</AppShell.Main>\n</AppShell>",
+      "imports": ["@mantine/core", "@mantine/hooks"],
+      "tags": ["layout", "shell", "app", "mantine"]
+    },
+    {
+      "id": "mantine/notifications",
+      "name": "Mantine Notifications",
+      "url": "https://mantine.dev/core/notifications/",
+      "semantic": "notification system with toast queue, auto-close, customizable position, and action buttons",
+      "snippet": "import { notifications } from \"@mantine/notifications\";\n\nnotifications.show({ title: \"Success\", message: \"Saved!\", color: \"green\" });",
+      "imports": ["@mantine/core", "@mantine/notifications"],
+      "tags": ["notifications", "toast", "alert", "mantine"]
+    },
+    {
+      "id": "sonner/toast",
+      "name": "Sonner Toast",
+      "url": "https://sonner.emilkowal.ski/",
+      "semantic": "minimalist toast notification system with swipe-to-dismiss, promise toasts, and rich formatting",
+      "snippet": "import { Toaster, toast } from \"sonner\";\n\n<Toaster richColors position=\"top-right\" />\ntoast.success(\"Data saved\");\ntoast.promise(saveFn, { loading: \"Saving...\", success: \"Done\", error: \"Failed\" });",
+      "imports": ["sonner"],
+      "tags": ["toast", "notification", "sonner"]
+    },
+    {
+      "id": "vaul/drawer",
+      "name": "Vaul Drawer",
+      "url": "https://vaul.emilkowal.ski/",
+      "semantic": "mobile-first drawer component with drag-to-dismiss, snap points, and scrollable content",
+      "snippet": "import { Drawer, DrawerContent, DrawerTrigger } from \"vaul\";\n\n<Drawer.Root>\n  <Drawer.Trigger>Open</Drawer.Trigger>\n  <DrawerContent>\n    <div className=\"mx-auto w-12 h-1.5 rounded-full bg-zinc-300\" />\n    <div className=\"p-4\">Content</div>\n  </DrawerContent>\n</Drawer.Root>",
+      "imports": ["vaul"],
+      "tags": ["drawer", "sheet", "mobile", "vaul"]
+    },
+    {
+      "id": "recharts/line-chart",
+      "name": "Recharts Line Chart",
+      "url": "https://recharts.org/en-US/api/LineChart",
+      "semantic": "responsive line chart component with axes, tooltips, legends, and multiple series",
+      "snippet": "import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from \"recharts\";\n\n<ResponsiveContainer width=\"100%\" height={300}>\n  <LineChart data={data}>\n    <CartesianGrid strokeDasharray=\"3 3\" />\n    <XAxis dataKey=\"name\" />\n    <Tooltip />\n    <Line type=\"monotone\" dataKey=\"pv\" stroke=\"#8884d8\" />\n  </LineChart>\n</ResponsiveContainer>",
+      "imports": ["recharts"],
+      "tags": ["chart", "line", "data-viz", "recharts"]
+    },
+    {
+      "id": "motion/animation",
+      "name": "Motion (Framer Motion)",
+      "url": "https://motion.dev/docs/react-quick-start",
+      "semantic": "declarative animation primitives for enter/exit, layout, scroll-driven, and gesture animations",
+      "snippet": "import { motion, AnimatePresence } from \"motion/react\";\n\n<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} />",
+      "imports": ["motion"],
+      "tags": ["animation", "motion", "framer", "gesture"]
+    },
+    {
+      "id": "cmdk/command",
+      "name": "cmdk (Command Menu)",
+      "url": "https://cmdk.paco.me/",
+      "semantic": "fast, composable command palette with fuzzy search, keyboard navigation, and groups",
+      "snippet": "import { Command } from \"cmdk\";\n\n<Command label=\"Command Menu\">\n  <Command.Input placeholder=\"Search...\" />\n  <Command.List>\n    <Command.Group heading=\"Actions\">\n      <Command.Item onSelect={() => console.log(\"selected\")}>New File</Command.Item>\n    </Command.Group>\n  </Command.List>\n</Command>",
+      "imports": ["cmdk"],
+      "tags": ["command", "palette", "search", "keyboard"]
+    },
+    {
+      "id": "tanstack/table",
+      "name": "TanStack Table",
+      "url": "https://tanstack.com/table/latest",
+      "semantic": "headless table with sorting, filtering, pagination, column ordering, row selection, and virtualization",
+      "snippet": "import { useReactTable, getCoreRowModel, flexRender, createColumnHelper } from \"@tanstack/react-table\";\n\nconst table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });",
+      "imports": ["@tanstack/react-table"],
+      "tags": ["table", "data-grid", "sorting", "tanstack"]
+    },
+    {
+      "id": "tanstack/form",
+      "name": "TanStack Form",
+      "url": "https://tanstack.com/form/latest",
+      "semantic": "type-safe headless form library with validation, field arrays, async submission, and React/solid adapters",
+      "snippet": "import { useForm } from \"@tanstack/react-form\";\n\nconst form = useForm({ defaultValues: { name: \"\" }, onSubmit: async ({ value }) => console.log(value) });",
+      "imports": ["@tanstack/react-form"],
+      "tags": ["form", "validation", "tanstack"]
+    },
+    {
+      "id": "input-otp/input",
+      "name": "Input OTP",
+      "url": "https://input-otp.rodz.dev/",
+      "semantic": "one-time-password input with auto-focus, paste, backspace navigation, and segmented display",
+      "snippet": "import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\";\n\n<InputOTP maxLength={6} onChange={(v) => console.log(v)}>\n  <InputOTPGroup>\n    {Array.from({ length: 6 }).map((_, i) => <InputOTPSlot key={i} index={i} />)}\n  </InputOTPGroup>\n</InputOTP>",
+      "imports": ["input-otp"],
+      "tags": ["otp", "input", "form", "verification"]
+    },
+    {
+      "id": "embla/carousel",
+      "name": "Embla Carousel",
+      "url": "https://www.embla-carousel.com/",
+      "semantic": "high-performance carousel with infinite scroll, autoplay, parallax, and RTL support",
+      "snippet": "import useEmblaCarousel from \"embla-carousel-react\";\n\nconst [emblaRef] = useEmblaCarousel({ loop: true, autoplay: true });\n<div className=\"overflow-hidden\" ref={emblaRef}>\n  <div className=\"flex\">{slides}</div>\n</div>",
+      "imports": ["embla-carousel-react", "embla-carousel-autoplay"],
+      "tags": ["carousel", "slider", "embla", "gallery"]
+    },
+    {
+      "id": "sandpack/code-editor",
+      "name": "Sandpack Code Editor",
+      "url": "https://sandpack.codesandbox.io/",
+      "semantic": "in-browser code editor with syntax highlighting, live preview, multi-file support, and bundler",
+      "snippet": "import { Sandpack } from \"@codesandbox/sandpack-react\";\n\n<Sandpack template=\"react\" theme=\"dark\" files={{ \"/App.tsx\": \"export default function App() { return <h1>Hello</h1>; }\" }} />",
+      "imports": ["@codesandbox/sandpack-react", "@codesandbox/sandpack-themes"],
+      "tags": ["editor", "code", "sandbox", "sandpack"]
+    },
+    {
+      "id": "zag-js/dialog",
+      "name": "Zag.js Dialog",
+      "url": "https://zagjs.com/components/react/dialog",
+      "semantic": "headless dialog state machine with open/close, focus trap, scroll lock, and dismiss on escape",
+      "snippet": "import { useDialog, DialogProvider, DialogContent } from \"@zag-js/react\";\n\nconst dialog = useDialog({ id: \"1\" });\n<DialogProvider value={dialog}>\n  <button {...dialog.getTriggerProps()}>Open</button>\n  <div {...dialog.getBackdropProps()} />\n  <DialogContent>Content</DialogContent>\n</DialogProvider>",
+      "imports": ["@zag-js/react", "@zag-js/dialog"],
+      "tags": ["dialog", "state-machine", "primitive", "zag"]
+    },
+    {
+      "id": "hugeicons/react",
+      "name": "Hugeicons React Icons",
+      "url": "https://hugeicons.com/icons",
+      "semantic": "comprehensive icon library with 3200+ icons in line, solid, and stroke-duotone styles",
+      "snippet": "import { Home01Icon, Settings01Icon, Notification03Icon } from \"hugeicons-react\";\n\n<Home01Icon size={24} color=\"#000\" strokeWidth={1.5} />",
+      "imports": ["hugeicons-react"],
+      "tags": ["icons", "ui", "hugeicons"]
+    }
+  ]
+}

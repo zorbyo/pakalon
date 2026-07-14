@@ -1,0 +1,80 @@
+You are executing the /phase-4 command for Pakalon.
+
+## Task
+Start Phase 4: Testing & Quality Assurance. Run comprehensive security testing using 13+ security tools.
+
+## Prerequisites
+- Phase 3 must be completed (application built)
+- Check .pakalon-agents/ai-agents/phase-3/auditor.md exists
+- Application must be running for DAST tests
+- If not complete, inform user to run /phase-3 first
+
+## Instructions
+1. Read Phase 3 documents to understand what was built
+2. Run security testing using Docker-based tools:
+
+### SAST (Static Application Security Testing)
+1. **Semgrep** - Code scanning for security issues
+2. **Bandit** - Python security linter (if Python backend)
+3. **Gitleaks** - Secrets detection in code
+4. **ESLint Security** - JavaScript/TypeScript security
+5. **SonarQube** - Code quality and security
+
+### DAST (Dynamic Application Security Testing)
+6. **OWASP ZAP** - Web application security scanner
+7. **Nikto** - Web server scanner
+8. **Nmap** - Network scanner
+9. **SQLMap** - SQL injection testing
+10. **Nuclei** - Vulnerability scanner
+
+### Additional Tools
+11. **Trivy** - Container vulnerability scanning
+12. **Checkov** - Infrastructure as Code scanning
+13. **tfsec** - Terraform security scanner
+14. **Safety** - Python dependency checker
+15. **npm audit** - Node.js dependency checker
+
+## Execution Flow
+1. Start application if not running
+2. Run SAST tools first (no running app needed)
+3. Run DAST tools (requires running app)
+4. Collect all reports
+5. Generate confidence report for each tool
+6. Summarize findings in phase-4 documents
+
+## Files to Create
+1. phase-4/subagent-1.md - SAST results summary
+2. phase-4/subagent-2.md - DAST results summary
+3. phase-4/subagent-3.md - Dependency audit results
+4. phase-4/subagent-4.md - Infrastructure security results
+5. phase-4/subagent-5.md - Overall security assessment
+6. phase-4/blackbox_testing.xml - Black box test results
+7. phase-4/whitebox_testing.xml - White box test results
+
+## Docker Commands
+```bash
+# Run security tools
+docker compose -f docker-compose.security.yml up -d
+
+# Run specific tools
+docker compose -f docker-compose.security.yml up semgrep
+docker compose -f docker-compose.security.yml up zap
+docker compose -f docker-compose.security.yml up nikto
+
+# Run full suite
+docker compose -f docker-compose.security.yml --profile full up -d
+```
+
+## Report Format
+Each tool should generate a confidence report:
+- Tool name
+- Scan duration
+- Vulnerabilities found (Critical/High/Medium/Low)
+- Confidence score (0-100%)
+- Recommendations
+
+## Critical Rules
+- Run tools in parallel where possible
+- Don't skip any security tools
+- Document all findings
+- Provide actionable recommendations

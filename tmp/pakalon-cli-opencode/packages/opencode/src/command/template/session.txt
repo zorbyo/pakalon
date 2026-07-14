@@ -1,0 +1,90 @@
+You are the /session command for Pakalon.
+
+## Task
+Display detailed information about the current session.
+
+Use the `pakalon` tool to get pipeline status if active.
+
+## STEP 1: GET PIPELINE STATUS
+
+If in Pakalon mode, get phase status:
+```json
+{
+  "action": "get-phase-status"
+}
+```
+
+## STEP 2: GET MODE STATUS
+
+Get current Pakalon mode:
+```json
+{
+  "action": "get-mode",
+  "sessionId": "current-session-id"
+}
+```
+
+## STEP 3: DISPLAY SESSION INFO
+
+```
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Current Session Information                                                │
+├────────────────────────────────────────────────────────────────────────────┤
+│ Session ID: ses_abc123                                                     │
+│ Status: Active                                                             │
+│ Started: 2026-03-21 14:30:00                                               │
+│ Duration: 45 minutes                                                       │
+├────────────────────────────────────────────────────────────────────────────┤
+│ Model Configuration                                                        │
+│   Current Model: claude-3.5-sonnet                                         │
+│   Context Window: 200,000 tokens                                           │
+│   Max Output: 8,192 tokens                                                 │
+│   Thinking Mode: [Enabled/Disabled]                                        │
+│   Pakalon Mode: [plan/edit/auto-accept/bypass]                             │
+├────────────────────────────────────────────────────────────────────────────┤
+│ Token Usage                                                                │
+│   Total Used: 125,000 tokens                                               │
+│   Input Tokens: 100,000                                                    │
+│   Output Tokens: 25,000                                                    │
+│   Remaining: 75,000 tokens                                                 │
+│   Usage: [████████████░░░░░░░░░░] 62.5%                                    │
+├────────────────────────────────────────────────────────────────────────────┤
+│ Session Statistics                                                         │
+│   Messages Sent: 45                                                        │
+│   Messages Received: 45                                                    │
+│   Avg Tokens/Message: 2,778                                                │
+│   Files Modified: 12                                                       │
+│   Lines Changed: +450 / -120                                               │
+├────────────────────────────────────────────────────────────────────────────┤
+│ Pipeline Status (if active)                                                │
+│   Current Phase: Phase 3 - Development                                     │
+│   Phase Progress: 60%                                                      │
+│   Artifacts Generated: 8                                                   │
+│   Mode: Human-in-the-Loop (HIL)                                            │
+├────────────────────────────────────────────────────────────────────────────┤
+│ Project Information                                                        │
+│   Directory: /path/to/project                                              │
+│   .pakalon: Initialized                                                    │
+│   Git Branch: main                                                         │
+│   Last Commit: abc1234 - "Add user authentication"                         │
+├────────────────────────────────────────────────────────────────────────────┤
+│ Cost Estimate                                                              │
+│   Input Cost: $0.30 (100K tokens × $3/M)                                   │
+│   Output Cost: $0.38 (25K tokens × $15/M)                                  │
+│   Total: $0.68                                                             │
+└────────────────────────────────────────────────────────────────────────────┘
+```
+
+## OPTIONS
+- `/session` - Show current session info
+- `/session --verbose` - Show extended information
+- `/session --json` - Output as JSON
+- `/session --export` - Export session data
+
+## QUICK ACTIONS
+- `/new` - Start a new session
+- `/resume <id>` - Resume a different session
+- `/history` - View session history
+- `/context` - View context window details
+
+Project path: ${path}

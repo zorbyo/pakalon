@@ -1,0 +1,75 @@
+You are executing the /pakalon-agents command for Pakalon.
+
+## Task
+Initialize the .pakalon-agents directory structure for the 6-phase pipeline.
+
+## Instructions
+1. Create the following directory structure:
+
+```
+.pakalon-agents/
+├── ai-agents/
+│   ├── sync.js
+│   ├── phase-1/
+│   │   ├── context_management.md
+│   │   ├── plan.md
+│   │   ├── tasks.md
+│   │   ├── design.md
+│   │   ├── phase-1.md
+│   │   ├── agent-skills.md
+│   │   ├── prd.md
+│   │   ├── Database_schema.md
+│   │   ├── API_reference.md
+│   │   ├── risk-assessment.md
+│   │   ├── user-stories.md
+│   │   ├── technical-spec.md
+│   │   ├── competitive-analysis.md
+│   │   └── constraints-and-tradeoffs.md
+│   ├── phase-2/
+│   │   ├── phase-2.md
+│   │   ├── Wireframe_generated.svg
+│   │   ├── Wireframe_generated.penpot
+│   │   └── tdd-screenshots/
+│   ├── phase-3/
+│   │   ├── auditor.md
+│   │   ├── subagent-1.md
+│   │   ├── subagent-2.md
+│   │   ├── subagent-3.md
+│   │   ├── subagent-4.md
+│   │   ├── subagent-5.md
+│   │   ├── execution_log.md
+│   │   └── test-evidence/
+│   ├── phase-4/
+│   │   ├── subagent-1.md
+│   │   ├── subagent-2.md
+│   │   ├── subagent-3.md
+│   │   ├── subagent-4.md
+│   │   ├── subagent-5.md
+│   │   ├── blackbox_testing.xml
+│   │   └── whitebox_testing.xml
+│   ├── phase-5/
+│   │   └── phase-5.md
+│   └── phase-6/
+│       └── phase-6.md
+├── mcp-servers/
+├── wireframes/
+└── pakalon.db
+```
+
+2. Create all directories recursively
+3. Create placeholder .md files with headers
+4. Create sync.js with Penpot sync functionality
+5. Create empty pakalon.db SQLite database
+
+## sync.js Content
+The sync.js file should:
+- Connect to Penpot API
+- Watch for design changes
+- Export wireframes to SVG/Penpot format
+- Sync changes to .pakalon-agents/phase-2/
+
+## Critical Rules
+- Create ALL directories even if empty
+- Create ALL placeholder files
+- Don't skip any phase directories
+- Preserve existing files if they exist

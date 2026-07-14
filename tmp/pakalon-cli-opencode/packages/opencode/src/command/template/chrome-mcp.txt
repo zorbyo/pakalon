@@ -1,0 +1,156 @@
+You are executing the /chrome-mcp command for Pakalon.
+
+## Task
+Integrate Chrome DevTools MCP for automated browser testing and UI verification.
+
+## Overview
+Chrome DevTools MCP (Model Context Protocol) enables:
+- Open built applications in Chrome browser
+- Automated UI testing (buttons, forms, user flows)
+- Screenshot and screen recording capture
+- Test report generation with errors/issues
+- Pass reports to subagent for bug fixing
+
+## Installation
+
+### Prerequisites
+- Node.js 18+ installed
+- Chrome/Chromium browser installed
+- MCP SDK installed: `npm install @modelcontextprotocol/sdk`
+
+### Setup
+1. Install Chrome DevTools MCP server:
+\`\`\`bash
+npm install @anthropic/chrome-devtools-mcp
+# or
+npx @anthropic/chrome-devtools-mcp --install
+\`\`\`
+
+2. Configure MCP server in ~/.pakalon/mcp/config.json:
+\`\`\`json
+{
+  "servers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["@anthropic/chrome-devtools-mcp"],
+      "env": {
+        "CHROME_PATH": "/path/to/chrome"
+      }
+    }
+  }
+}
+\`\`\`
+
+## Usage
+
+### Commands
+\`\`\`
+/chrome-mcp                    # Show Chrome DevTools MCP status
+/chrome-mcp install            # Install Chrome DevTools MCP server
+/chrome-mcp test <url>         # Run automated tests on URL
+/chrome-mcp screenshot <url>   # Take screenshot of URL
+/chrome-mcp record <url>       # Record user flow on URL
+/chrome-mcp audit <url>        # Run accessibility/performance audit
+/chrome-mcp open <url>         # Open URL in Chrome with DevTools
+\`\`\`
+
+## MCP Tools Available
+
+### 1. navigate
+Navigate to a URL in Chrome browser.
+
+### 2. click
+Click on an element by selector or text.
+
+### 3. type
+Type text into an input field.
+
+### 4. screenshot
+Capture screenshot of current page or element.
+
+### 5. evaluate
+Execute JavaScript in the browser context.
+
+### 6. getConsoleLogs
+Retrieve console logs from the browser.
+
+### 7. getNetworkRequests
+Retrieve network requests made by the page.
+
+### 8. getPerformanceMetrics
+Get performance metrics (LCP, FID, CLS).
+
+### 9. getAccessibilityTree
+Get accessibility tree for the page.
+
+### 10. waitForSelector
+Wait for an element to appear.
+
+## Test Workflow
+
+### Phase 3 Integration
+After Phase 3 (Development), Chrome DevTools MCP can:
+1. Open the built application
+2. Run automated UI tests based on user stories
+3. Capture screenshots for each test scenario
+4. Detect console errors and network failures
+5. Generate test report with findings
+6. Pass report to bug-fixing subagent
+
+### Test Report Format
+\`\`\`json
+{
+  "url": "http://localhost:3000",
+  "timestamp": "2026-03-21T14:30:00Z",
+  "summary": {
+    "total": 15,
+    "passed": 12,
+    "failed": 3,
+    "warnings": 5
+  },
+  "tests": [
+    {
+      "name": "Login form submission",
+      "status": "passed",
+      "duration": "1.2s",
+      "screenshot": "login-test.png"
+    },
+    {
+      "name": "Dashboard data loading",
+      "status": "failed",
+      "error": "Timeout waiting for data",
+      "console": ["Error: API request failed"],
+      "screenshot": "dashboard-error.png"
+    }
+  ],
+  "performance": {
+    "lcp": "2.1s",
+    "fid": "45ms",
+    "cls": "0.05"
+  },
+  "accessibility": {
+    "score": 92,
+    "issues": [
+      {
+        "type": "contrast",
+        "element": "button.primary",
+        "severity": "warning"
+      }
+    ]
+  }
+}
+\`\`\`
+
+## Configuration Options
+- **headless**: Run Chrome in headless mode (default: true)
+- **timeout**: Navigation timeout in ms (default: 30000)
+- **viewport**: Browser viewport size (default: 1920x1080)
+- **recordVideo**: Enable video recording (default: false)
+- **captureConsole**: Capture console logs (default: true)
+- **captureNetwork**: Capture network requests (default: true)
+
+## Security Considerations
+- Only test URLs on localhost or trusted domains
+- Do not store sensitive credentials in test scripts
+- Use environment variables for test credentials
+- Clear browser data between test runs

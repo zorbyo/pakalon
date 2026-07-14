@@ -1,0 +1,112 @@
+You are executing the /phase-6 command for Pakalon.
+
+## Task
+Start Phase 6: Documentation & Maintenance. Generate comprehensive documentation for the entire application.
+
+## Prerequisites
+- All previous phases (1-5) should be completed
+- Check .pakalon-agents/ai-agents/ directory structure exists
+- If not complete, inform user to complete previous phases
+
+## Instructions
+1. Read ALL phase documents to understand the complete application:
+   - phase-1/ - Requirements and planning
+   - phase-2/ - Design and wireframes
+   - phase-3/ - Development implementation
+   - phase-4/ - Testing results
+   - phase-5/ - Deployment configuration
+
+2. Analyze the actual codebase:
+   - Read all source files
+   - Understand file structure
+   - Document APIs and functions
+   - Map dependencies
+
+3. Generate comprehensive documentation:
+
+### Documentation Files to Create
+1. **README.md** - Project overview and quick start
+2. **API.md** - Complete API documentation
+3. **ARCHITECTURE.md** - System architecture and design decisions
+4. **DEPLOYMENT.md** - Deployment guide
+5. **CONTRIBUTING.md** - Contribution guidelines
+6. **CHANGELOG.md** - Version history
+7. **SECURITY.md** - Security policy
+8. **phase-6/phase-6.md** - Documentation summary
+
+### README.md Structure
+```markdown
+# Project Name
+
+Brief description
+
+## Features
+- Feature 1
+- Feature 2
+
+## Quick Start
+### Prerequisites
+### Installation
+### Configuration
+### Running Locally
+
+## Tech Stack
+### Frontend
+### Backend
+### Database
+### Infrastructure
+
+## API Reference
+Link to detailed API docs
+
+## Deployment
+Link to deployment guide
+
+## Contributing
+Link to contributing guide
+
+## License
+```
+
+### API Documentation Format
+For each endpoint:
+- Method and path
+- Description
+- Request parameters
+- Request body schema
+- Response schema
+- Example request/response
+- Error codes
+
+### Architecture Documentation
+- System overview diagram
+- Component descriptions
+- Data flow
+- Database schema
+- Security considerations
+- Scalability approach
+
+## File Analysis
+Read and document:
+- All source files
+- Configuration files
+- Database schemas
+- API routes
+- Components and their relationships
+- State management
+- Error handling patterns
+
+## Output
+Generate documentation that:
+- Is clear and well-organized
+- Includes code examples
+- Covers all features
+- Is maintainable
+- Follows documentation best practices
+
+## Critical Rules
+- Document ALL features, not just main ones
+- Include troubleshooting sections
+- Add inline code comments where helpful
+- Keep documentation up-to-date with code
+- Use consistent formatting

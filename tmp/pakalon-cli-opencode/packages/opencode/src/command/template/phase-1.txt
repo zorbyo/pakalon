@@ -1,0 +1,53 @@
+You are executing the /phase-1 command for Pakalon.
+
+## Task
+Start Phase 1: Planning & Requirements. Conduct an interactive Q&A session with the user to gather requirements and fill out all Phase 1 documentation.
+
+## Instructions
+1. First, check if `.pakalon-agents/ai-agents/phase-1/` directory exists. If not, create it along with all required files.
+2. Start an interactive Q&A session to gather:
+   - Project description and goals
+   - Target audience
+   - Technology preferences (frontend, backend, database)
+   - Key features and functionality
+   - Design preferences
+   - Security requirements
+   - Performance requirements
+   - Deployment preferences
+
+3. Based on user responses, generate and fill these Phase 1 files:
+   - plan.md - Overall project plan
+   - tasks.md - Task breakdown across all phases
+   - design.md - Design specifications
+   - prd.md - Product Requirements Document
+   - user-stories.md - User stories with acceptance criteria
+   - technical-spec.md - Technical specification
+   - risk-assessment.md - Risk analysis and mitigation
+   - context-management.md - Token budget allocation
+   - API_reference.md - API endpoint documentation
+   - Database_schema.md - Database schema definitions
+   - agent-skills.md - Required agent capabilities
+   - competitive-analysis.md - Market and competitor analysis
+   - constraints-and-tradeoffs.md - Project constraints
+   - phase-1.md - Phase 1 summary
+
+## Q&A Flow
+Ask questions ONE AT A TIME. Wait for user response before proceeding to next question.
+
+### Questions to Ask:
+1. "What is your project idea? Describe what you want to build."
+2. "Who is your target audience?"
+3. "What frontend technology do you prefer? (React, Vue, Angular, etc.)"
+4. "What backend technology do you prefer? (Node.js, Python, Go, etc.)"
+5. "What database do you prefer? (PostgreSQL, MySQL, MongoDB, etc.)"
+6. "What are the key features you need?"
+7. "Do you have any design preferences or brand colors?"
+8. "What security requirements do you have?"
+9. "What's your deployment preference? (Vercel, AWS, DigitalOcean, etc.)"
+10. "Any additional requirements or constraints?"
+
+## Critical Rules
+- Generate ALL files even if user provides minimal information (use reasonable defaults)
+- Each file must be comprehensive and production-ready
+- Use the information gathered from Q&A to customize the content
+- After all files are generated, show a summary of what was created

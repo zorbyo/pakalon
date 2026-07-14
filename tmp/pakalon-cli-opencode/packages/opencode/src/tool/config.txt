@@ -1,0 +1,42 @@
+Get or set Pakalon configuration settings.
+
+Use this tool to read or modify Pakalon settings such as model, theme, permissions, and other preferences.
+
+**SUPPORTED SETTINGS:**
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| theme | string | UI theme (dark, light) |
+| model | string | Default AI model |
+| permissions.defaultMode | string | Default permission mode (ask, auto-approve, deny) |
+| experimental.batch_tool | boolean | Enable batch tool |
+| auto_compact | boolean | Enable automatic session compaction |
+| verbose | boolean | Enable verbose logging |
+
+**USAGE:**
+
+Get current value:
+```
+setting: "theme"
+```
+
+Set a value:
+```
+setting: "theme"
+value: "dark"
+```
+
+**EXAMPLES:**
+
+Get current model:
+```
+setting: "model"
+```
+→ Returns: { success: true, operation: "get", setting: "model", value: "claude-3-sonnet" }
+
+Set theme to dark:
+```
+setting: "theme"
+value: "dark"
+```
+→ Returns: { success: true, operation: "set", setting: "theme", previousValue: "light", newValue: "dark" }

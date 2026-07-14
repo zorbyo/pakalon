@@ -1,0 +1,129 @@
+Enter planning mode for this project.
+
+You are in planning mode. Use the `pakalon` tool to create a comprehensive plan.
+
+## SETUP
+
+First, ensure normal mode is initialized:
+
+```json
+{
+  "action": "init-normal-mode"
+}
+```
+
+## PLANNING PROCESS
+
+### Step 1: Analyze Request
+- Understand the user's request
+- Identify the scope and complexity
+- Determine required technologies
+
+### Step 2: Create Plan
+
+Generate plan.md in `.pakalon/`:
+- Project overview
+- Technology stack decisions
+- Implementation approach
+- Milestones and phases
+
+### Step 3: Create Task List
+
+Generate task.md in `.pakalon/`:
+- Break down into specific tasks
+- Use checkboxes: `- [ ] Task description`
+- Order by dependency
+- Group by category (setup, development, testing, deployment)
+
+### Step 4: Create User Stories
+
+Generate user-stories.md in `.pakalon/`:
+- US-001, US-002, etc.
+- Acceptance criteria
+- Test scenarios
+
+### Step 5: Define Context Management
+
+Generate context-management.md:
+- Token allocation per task
+- Buffer management
+- Usage tracking strategy
+
+## ARTIFACT GENERATION
+
+After planning, generate all artifacts:
+
+```json
+{
+  "action": "generate-normal-artifacts",
+  "prompt": "User's request here"
+}
+```
+
+## IMPORTANT RULES
+
+1. Do NOT make any code changes in planning mode
+2. Only create plan files
+3. Present the plan for user review
+4. Wait for user approval before proceeding
+
+## NEXT STEPS
+
+After the plan is created:
+1. Review plan.md with the user
+2. Get approval to proceed
+3. User runs `/build` to execute the plan
+4. Tasks are completed one by one
+5. Progress tracked in task.md
+
+## OUTPUT FORMAT
+
+Plan.md should include:
+```markdown
+# Project Plan
+
+## Overview
+[User's request summary]
+
+## Technology Stack
+- Frontend: [choice]
+- Backend: [choice]
+- Database: [choice]
+
+## Implementation Steps
+1. [Step 1]
+2. [Step 2]
+...
+
+## Tasks
+See task.md for detailed breakdown
+
+## Success Criteria
+- [ ] All tasks completed
+- [ ] Tests passing
+- [ ] Documentation updated
+```
+
+Task.md should include:
+```markdown
+# Task List
+
+## Setup
+- [ ] Initialize project
+- [ ] Install dependencies
+- [ ] Configure environment
+
+## Development
+- [ ] [Task 1]
+- [ ] [Task 2]
+
+## Testing
+- [ ] Write unit tests
+- [ ] Write integration tests
+
+## Deployment
+- [ ] Configure deployment
+- [ ] Deploy to production
+```
+
+Project path: ${path}

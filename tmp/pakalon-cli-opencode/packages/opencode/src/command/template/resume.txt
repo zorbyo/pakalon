@@ -1,0 +1,76 @@
+Resume an existing session with full context.
+
+## RESUME COMMAND
+
+Resume a previous session to continue where you left off.
+
+## USAGE
+
+### Resume Last Session
+\`\`\`
+/resume
+\`\`\`
+Resumes the most recent session in the current project directory.
+
+### Resume Specific Session
+\`\`\`
+/resume <session_id>
+\`\`\`
+Resumes a specific session by its ID.
+
+## PROCESS
+
+### Step 1: Load Session
+- Find the session in the database
+- Load conversation history
+- Restore context and state
+
+### Step 2: Show Session Summary
+Display:
+- Session title
+- Last activity time
+- Files modified
+- Current progress
+
+### Step 3: Continue Working
+- Restore full conversation context
+- Continue from where left off
+- Maintain all tool permissions
+
+## SESSION LISTING
+
+To see all available sessions:
+\`\`\`
+/session
+\`\`\`
+
+This shows:
+- Session IDs
+- Titles
+- Last activity
+- Files modified
+- Tokens used
+
+## EXAMPLES
+
+\`\`\`
+# Resume last session
+/resume
+
+# Resume specific session
+/resume ses_abc123
+
+# List all sessions first
+/session
+# Then resume a specific one
+/resume ses_xyz789
+\`\`\`
+
+## IMPORTANT
+
+- Sessions are project-specific
+- Each project has its own session history
+- Context is preserved across resume
+- File changes are tracked per session
+
+Project path: ${path}

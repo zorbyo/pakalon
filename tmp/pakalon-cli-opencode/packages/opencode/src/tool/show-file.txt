@@ -1,0 +1,6 @@
+Display a file's contents prominently for user review. Unlike the read tool which is for the agent's consumption, this tool shows the file in a way the user can easily review and verify changes.
+
+Use this tool when:
+- The user should review the contents of a file you've created or modified
+- You want to show a diff or specific section for verification
+- Displaying configuration files or important code for the user to approve

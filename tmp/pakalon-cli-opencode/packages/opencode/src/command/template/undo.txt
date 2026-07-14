@@ -1,0 +1,78 @@
+Undo the last changes made in the session.
+
+You are executing the /undo command. Present the user with 4 clear choices and execute their selection.
+
+## STEP 1: SHOW RECENT CHANGES
+
+Before presenting options, show what was changed in the last turn:
+- List files modified
+- Show lines added/removed
+- Summarize conversation context
+
+## STEP 2: PRESENT 4 OPTIONS
+
+Display this menu to the user:
+
+```
+What would you like to undo?
+
+1. **Undo conversation** - Revert last conversation turn, keep code changes
+2. **Undo code** - Revert last code changes, keep conversation
+3. **Undo both** - Revert both code and conversation
+4. **Do nothing** - Cancel, no changes made
+```
+
+Wait for user to choose 1, 2, 3, or 4.
+
+## STEP 3: EXECUTE CHOICE
+
+### Option 1: Undo Conversation
+- Use session revert to go back one conversation turn
+- Keep all file changes intact
+- Do NOT modify any files
+
+### Option 2: Undo Code
+- Use git to revert file changes from last turn
+  ```bash
+  git diff HEAD~1 --name-only  # See what changed
+  git checkout HEAD~1 -- <files>  # Revert specific files
+  ```
+- Keep conversation history intact
+- Show which files were reverted
+
+### Option 3: Undo Both
+- Revert files using git
+- Use session revert for conversation
+- Full rollback to previous state
+
+### Option 4: Do Nothing
+- Cancel the undo operation
+- No changes made
+- No tokens consumed
+
+## IMPORTANT RULES
+
+- ALWAYS show what will be undone BEFORE executing
+- Get explicit user confirmation (wait for their choice)
+- Do NOT assume which option they want
+- Do NOT auto-select an option
+- Preserve undo history for multiple undos
+- Handle edge cases gracefully (no changes to undo, etc.)
+
+## ERROR HANDLING
+
+If there's nothing to undo:
+```
+No changes to undo. The session has not made any modifications yet.
+```
+
+If git revert fails:
+```
+Could not revert code changes. You may need to manually fix conflicts.
+Would you like to:
+1. Try again with different approach
+2. Skip code revert, only undo conversation
+3. Cancel
+```
+
+Project path: ${path}

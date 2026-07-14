@@ -1,0 +1,144 @@
+Initialize and orchestrate the Pakalon 6-phase agentic development pipeline.
+
+You are starting the Pakalon pipeline. Use the `pakalon` tool to orchestrate a complete development workflow through 6 phases.
+
+## INITIALIZATION
+
+When the user runs `/pakalon`, first determine the mode:
+
+1. Ask the user to choose:
+   - **Human in Loop (HIL)** - Interactive Q&A, user approves each phase
+   - **YOLO Mode** - AI decides everything automatically
+
+2. Initialize the pipeline:
+   ```json
+   {
+     "action": "init-pipeline",
+     "mode": "hil",
+     "prompt": "$ARGUMENTS"
+   }
+   ```
+
+## PHASE 1: PLANNING & REQUIREMENTS
+
+### HIL Mode Flow:
+1. Initialize Q&A session:
+   ```json
+   {
+     "action": "init-qa",
+     "mode": "hil",
+     "prompt": "$ARGUMENTS"
+   }
+   ```
+
+2. Loop through questions:
+   ```json
+   {
+     "action": "get-current-question"
+   }
+   ```
+
+3. Present question to user, wait for answer, then:
+   ```json
+   {
+     "action": "answer-question",
+     "questionAnswer": "user's choice"
+   }
+   ```
+
+4. When Q&A complete, generate artifacts:
+   ```json
+   {
+     "action": "generate-phase1"
+   }
+   ```
+
+### YOLO Mode Flow:
+1. Initialize Q&A with YOLO mode
+2. Auto-answer all questions based on the prompt
+3. Generate Phase 1 artifacts immediately
+
+## PHASE 2: WIREFRAME GENERATION
+
+After Phase 1:
+1. Read design.md and plan.md from phase-1/
+2. Generate wireframes for all pages
+3. Save as SVG in `.pakalon-agents/wireframes/`
+4. Create phase-2.md documentation
+5. In HIL mode: Show wireframe, ask for approval
+6. In YOLO mode: Auto-approve and proceed
+
+## PHASE 3: DEVELOPMENT & IMPLEMENTATION
+
+Run 5 subagents sequentially:
+
+```json
+{
+  "action": "run-subagent",
+  "subagentNumber": 1,
+  "mode": "hil"
+}
+```
+
+Subagents:
+1. **Frontend Designer** - Implements UI based on wireframes
+2. **Backend Framer** - Builds APIs and database
+3. **Integration Specialist** - Connects frontend to backend
+4. **Debug & Test Engineer** - Finds and fixes bugs
+5. **Review & Feedback** (HIL only) - Gathers user feedback
+
+## PHASE 4: TESTING & QUALITY ASSURANCE
+
+Generate security reports:
+```json
+{
+  "action": "generate-security-report",
+  "subagentNumber": 1,
+  "plan": "free"
+}
+```
+
+Security subagents:
+1. SAST Analyzer - semgrep, bandit, gitleaks
+2. DAST Tester - OWASP ZAP, nikto
+3. Code Reviewer - Line-by-line review
+4. CI/CD Tester - Pipeline testing
+5. Cyber Security - Network scanning
+
+## PHASE 5: DEPLOYMENT & INTEGRATION
+
+- Set up CI/CD pipeline
+- Configure GitHub Actions
+- Generate phase-5.md documentation
+
+## PHASE 6: DOCUMENTATION
+
+- Generate Doc.md with complete documentation
+- Update README.md
+- Generate phase-6.md
+
+## PHASE TRANSITIONS
+
+After each phase, check status and advance:
+```json
+{
+  "action": "get-phase-status"
+}
+```
+
+When ready to proceed:
+```json
+{
+  "action": "advance-phase"
+}
+```
+
+## IMPORTANT RULES
+
+1. Always use the `pakalon` tool for all pipeline operations
+2. In HIL mode, ask for user confirmation before advancing phases
+3. In YOLO mode, make intelligent decisions automatically
+4. Track completion status after each phase
+5. Generate all required documentation files
+
+Project path: ${path}

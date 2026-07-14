@@ -1,0 +1,125 @@
+# Pakalon Security Scanning Tools (Phase 4)
+# Start with: docker compose -f docker-compose.security.yml --profile full up -d
+# Stop with:  docker compose -f docker-compose.security.yml down
+#
+# These tools are OPTIONAL and only needed for Phase 4 (Testing & QA).
+# Free tier runs without these; Pro tier enables the full suite.
+#
+# All services use `profile: full` so they only start when explicitly requested.
+# Pin image tags for production use.
+
+version: "3.8"
+
+services:
+  # ─── SAST: Static Analysis ───────────────────────────────────────
+
+  # Semgrep: Multi-language static analysis
+  semgrep:
+    image: returntocorp/semgrep:latest
+    container_name: pakalon-semgrep
+    profiles: ["full"]
+    volumes:
+      - "${PWD:-.}:/src"
+    entrypoint: ["semgrep", "--config=auto", "/src"]
+    working_dir: /src
+    restart: "no"
+
+  # Gitleaks: Secret/key detection in Git repos
+  gitleaks:
+    image: zricethezav/gitleaks:latest
+    container_name: pakalon-gitleaks
+    profiles: ["full"]
+    volumes:
+      - "${PWD:-.}:/src"
+    entrypoint: ["gitleaks", "detect", "--source=/src", "--verbose"]
+    working_dir: /src
+    restart: "no"
+
+  # SonarQube: Continuous code quality inspection
+  sonarqube:
+    image: sonarqube:community-latest
+    container_name: pakalon-sonarqube
+    profiles: ["full"]
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+      - sonarqube-logs:/opt/sonarqube/logs
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    restart: unless-stopped
+
+  # Bandit: Python security linter
+  bandit:
+    image: python:3.12-slim
+    container_name: pakalon-bandit
+    profiles: ["full"]
+    volumes:
+      - "${PWD:-.}:/src"
+    entrypoint: ["sh", "-c", "pip install bandit -q && bandit -r /src -f json -o /src/bandit-report.json"]
+    working_dir: /src
+    restart: "no"
+
+  # Brakeman: Ruby on Rails security scanner
+  brakeman:
+    image: presidentbeef/brakeman:latest
+    container_name: pakalon-brakeman
+    profiles: ["full"]
+    volumes:
+      - "${PWD:-.}:/src"
+    entrypoint: ["brakeman", "/src", "--output", "/src/brakeman-report.json"]
+    working_dir: /src
+    restart: "no"
+
+  # ─── DAST: Dynamic Analysis ──────────────────────────────────────
+
+  # OWASP ZAP: Web app security scanner
+  owasp-zap:
+    image: softwaresecurityproject/zap-stable:latest
+    container_name: pakalon-zap
+    profiles: ["full"]
+    ports:
+      - "8080:8080"
+    volumes:
+      - "${PWD:-.}:/zap/wrk"
+    entrypoint: [
+      "zap.sh", "-daemon", "-host", "0.0.0.0",
+      "-port", "8080", "-config", "api.disablekey=true"
+    ]
+    restart: "no"
+
+  # Nikto: Web server scanner
+  nikto:
+    image: sullo/nikto:latest
+    container_name: pakalon-nikto
+    profiles: ["full"]
+    volumes:
+      - "${PWD:-.}:/tmp"
+    entrypoint: ["nikto", "-h", "${TARGET_HOST:-localhost}", "-o", "/tmp/nikto-report.html"]
+    restart: "no"
+
+  # sqlmap: SQL injection detection
+  sqlmap:
+    image: paolotax/sqlmap:latest
+    container_name: pakalon-sqlmap
+    profiles: ["full"]
+    volumes:
+      - "${PWD:-.}:/src"
+    entrypoint: ["sqlmap", "-u", "${TARGET_URL:-http://localhost}", "--batch", "--output-dir=/src/sqlmap-results"]
+    working_dir: /src
+    restart: "no"
+
+  # XSStrike: XSS vulnerability scanner
+  xsstrike:
+    image: python:3.12-slim
+    container_name: pakalon-xsstrike
+    profiles: ["full"]
+    volumes:
+      - "${PWD:-.}:/src"
+    entrypoint: ["sh", "-c", "pip install xsstrike -q && python -m xsstrike -u ${TARGET_URL:-http://localhost} --params"]
+    working_dir: /src
+    restart: "no"
+
+volumes:
+  sonarqube-data:
+  sonarqube-logs:

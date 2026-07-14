@@ -1,0 +1,35 @@
+Executes a bash command in a persistent shell session with optional timeout.
+
+All commands run in ${directory} by default. Use the `workdir` parameter for other directories. AVOID `cd <directory> && <command>` patterns.
+
+This tool is for terminal operations (git, npm, docker, etc). For file operations use dedicated tools (Read, Write, Edit, Glob, Grep).
+
+Usage:
+- The command argument is required.
+- Optional timeout in milliseconds (default: 120000ms).
+- Write a concise 5-10 word description of what the command does.
+- Output exceeding ${maxLines} lines or ${maxBytes} bytes is truncated to a file. Use Read with offset/limit or Grep to access it.
+
+Prefer dedicated tools over bash equivalents:
+- File search: Glob (NOT find)
+- Content search: Grep (NOT grep/rg)
+- Read files: Read (NOT cat/head/tail)
+- Edit files: Edit (NOT sed/awk)
+- Write files: Write (NOT echo/cat)
+
+When issuing multiple commands:
+- Independent commands: make parallel Bash calls
+- Dependent commands: chain with '&&' (e.g., `git add . && git commit -m "msg"`)
+- Use 'workdir' parameter instead of `cd`
+
+Git commits - only when requested:
+- Run git status, git diff, git log in parallel first
+- Never commit secrets (.env, credentials.json)
+- Draft concise commit messages focusing on "why"
+- Never use `--amend` without explicit request
+- Never force push without explicit request
+
+PR creation via `gh` command:
+- Run git status, git diff, git log in parallel first
+- Analyze ALL commits in the PR
+- Create with `gh pr create --title "..." --body "..."`

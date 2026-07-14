@@ -1,0 +1,8 @@
+Look up pakalon CLI documentation and reference information. Use this tool when the user asks about pakalon features, commands, configuration options, or when you need to understand how pakalon works.
+
+Provides information about:
+- Available CLI commands and their usage
+- Configuration options in pakalon.json
+- Tool descriptions and parameters
+- Plugin system and hooks
+- Agent configuration and modes

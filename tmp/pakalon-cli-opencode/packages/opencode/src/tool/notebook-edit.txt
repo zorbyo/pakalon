@@ -1,0 +1,50 @@
+Edit Jupyter notebook cells (.ipynb files).
+
+Use this tool to modify, insert, or delete cells in Jupyter notebooks.
+
+**PARAMETERS:**
+- notebook_path: Absolute path to the Jupyter notebook file
+- cell_id: The ID of the cell to edit (optional for insert at beginning)
+- new_source: The new source code/markdown for the cell
+- cell_type: Cell type - "code" or "markdown" (required for insert)
+- edit_mode: "replace" (default), "insert", or "delete"
+
+**USAGE:**
+
+Replace cell content:
+```
+notebook_path: "/path/to/notebook.ipynb"
+cell_id: "cell-0"
+new_source: "print('Hello, World!')"
+edit_mode: "replace"
+```
+
+Insert new cell after existing cell:
+```
+notebook_path: "/path/to/notebook.ipynb"
+cell_id: "cell-2"
+new_source: "# New Section\nThis is a new markdown cell"
+cell_type: "markdown"
+edit_mode: "insert"
+```
+
+Insert at beginning:
+```
+notebook_path: "/path/to/notebook.ipynb"
+new_source: "import pandas as pd\nimport numpy as np"
+cell_type: "code"
+edit_mode: "insert"
+```
+
+Delete a cell:
+```
+notebook_path: "/path/to/notebook.ipynb"
+cell_id: "cell-5"
+edit_mode: "delete"
+```
+
+**NOTES:**
+- Always read the notebook first before editing
+- Use absolute paths only
+- For code cells, execution count is reset and outputs are cleared
+- Cell IDs can be actual IDs or cell-N format (e.g., "cell-0", "cell-1")

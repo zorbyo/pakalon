@@ -1,0 +1,197 @@
+You are executing the /figma command for Pakalon.
+
+## Task
+Import and analyze designs from Figma for wireframe generation.
+
+## Overview
+Figma integration enables:
+- Import designs directly from Figma
+- Analyze design elements (colors, typography, components)
+- Generate wireframes based on Figma designs
+- Make minor adjustments if needed
+- Proceed to development phases
+
+## Prerequisites
+- Figma Personal Access Token (PAT)
+- Access to the Figma file
+
+## Setup
+
+### 1. Get Figma Personal Access Token
+1. Go to Figma → Settings → Account → Personal Access Tokens
+2. Click "Create new personal access token"
+3. Copy the token
+4. Set in Pakalon:
+\`\`\`
+/figma setup <your-token>
+\`\`\`
+
+### 2. Configure Project
+Save token to \`.pakalon/config.json\`:
+\`\`\`json
+{
+  "figma": {
+    "token": "your-figma-pat",
+    "default_file": "optional-default-file-key"
+  }
+}
+\`\`\`
+
+## Usage
+
+### Commands
+\`\`\`
+/figma setup <token>           # Set up Figma Personal Access Token
+/figma import <file-url>       # Import design from Figma file
+/figma analyze <file-url>      # Analyze design without importing
+/figma list                    # List imported Figma designs
+/figma sync                    # Sync changes from Figma
+/figma export                  # Export design assets
+\`\`\`
+
+### Import Workflow
+1. **Import Design**
+   \`\`\`
+   /figma import https://www.figma.com/file/abc123/MyDesign
+   \`\`\`
+
+2. **Design Analysis**
+   Pakalon will extract:
+   - Color palette
+   - Typography
+   - Component library
+   - Layout structure
+   - Spacing patterns
+
+3. **Review Analysis**
+   \`\`\`
+   ┌─────────────────────────────────────────────────────────┐
+   │ Figma Design Analysis                                  │
+   ├─────────────────────────────────────────────────────────┤
+   │ File: MyDesign                                         │
+   │ Pages: 5                                               │
+   │ Components: 23                                         │
+   ├─────────────────────────────────────────────────────────┤
+   │ Colors                                                 │
+   │   Primary: #6366f1                                     │
+   │   Secondary: #8b5cf6                                   │
+   │   Accent: #10b981                                      │
+   ├─────────────────────────────────────────────────────────┤
+   │ Typography                                             │
+   │   Headings: Inter Bold                                 │
+   │   Body: Inter Regular                                  │
+   ├─────────────────────────────────────────────────────────┤
+   │ Components                                             │
+   │   Button: 4 variants                                   │
+   │   Input: 3 variants                                    │
+   │   Card: 2 variants                                     │
+   │   Modal: 1 variant                                     │
+   └─────────────────────────────────────────────────────────┘
+   \`\`\`
+
+4. **Generate Wireframes**
+   Based on the analysis, Pakalon generates wireframes that match the Figma design.
+
+5. **Review & Adjust**
+   In HIL mode, review the generated wireframes and make adjustments.
+
+## Figma API Integration
+
+### Endpoints Used
+- GET /v1/files/:file_key - Get file data
+- GET /v1/files/:file_key/nodes - Get specific nodes
+- GET /v1/images/:file_key - Export images
+- GET /v1/styles/:file_key - Get styles
+
+### Data Extracted
+\`\`\`json
+{
+  "file": {
+    "name": "MyDesign",
+    "lastModified": "2026-03-21T10:00:00Z",
+    "version": "123456"
+  },
+  "styles": {
+    "colors": [
+      { "name": "Primary", "hex": "#6366f1" },
+      { "name": "Secondary", "hex": "#8b5cf6" }
+    ],
+    "typography": [
+      { "name": "Heading 1", "fontFamily": "Inter", "fontSize": 36, "fontWeight": 700 },
+      { "name": "Body", "fontFamily": "Inter", "fontSize": 16, "fontWeight": 400 }
+    ]
+  },
+  "components": [
+    { "name": "Button/Primary", "type": "COMPONENT" },
+    { "name": "Input/Default", "type": "COMPONENT" }
+  ],
+  "pages": [
+    { "name": "Home", "frames": 3 },
+    { "name": "Dashboard", "frames": 5 }
+  ]
+}
+\`\`\`
+
+## Phase Integration
+
+### Phase 1: Planning
+- Import Figma design
+- Analyze design system
+- Extract requirements from design
+
+### Phase 2: Wireframes
+- Generate wireframes matching Figma
+- Preserve design tokens
+- Maintain component structure
+
+### Phase 3: Development
+- Use extracted colors in CSS
+- Apply typography from design
+- Build components matching Figma
+
+## Export Options
+
+### Supported Formats
+- SVG (vector graphics)
+- PNG (raster images)
+- JSON (design tokens)
+- CSS (style variables)
+- Tailwind (config values)
+
+### Example Export
+\`\`\`bash
+/figma export --format css
+\`\`\`
+
+**Output:**
+\`\`\`css
+:root {
+  --color-primary: #6366f1;
+  --color-secondary: #8b5cf6;
+  --color-accent: #10b981;
+  --font-heading: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+\`\`\`
+
+## Security Considerations
+- Store Figma token securely in \`.pakalon/config.json\`
+- Never commit tokens to version control
+- Add \`.pakalon/config.json\` to \`.gitignore\`
+- Use environment variables for CI/CD
+
+## Troubleshooting
+
+### Token Invalid
+- Regenerate token in Figma settings
+- Ensure token has file read permissions
+
+### File Not Found
+- Check file URL format
+- Verify you have access to the file
+- Ensure file is not in trash
+
+### Rate Limiting
+- Figma API has rate limits
+- Use caching for repeated requests
+- Implement exponential backoff

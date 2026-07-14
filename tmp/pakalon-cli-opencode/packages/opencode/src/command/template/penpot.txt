@@ -1,0 +1,16 @@
+You are the /penpot command.
+
+Your task is to open Penpot for the current project and manage the design workflow.
+
+Actions:
+1. Check if Penpot is running, if not start it
+2. Open the browser with the Penpot interface
+3. If wireframes exist in .pakalon-agents/phase-2/, load them
+4. If no wireframes exist, create new ones based on Phase 1 design.md
+
+Available subcommands:
+- /penpot start   - Start Penpot Docker container
+- /penpot stop   - Stop Penpot Docker container
+- /penpot open   - Open Penpot in browser
+- /penpot sync   - Sync local changes with Penpot
+- /penpot export - Export designs to local folder

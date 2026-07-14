@@ -1,0 +1,38 @@
+# Caddyfile for Pakalon self-hosted web companion
+#
+# Listens on :443 inside the container (mapped to host :8443 by
+# docker-compose.selfhosted.yml). All routes are reverse-proxied
+# to the internal services.
+
+:443 {
+    encode zstd gzip
+
+    # Static web companion
+    root * /srv
+    file_server
+
+    # LLM proxy (OpenAI-compatible)
+    handle /v1/* {
+        reverse_proxy llm-proxy:8080
+    }
+
+    # Mem0
+    handle /mem0/* {
+        reverse_proxy mem0:8000
+    }
+
+    # Vector store
+    handle /vector/* {
+        reverse_proxy vector:8000
+    }
+
+    # MCP hub
+    handle /mcp/* {
+        reverse_proxy mcp-hub:7000
+    }
+
+    # Health
+    handle /healthz {
+        respond "ok" 200
+    }
+}

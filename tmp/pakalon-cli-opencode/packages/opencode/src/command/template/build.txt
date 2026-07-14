@@ -1,0 +1,65 @@
+Execute the build plan from .pakalon/plan.md and .pakalon/task.md.
+
+You are in build mode. Your task is to execute the plan created by `/plan`.
+
+## SETUP
+
+1. First, check if normal mode is initialized:
+   ```json
+   {
+     "action": "init-normal-mode"
+   }
+   ```
+
+2. Read the plan from `.pakalon/plan.md`
+3. Read the task list from `.pakalon/task.md`
+
+## EXECUTION
+
+For each task in task.md:
+
+1. Read the task description
+2. Implement the required code changes
+3. Test the change
+4. Update task.md to mark it complete:
+   - Change `- [ ]` to `- [x]`
+   - Add a brief note about what was done
+
+5. Continue to next task
+
+## TASK TRACKING
+
+After each completed task, update `.pakalon/task.md`:
+
+```markdown
+## Setup Tasks
+- [x] Initialize project - Done: Created project structure
+- [x] Install dependencies - Done: Installed npm packages
+- [ ] Configure environment - In progress
+```
+
+## COMPLETION
+
+After all tasks are complete:
+1. Run final verification tests
+2. Summarize all changes made
+3. List any remaining issues or follow-ups
+4. Update `.pakalon/plan.md` with completion status
+
+## ERROR HANDLING
+
+If a task fails:
+1. Document the error
+2. Try to fix it automatically
+3. If unfixable, mark task as `- [!] Task name - ERROR: reason`
+4. Continue with next task
+
+## IMPORTANT
+
+- Execute tasks IN ORDER from task.md
+- Mark each task complete IMMEDIATELY after finishing
+- Do NOT skip tasks
+- Do NOT add new tasks unless required by existing tasks
+- Test each change before moving to next task
+
+Project path: ${path}

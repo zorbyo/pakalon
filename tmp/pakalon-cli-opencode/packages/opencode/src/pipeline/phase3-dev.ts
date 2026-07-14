@@ -1,0 +1,180 @@
+import { Log } from "../util/log"
+import { FileStructure } from "./file-structure"
+import type { PhaseContext, PhaseResult, SubAgentConfig } from "./types"
+import { SubAgentRunner } from "./sub-agent-runner"
+import type { SubAgentExecutionResult } from "./sub-agent-runner"
+
+const log = Log.create({ service: "pipeline:phase3" })
+
+const SUB_AGENTS: SubAgentConfig[] = [
+  {
+    name: "frontend-designer",
+    description: "Builds frontend components based on wireframes",
+    systemPrompt: `You are Sub-agent 1: Frontend Designer.
+Build the frontend UI based on Phase 2 wireframes and Phase 1 requirements.
+Use the specified tech stack. Create responsive, accessible components.
+Generate component files, styles, and routing.`,
+    tools: ["read", "write", "edit", "glob", "grep", "bash"],
+  },
+  {
+    name: "backend-framer",
+    description: "Builds backend API and database layer",
+    systemPrompt: `You are Sub-agent 2: Backend Framer.
+Build the backend based on Database_schema.md and API_reference.md from Phase 1.
+Set up database models, API routes, authentication, and middleware.
+Follow REST/GraphQL conventions from the planning phase.`,
+    tools: ["read", "write", "edit", "glob", "grep", "bash"],
+  },
+  {
+    name: "integration-specialist",
+    description: "Integrates frontend and backend",
+    systemPrompt: `You are Sub-agent 3: Integration Specialist.
+Connect the frontend built by Sub-agent 1 with the backend built by Sub-agent 2.
+Implement API calls, state management, error handling, and data flow.
+Ensure real-time updates where needed.`,
+    tools: ["read", "write", "edit", "glob", "grep", "bash"],
+  },
+  {
+    name: "bug-fixer",
+    description: "Debugs and tests the application",
+    systemPrompt: `You are Sub-agent 4: Bug Fixer & Tester.
+Test the integrated application. Fix any bugs found.
+Run existing tests, write new tests for uncovered areas.
+Ensure all user stories from Phase 1 are working.`,
+    tools: ["read", "write", "edit", "glob", "grep", "bash"],
+  },
+  {
+    name: "user-feedback",
+    description: "Presents results for user feedback (HIL only)",
+    systemPrompt: `You are Sub-agent 5: User Feedback Agent.
+Present the completed application to the user for review.
+Show what was built, list features implemented, and ask for feedback.
+In HIL mode, wait for user approval before marking Phase 3 complete.`,
+    tools: ["read", "glob", "grep", "question"],
+  },
+]
+
+export namespace Phase3Dev {
+  export function getSubAgents(): SubAgentConfig[] {
+    return SUB_AGENTS
+  }
+
+  export function subAgentPrompt(index: number): string {
+    return SUB_AGENTS[index]?.systemPrompt ?? ""
+  }
+
+  export async function execute(ctx: PhaseContext): Promise<PhaseResult> {
+    log.info("starting phase 3 development", { mode: ctx.mode, path: ctx.projectPath })
+
+    const results = await SubAgentRunner.runSequential(ctx.projectPath, SUB_AGENTS, ctx)
+    const artifacts = results.flatMap((r) => r.artifacts)
+    const tokensUsed = results.reduce((sum, r) => sum + r.tokensUsed, 0)
+
+    for (let i = 0; i < results.length; i++) {
+      const agent = SUB_AGENTS[i]
+      const result = results[i]
+      if (!agent) continue
+      const content = generateSubAgentDoc(ctx, i, agent, result)
+      const fileName = `subagent-${i + 1}.md`
+      await FileStructure.writeArtifact(ctx.projectPath, 3, fileName, content)
+      artifacts.push(fileName)
+    }
+
+    const execLog = generateExecutionLog(ctx, results)
+    await FileStructure.writeArtifact(ctx.projectPath, 3, "execution_log.md", execLog)
+    artifacts.push("execution_log.md")
+
+    log.info("phase 3 completed", {
+      agents: results.length,
+      successful: results.filter((r) => r.success).length,
+      failed: results.filter((r) => !r.success).length,
+      tokensUsed,
+    })
+
+    return { success: results.every((r) => r.success), artifacts, nextPhase: 4, tokensUsed }
+  }
+
+  function generateSubAgentDoc(
+    ctx: PhaseContext,
+    index: number,
+    agent: SubAgentConfig,
+    result: SubAgentExecutionResult,
+  ): string {
+    const status = result.success ? "Completed" : "Failed"
+    const artifacts = result.artifacts.length > 0 ? result.artifacts.map((a) => `- ${a}`).join("\n") : "- None"
+    const error = result.error
+      ? `\n## Error\n${result.error}\n`
+      : ""
+
+    return `# Sub-agent ${index + 1}: ${agent.name}
+
+## Description
+${agent.description}
+
+## Status: ${status}
+
+## Tasks Performed
+- Executed assigned phase 3 development work
+- Generated or updated project artifacts
+- Reported execution status and metrics
+
+## Tools Used
+${agent.tools.map((t) => `- ${t}`).join("\n")}
+
+## Execution Metrics
+- Success: ${result.success ? "Yes" : "No"}
+- Tokens Used: ${result.tokensUsed}
+- Duration: ${result.duration} ms
+
+## Artifacts
+${artifacts}
+
+${error}
+
+## Mode
+${ctx.mode === "hil" ? "Human-in-the-Loop" : "YOLO"}
+
+---
+*Generated by Pakalon Phase 3 Development Agent - Sub-agent ${index + 1}*
+`
+  }
+
+  function generateExecutionLog(ctx: PhaseContext, results: SubAgentExecutionResult[]): string {
+    const successful = results.filter((r) => r.success)
+    const failed = results.filter((r) => !r.success)
+    const artifacts = results.flatMap((r) => r.artifacts)
+    const tokensUsed = results.reduce((sum, r) => sum + r.tokensUsed, 0)
+    const duration = results.reduce((sum, r) => sum + r.duration, 0)
+
+    return `# Execution Log
+
+## Phase 3 Development
+- Mode: ${ctx.mode}
+- Sub-agents executed: ${results.length}
+- Successful: ${successful.length}
+- Failed: ${failed.length}
+- Total tokens used: ${tokensUsed}
+- Aggregate duration: ${duration} ms
+
+## Timeline
+- Start: ${new Date().toISOString()}
+- Status: ${failed.length === 0 ? "Completed" : "Completed with failures"}
+
+## Agent Results
+${results
+  .map((r, i) => {
+    const mark = r.success ? "✓" : "✗"
+    return `- ${mark} ${i + 1}. ${r.agentName} | tokens: ${r.tokensUsed} | duration: ${r.duration} ms`
+  })
+  .join("\n")}
+
+${failed.length > 0 ? `## Failures\n${failed.map((r) => `- ${r.agentName}: ${r.error ?? "unknown error"}`).join("\n")}\n` : ""}
+
+## Artifacts
+${artifacts.map((a) => `- ${a}`).join("\n")}
+
+---
+*Generated by Pakalon Phase 3 Orchestrator*
+`
+  }
+}

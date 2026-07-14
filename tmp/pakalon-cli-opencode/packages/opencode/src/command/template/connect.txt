@@ -1,0 +1,82 @@
+You are executing the /connect command for Pakalon.
+
+## Task
+Connect Pakalon to Telegram for remote control via bot.
+
+## Instructions
+
+### First Time Connection (/connect)
+1. Prompt user: "Enter your Telegram Bot Token:"
+   - User should create a bot via @BotFather on Telegram
+   - Token format: `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`
+
+2. Validate the token:
+   - Call Telegram API `getMe` to verify bot
+   - Display bot info: username, name, ID
+
+3. Store the token:
+   - Encrypt the token using AES-256-GCM
+   - Store encrypted token in Supabase via backend API
+   - Save to user's profile
+
+4. Set up webhook:
+   - Configure webhook URL (if backend is running)
+   - Or use polling mode for local development
+
+5. Display success message:
+   ```
+   ✅ Telegram Connected!
+   Bot: @username
+   Status: Active
+   
+   You can now control Pakalon via Telegram.
+   Send /start to your bot to begin.
+   
+   To disconnect, use: /connect-end
+   ```
+
+### Subsequent Connections (/connect)
+1. Retrieve stored token from Supabase
+2. Verify token is still valid
+3. Re-establish webhook/polling connection
+4. Display connection status
+
+### Disconnection (/connect-end)
+1. Delete webhook from Telegram
+2. Clear local connection state
+3. Display: "Telegram disconnected. Use /connect to reconnect."
+
+## Telegram Bot Commands
+Once connected, the bot should respond to:
+- `/start` - Welcome message and instructions
+- `/help` - List available commands
+- `/status` - Check Pakalon status
+- `/phase1` through `/phase6` - Phase information
+- Any text message - Process as Pakalon prompt
+
+## Message Processing
+When user sends a message via Telegram:
+1. Receive message via webhook
+2. Create/find Pakalon session for this chat
+3. Send message to Pakalon AI
+4. Stream response back to Telegram
+5. Handle long messages (split if > 4096 chars)
+
+## Security
+- Never log or display the bot token
+- Encrypt token before storage
+- Validate all incoming webhook requests
+- Rate limit messages per chat
+- Handle errors gracefully
+
+## Files to Update
+1. src/telegram/webhook-handler.ts - Complete processPrompt integration
+2. src/telegram/client.ts - Add message streaming
+3. src/telegram/token-store.ts - Already implemented
+
+## Critical Rules
+- Token must be stored in Supabase, not locally
+- Use proper encryption for token storage
+- Handle webhook verification
+- Support both webhook and polling modes
+- Graceful disconnection

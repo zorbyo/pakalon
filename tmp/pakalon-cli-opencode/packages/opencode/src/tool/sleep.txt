@@ -1,0 +1,28 @@
+Wait for a specified duration. The user can interrupt the sleep at any time.
+
+Use this when:
+- The user tells you to sleep or rest
+- You have nothing to do
+- You're waiting for something to complete
+- You need to pause between operations
+
+**PARAMETERS:**
+- duration_ms: Duration to sleep in milliseconds
+
+**NOTES:**
+- Prefer this over `Bash(sleep ...)` — it doesn't hold a shell process
+- Can be called concurrently with other tools without interference
+- User can interrupt at any time
+- Each wake-up costs an API call, so balance accordingly
+
+**EXAMPLES:**
+
+Wait 5 seconds:
+```
+duration_ms: 5000
+```
+
+Wait 1 minute:
+```
+duration_ms: 60000
+```

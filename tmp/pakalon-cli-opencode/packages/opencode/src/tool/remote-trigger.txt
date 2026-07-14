@@ -1,0 +1,51 @@
+Trigger a remote execution or webhook.
+
+Use this tool to trigger remote processes, webhooks, or external services.
+
+**PARAMETERS:**
+- url: The URL to trigger (webhook endpoint or remote service)
+- method: HTTP method (GET, POST, PUT, DELETE). Default: POST
+- body: Optional request body (JSON)
+- headers: Optional additional headers
+- timeout: Request timeout in milliseconds. Default: 30000
+
+**USAGE:**
+
+Trigger a webhook:
+```
+url: "https://api.example.com/webhook"
+method: "POST"
+body: { "event": "deployment", "status": "started" }
+```
+
+**EXAMPLES:**
+
+Simple webhook trigger:
+```
+url: "https://hooks.example.com/build"
+method: "POST"
+```
+
+With payload:
+```
+url: "https://api.example.com/deploy"
+method: "POST"
+body: {
+  "environment": "production",
+  "version": "1.2.3"
+}
+headers: {
+  "X-Deploy-Key": "secret123"
+}
+```
+
+GET request:
+```
+url: "https://api.example.com/status"
+method: "GET"
+```
+
+**NOTES:**
+- Supports HTTP/HTTPS endpoints
+- Automatically includes Content-Type: application/json for POST/PUT with body
+- Timeout defaults to 30 seconds

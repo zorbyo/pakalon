@@ -1,0 +1,34 @@
+Execute PowerShell commands on Windows. This tool is specifically designed for Windows environments.
+
+**IMPORTANT GUIDELINES:**
+- Use native PowerShell cmdlets (Get-ChildItem, Get-Content, etc.) not Unix commands
+- Commands run in PowerShell Core (pwsh) if available, otherwise Windows PowerShell
+- Use backslash (\) for Windows paths
+- Current working directory: ${directory}
+
+**READ-ONLY COMMANDS** (auto-approved):
+- Get-ChildItem, Get-Content, Get-Item, Test-Path
+- Get-Process, Get-Service, Get-Location
+- Select-String (grep equivalent), Where-Object, Format-*
+- Write-Output, Write-Host
+
+**WRITE/MODIFY COMMANDS** (require approval):
+- Set-Content, Add-Content, Remove-Item, Move-Item, Copy-Item
+- New-Item, Rename-Item
+- Start-Process, Stop-Process, Restart-Service
+- Any command that modifies system state
+
+**OUTPUT HANDLING:**
+- Maximum ${maxLines} lines or ${maxBytes} bytes returned
+- Use -First/-Last parameters to limit output
+- For large outputs, consider | Select-Object -First N
+
+**TIMEOUT:**
+- Default timeout: 120000ms (2 minutes)
+- Long-running commands will be terminated after timeout
+- Use run_in_background: true for commands that may take longer
+
+**EXAMPLES:**
+Get-ChildItem -Path . -Recurse -Filter "*.ts" | Select-String "functionName"
+Get-Content -Path "file.txt" -Head 50
+Get-Process | Where-Object { $_.CPU -gt 100 }

@@ -1,0 +1,410 @@
+ M README.md
+ M assets/Minilogo-animation/loading-animation.tsx
+ D assets/load-animation.asciimtn
+ D "assets/video-animation/mini-logo (1).tsx"
+ D assets/video-animation/mini-logo.tsx
+ M bun.lock
+ D docker-compose-security.yml
+ M package.json
+ D pyproject.toml
+ D python/README.md
+ D python/agents/__init__.py
+ D python/agents/package.json
+ D python/agents/phase1/__init__.py
+ D python/agents/phase1/api_reference_generator.py
+ D python/agents/phase1/context_budget.py
+ D python/agents/phase1/database_schema_generator.py
+ D python/agents/phase1/figma_import.py
+ D python/agents/phase1/graph.py
+ D python/agents/phase1/qa_loop.py
+ D python/agents/phase1/skills.py
+ D python/agents/phase1/tests/__init__.py
+ D python/agents/phase1/tests/test_phase1.py
+ D python/agents/phase2/__init__.py
+ D python/agents/phase2/graph.py
+ D python/agents/phase2/penpot_sync.py
+ D python/agents/phase2/tdd.py
+ D python/agents/phase2/tests/__init__.py
+ D python/agents/phase2/tests/test_phase2.py
+ D python/agents/phase2/tests/test_phase2_revn.py
+ D python/agents/phase3/__init__.py
+ D python/agents/phase3/agent_browser.py
+ D python/agents/phase3/auditor.py
+ D python/agents/phase3/build_registry.py
+ D python/agents/phase3/chrome_mcp.py
+ D python/agents/phase3/execution_log.py
+ D python/agents/phase3/graph.py
+ D python/agents/phase3/registry_rag.py
+ D python/agents/phase3/tests/__init__.py
+ D python/agents/phase3/tests/test_phase3.py
+ D python/agents/phase4/__init__.py
+ D python/agents/phase4/auto_retry.py
+ D python/agents/phase4/cicd_tester.py
+ D python/agents/phase4/cyber_security.py
+ D python/agents/phase4/dast.py
+ D python/agents/phase4/graph.py
+ D python/agents/phase4/hoppscotch_tester.py
+ D python/agents/phase4/phase4_auto_retry.py
+ D python/agents/phase4/requirement_check.py
+ D python/agents/phase4/sast.py
+ D python/agents/phase4/tests/__init__.py
+ D python/agents/phase4/tests/test_phase4.py
+ D python/agents/phase4/vercel_browser.py
+ D python/agents/phase4/xml_reports.py
+ D python/agents/phase5/__init__.py
+ D python/agents/phase5/ci_cd_environments.py
+ D python/agents/phase5/github_integration.py
+ D python/agents/phase5/graph.py
+ D python/agents/phase5/multi_env_cicd.py
+ D python/agents/phase5/workflow_editor.py
+ D python/agents/phase6/__init__.py
+ D python/agents/phase6/docs_generator.py
+ D python/agents/phase6/graph.py
+ D python/agents/shared/__init__.py
+ D python/agents/shared/decision_registry.py
+ D python/agents/shared/langgraph_checkpointer.py
+ D python/agents/shared/lsp.py
+ D python/agents/shared/mem0_context.py
+ D python/agents/shared/paths.py
+ D python/agents/shared/penpot_metadata.py
+ D python/agents/skills/INDEX.md
+ D python/agents/skills/__init__.py
+ D python/agents/skills/composition-patterns.md
+ D python/agents/skills/docx.md
+ D python/agents/skills/frontend-design.md
+ D python/agents/skills/mcp-builder.md
+ D python/agents/skills/pdf.md
+ D python/agents/skills/pptx.md
+ D python/agents/skills/react-best-practices.md
+ D python/agents/skills/react-native-skills.md
+ D python/agents/skills/vercel-deploy-claimable.md
+ D python/agents/skills/web-design-guidelines.md
+ D python/agents/skills/webapp-testing.md
+ D python/agents/skills/xlsx.md
+ D python/agents/sync.js
+ D python/bridge/server.py
+ D python/memory/__init__.py
+ D python/memory/chroma_client.py
+ D python/memory/lance_client.py
+ D python/memory/mem0_client.py
+ D python/penpot-compose.yml
+ D python/requirements.txt
+ D python/scripts/__init__.py
+ D python/scripts/seed_rag_corpus.py
+ D python/tools/__init__.py
+ D python/tools/firecrawl.py
+ D python/tools/image_gen.py
+ D python/tools/image_video.py
+ D python/tools/penpot.py
+ D python/tools/screenshot.py
+ D python/tools/storage.py
+ D python/utils/__init__.py
+ D python/utils/backoff.py
+ D python/utils/env_mask.py
+ D python/utils/phase_checkpoint.py
+ M src/__tests__/e2e.test.ts
+ M src/ai/__tests__/orchestrate-tool.test.ts
+ M src/ai/__tests__/proxy-tool-runner.test.ts
+ M src/ai/auto-compaction.ts
+ M src/ai/context.ts
+ M src/ai/hooks.ts
+ M src/ai/openrouter.ts
+ M src/ai/penpot-sync.ts
+ M src/ai/proxy-tool-runner.ts
+ M src/ai/skills.ts
+ M src/ai/stream.ts
+ M src/ai/tools.ts
+ M src/api/client.ts
+ M src/auth/device-flow.ts
+ D src/bridge/__tests__/bridge.test.ts
+ D src/bridge/client.ts
+ D src/bridge/manager.ts
+ M src/commands/__tests__/pakalon.test.ts
+ M src/commands/git.ts
+ M src/commands/hooks.ts
+ M src/commands/init.ts
+ D src/commands/model.ts
+ M src/commands/pakalon.ts
+ M src/commands/permissions.ts
+ M src/commands/session.ts
+ M src/commands/update-cli.ts
+ M src/commands/web.ts
+ M src/components/screens/AgentScreen.tsx
+ M src/components/screens/BuildScreen.tsx
+ M src/components/screens/ChatScreen.tsx
+ M src/components/screens/LoginScreen.tsx
+ M src/components/screens/ModelsScreen.tsx
+ M src/components/ui/Banner.tsx
+ M src/components/ui/ContextBar.tsx
+ M src/components/ui/InputBar.tsx
+ M src/components/ui/MessageList.tsx
+ M src/components/ui/Spinner.tsx
+ M src/components/ui/StatusLine.tsx
+ M src/constants/colors.ts
+ M src/constants/models.ts
+ M src/frontend/animations/LogoStatic.tsx
+ M src/frontend/animations/MiniLogoAnimation.tsx
+ M src/frontend/animations/TextLogoAnimation.tsx
+ M src/frontend/components/HeaderBar.tsx
+ M src/frontend/components/PakalonLogo.tsx
+ M src/frontend/screens/ChatLayout.tsx
+ M src/frontend/screens/SplashLoginScreen.tsx
+ M src/index.tsx
+ M src/lsp/index.ts
+ M src/mcp/advanced.ts
+ M src/mcp/manager.ts
+ M src/mcp/tools.ts
+ M src/store/index.ts
+ M src/store/slices/fileChanges.slice.ts
+ M src/store/slices/mode.slice.ts
+ M src/store/slices/model.slice.ts
+ M src/store/slices/session.slice.ts
+ M src/store/slices/streaming.slice.ts
+ M src/store/slices/todo.slice.ts
+ M src/utils/agents-folder-structure.ts
+ M src/utils/github-pr.ts
+ M src/utils/shell-layout.ts
+ M tsconfig.json
+ D uv.lock
+?? .agents/
+?? .claude/
+?? .pakalon/snapshots/1773655067263_3b362bbf-d0cf-4753-b93e-274060d46f32.json
+?? .pakalon/snapshots/1773982850680_ead68749-3f7d-43d7-bd0b-8a0b645333db.json
+?? .pakalon/snapshots/1774764844676_f6e16081-eeda-4a92-96ad-3d86df316388.json
+?? .pakalon/snapshots/1774853346249_bba201af-44cc-428c-858e-1d7428e494b2.json
+?? errors.txt
+?? nul
+?? package-lock.json
+?? src/__tests__/agent-runtime.test.ts
+?? src/__tests__/fleet-system.test.ts
+?? src/agents/
+?? src/ai/agent-messenger.ts
+?? src/ai/agent-runtime-adapter.ts
+?? src/ai/agent-runtime.ts
+?? src/ai/autopilot.ts
+?? src/ai/compactor.ts
+?? src/ai/conflict-resolver.ts
+?? src/ai/context-manager.ts
+?? src/ai/context-viz.ts
+?? src/ai/copilot-tools.ts
+?? src/ai/fleet.ts
+?? src/ai/lifecycle.ts
+?? src/ai/session-commands.ts
+?? src/ai/session-share.ts
+?? src/ai/terse-config.ts
+?? src/ai/terse-prompts.ts
+?? src/ai/terse.ts
+?? src/ai/tool-display.ts
+?? src/ai/tool-permissions.ts
+?? src/ai/tool-registry.ts
+?? src/auth/index.ts
+?? src/bridge/index.ts
+?? src/cicd/
+?? src/cli.ts
+?? src/commands/__tests__/slash-registry.test.ts
+?? src/commands/add-dir/
+?? src/commands/advisor.ts
+?? src/commands/agents/
+?? src/commands/ant-trace/
+?? src/commands/auth.ts
+?? src/commands/autofix-pr/
+?? src/commands/backfill-sessions/
+?? src/commands/benchmark.ts
+?? src/commands/branch/
+?? src/commands/break-cache/
+?? src/commands/bridge-kick.ts
+?? src/commands/bridge/
+?? src/commands/brief.ts
+?? src/commands/btw/
+?? src/commands/bughunter/
+?? src/commands/catalog.ts
+?? src/commands/chrome/
+?? src/commands/clear.ts
+?? src/commands/clear/
+?? src/commands/color/
+?? src/commands/commit-push-pr.ts
+?? src/commands/commit.ts
+?? src/commands/compact.ts
+?? src/commands/compact/
+?? src/commands/config/
+?? src/commands/connect.ts
+?? src/commands/context-viz.ts
+?? src/commands/context/
+?? src/commands/copy.ts
+?? src/commands/copy/
+?? src/commands/cost.ts
+?? src/commands/cost/
+?? src/commands/createMovedToPluginCommand.ts
+?? src/commands/ctx_viz/
+?? src/commands/debug-tool-call/
+?? src/commands/desktop/
+?? src/commands/diff.ts
+?? src/commands/diff/
+?? src/commands/doctor/
+?? src/commands/effort/
+?? src/commands/env/
+?? src/commands/exit.ts
+?? src/commands/exit/
+?? src/commands/export/
+?? src/commands/extra-usage/
+?? src/commands/fast/
+?? src/commands/feedback/
+?? src/commands/files/
+?? src/commands/fleet.ts
+?? src/commands/good-claude/
+?? src/commands/heapdump/
+?? src/commands/help.ts
+?? src/commands/help/
+?? src/commands/hooks/
+?? src/commands/ide/
+?? src/commands/index.ts
+?? src/commands/init-verifiers.ts
+?? src/commands/insights.ts
+?? src/commands/install-github-app/
+?? src/commands/install-slack-app/
+?? src/commands/install.tsx
+?? src/commands/issue/
+?? src/commands/keybindings/
+?? src/commands/login/
+?? src/commands/logout/
+?? src/commands/mcp.ts
+?? src/commands/mcp/
+?? src/commands/memory/
+?? src/commands/mobile/
+?? src/commands/mock-limits/
+?? src/commands/notifications.ts
+?? src/commands/oauth-refresh/
+?? src/commands/onboarding/
+?? src/commands/output-style/
+?? src/commands/pakalon-agents.ts
+?? src/commands/passes/
+?? src/commands/perf-issue/
+?? src/commands/permissions/
+?? src/commands/plan/
+?? src/commands/plugin/
+?? src/commands/pr_comments/
+?? src/commands/privacy-settings/
+?? src/commands/rate-limit-options/
+?? src/commands/release-notes/
+?? src/commands/reload-plugins/
+?? src/commands/remote-env/
+?? src/commands/remote-setup/
+?? src/commands/rename/
+?? src/commands/reset-limits/
+?? src/commands/resume.ts
+?? src/commands/resume/
+?? src/commands/review.ts
+?? src/commands/review/
+?? src/commands/rewind/
+?? src/commands/sandbox-toggle/
+?? src/commands/security-review.ts
+?? src/commands/session/
+?? src/commands/share.ts
+?? src/commands/share/
+?? src/commands/skills-cmd.ts
+?? src/commands/skills/
+?? src/commands/slash-registry.ts
+?? src/commands/stats/
+?? src/commands/status/
+?? src/commands/statusline.tsx
+?? src/commands/stickers/
+?? src/commands/summary/
+?? src/commands/tag/
+?? src/commands/tasks/
+?? src/commands/teleport/
+?? src/commands/terminalSetup/
+?? src/commands/theme/
+?? src/commands/thinkback-play/
+?? src/commands/thinkback/
+?? src/commands/types.ts
+?? src/commands/ultraplan.tsx
+?? src/commands/upgrade/
+?? src/commands/usage/
+?? src/commands/version-theme.ts
+?? src/commands/version.ts
+?? src/commands/vim/
+?? src/commands/voice/
+?? src/commands/worktree.ts
+?? src/components-cc/
+?? src/components/screens/SessionsScreen.tsx
+?? src/components/screens/SkillsScreen.tsx
+?? src/components/screens/__tests__/
+?? src/components/screens/chat-model-resolution.ts
+?? src/components/ui/MiniLogoAnimation.tsx
+?? src/components/ui/Toast.tsx
+?? src/components/ui/WorkingStatus.tsx
+?? src/constants/betaFeatures.ts
+?? src/constants/cyberRiskInstructions.ts
+?? src/constants/index.ts
+?? src/constants/oauthConfig.ts
+?? src/constants/outputStyles.ts
+?? src/constants/toolLimits.ts
+?? src/constants/xmlTags.ts
+?? src/coordinator/
+?? src/events/
+?? src/extension/
+?? src/frontend/animations/LoadingAnimation.tsx
+?? src/hooks/
+?? src/integrations/
+?? src/manifests/
+?? src/mcp/InProcessTransport.ts
+?? src/mcp/MCPConnectionManager.tsx
+?? src/mcp/SdkControlTransport.ts
+?? src/mcp/auth.ts
+?? src/mcp/channelAllowlist.ts
+?? src/mcp/channelNotification.ts
+?? src/mcp/channelPermissions.ts
+?? src/mcp/claudeai.ts
+?? src/mcp/client.ts
+?? src/mcp/config.ts
+?? src/mcp/elicitationHandler.ts
+?? src/mcp/envExpansion.ts
+?? src/mcp/headersHelper.ts
+?? src/mcp/mcpStringUtils.ts
+?? src/mcp/normalization.ts
+?? src/mcp/oauthPort.ts
+?? src/mcp/officialRegistry.ts
+?? src/mcp/types.ts
+?? src/mcp/useManageMCPConnections.ts
+?? src/mcp/utils.ts
+?? src/mcp/vscodeSdkMcp.ts
+?? src/mcp/xaa.ts
+?? src/mcp/xaaIdpLogin.ts
+?? src/media/
+?? src/memdir/
+?? src/memory/
+?? src/penpot/
+?? src/pipeline/
+?? src/plugins/
+?? src/query/
+?? src/remote/
+?? src/scrape/
+?? src/sdk/
+?? src/search/
+?? src/security/
+?? src/server/
+?? src/services/
+?? src/skills/
+?? src/state/
+?? src/storage/
+?? src/tasks/
+?? src/tests/
+?? src/tools/
+?? src/types-imported/
+?? src/types/bun-sqlite.d.ts
+?? src/ui/
+?? src/utils/__tests__/
+?? src/utils/alt-screen.ts
+?? src/utils/claude-imports.ts
+?? src/utils/envUtils.ts
+?? src/utils/model-effort.ts
+?? src/utils/monorepo-discovery.ts
+?? src/utils/runtime-command.ts
+?? src/utils/screen-reader.ts
+?? src/utils/secret-redaction.ts
+?? src/utils/telemetry/
+?? src/utils/toolResultStorage.ts
+?? src/vim/
+?? src/voice/
+?? src/workflow/
+?? vendor/

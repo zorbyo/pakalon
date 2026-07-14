@@ -1,0 +1,156 @@
+You are executing the /mcp command for Pakalon.
+
+Use the `pakalon` tool to manage MCP servers with project-level and global configuration.
+
+## OPTIONS
+
+Present the user with these options:
+
+```
+MCP Server Management
+
+1. **List servers** - Show configured MCP servers
+2. **Add server** - Add a new MCP server
+3. **Remove server** - Remove an MCP server
+4. **Browse catalog** - Browse available servers
+5. **Chrome DevTools setup** - Set up Chrome DevTools MCP
+
+What would you like to do?
+```
+
+## IMPLEMENTATION
+
+### Option 1: List Servers
+
+```json
+{
+  "action": "list-mcp-servers"
+}
+```
+
+Display results grouped by scope:
+```
+Global MCP Servers:
+- server1: command args
+- server2: command args
+
+Project MCP Servers:
+- server3: command args
+- server4: command args
+```
+
+### Option 2: Add Server
+
+Ask for:
+1. Server name
+2. Command to run
+3. Arguments (optional)
+4. Scope (global or project)
+
+Then call:
+```json
+{
+  "action": "add-mcp-server",
+  "serverName": "name",
+  "serverCommand": "command",
+  "serverArgs": ["arg1", "arg2"],
+  "global": false
+}
+```
+
+### Option 3: Remove Server
+
+Show list of servers, ask which to remove:
+```json
+{
+  "action": "remove-mcp-server",
+  "serverName": "name",
+  "global": false
+}
+```
+
+### Option 4: Browse Catalog
+
+Show pre-configured servers available for quick installation:
+
+**Development:**
+- **filesystem** - Local filesystem access
+- **github** - GitHub integration
+- **git** - Git operations
+- **memory** - Persistent memory storage
+- **chrome-devtools** - Chrome DevTools for browser automation
+
+**Productivity:**
+- **slack** - Slack integration
+- **notion** - Notion workspace
+- **google-drive** - Google Drive access
+- **postgres** - PostgreSQL database
+
+**Web:**
+- **puppeteer** - Browser automation
+- **playwright** - Browser testing
+- **fetch** - HTTP requests
+- **brave-search** - Web search
+
+Let user select one to install.
+
+### Option 5: Chrome DevTools Setup
+
+Guide user through Chrome DevTools MCP setup:
+
+1. **Install Chrome DevTools MCP**
+   ```bash
+   npm install -g @anthropic-ai/chrome-devtools-mcp
+   ```
+
+2. **Add to Pakalon**
+   ```json
+   {
+     "action": "add-mcp-server",
+     "serverName": "chrome-devtools",
+     "serverCommand": "npx",
+     "serverArgs": ["@anthropic-ai/chrome-devtools-mcp"],
+     "global": false
+   }
+   ```
+
+3. **Start Chrome with Remote Debugging**
+   ```bash
+   # macOS
+   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+   
+   # Windows
+   chrome.exe --remote-debugging-port=9222
+   
+   # Linux
+   google-chrome --remote-debugging-port=9222
+   ```
+
+4. **Test Connection**
+   - Navigate to your app: http://localhost:3000
+   - Run automated tests
+   - Take screenshots
+   - Record user flows
+
+## CONFIGURATION STORAGE
+
+Explain where configs are stored:
+- **Global**: `~/.pakalon/mcp.json`
+- **Project**: `.pakalon-agents/mcp-servers/config.json`
+
+Project config overrides global config for the same server name.
+
+## USAGE EXAMPLES
+
+After setup, users can use MCP servers in their workflow:
+- `/mcp list` - List all configured servers
+- `/mcp add <name> <command>` - Add new server
+- `/mcp remove <name>` - Remove server
+- `/mcp chrome-setup` - Set up Chrome DevTools
+
+## IMPORTANT
+
+- Always use the `pakalon` tool for MCP operations
+- Show clear feedback after each operation
+- Handle errors gracefully
+- Suggest popular servers from the catalog

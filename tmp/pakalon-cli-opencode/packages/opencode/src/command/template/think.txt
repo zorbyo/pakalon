@@ -1,0 +1,132 @@
+Toggle thinking mode for extended reasoning.
+
+Use the `pakalon` tool to manage thinking mode and Pakalon modes.
+
+## THINKING MODE
+
+Thinking mode enables models with extended reasoning capabilities to show their thought process.
+
+## HOW IT WORKS
+
+1. Use `/think` command or Shift+Tab to toggle thinking mode
+2. When enabled, the model will show its reasoning steps
+3. Thinking content is displayed in a separate section
+4. Useful for complex problem-solving
+
+## PAKALON MODES
+
+Pakalon has 4 operating modes:
+
+### Plan Mode (👁️)
+- Read-only, no code changes allowed
+- Ideal for analysis and exploration
+- File edits require permission
+
+### Edit Mode (✏️)
+- File changes require permission
+- Bash commands require permission
+- Balanced control
+
+### Auto-Accept Mode (⚡)
+- All file changes applied automatically
+- Bash commands run without asking
+- Faster execution
+
+### Bypass Mode (🚀)
+- Full automation
+- No interruptions
+- Maximum speed
+
+## COMMANDS
+
+### Thinking Mode
+```
+/think on    # Enable thinking mode
+/think off   # Disable thinking mode
+/think       # Toggle current state
+```
+
+### Pakalon Mode
+```
+/mode        # Show current mode
+/mode plan   # Switch to plan mode
+/mode edit   # Switch to edit mode
+/mode auto   # Switch to auto-accept mode
+/mode bypass # Switch to bypass mode
+```
+
+## MODE SWITCHING
+
+### Via Keyboard
+- **Shift+Tab** - Cycle through modes (plan → edit → auto-accept → bypass)
+
+### Via Command
+Use the pakalon tool to get/set mode:
+
+```json
+{
+  "action": "get-mode",
+  "sessionId": "current-session-id"
+}
+```
+
+```json
+{
+  "action": "cycle-mode",
+  "sessionId": "current-session-id"
+}
+```
+
+## THINKING MODE DETAILS
+
+### Thinking Enabled
+- Model shows step-by-step reasoning
+- Longer responses with detailed analysis
+- Better for complex tasks
+- Higher token usage
+
+### Thinking Disabled
+- Model provides direct answers
+- Shorter, more concise responses
+- Better for simple tasks
+- Lower token usage
+
+## MODEL SUPPORT
+
+Not all models support thinking mode. Supported models:
+- Claude 3.5 Sonnet (extended thinking)
+- Claude 3 Opus (extended thinking)
+- GPT-4o (reasoning mode)
+- o1-preview (built-in reasoning)
+- o1-mini (built-in reasoning)
+
+## STATUS BAR
+
+The status bar shows:
+```
+👁️ PLAN 🧠
+```
+- Icon indicates current mode
+- 🧠 indicates thinking mode is enabled
+
+## CONSIDERATIONS
+
+### When to Use Thinking Mode
+- Complex architecture decisions
+- Debugging difficult issues
+- Multi-step problem solving
+- Learning new codebases
+
+### When to Disable Thinking Mode
+- Simple file edits
+- Quick fixes
+- Routine tasks
+- When token budget is limited
+
+### Mode Recommendations
+- **Planning**: Use plan mode with thinking enabled
+- **Development**: Use edit mode with thinking disabled
+- **Quick Tasks**: Use auto-accept mode
+- **Automation**: Use bypass mode
+
+Project path: ${path}

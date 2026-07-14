@@ -1,0 +1,99 @@
+Display context window usage and token budget.
+
+Use the `pakalon` tool to get real token tracking data.
+
+## STEP 1: GET CURRENT STATUS
+
+```json
+{
+  "action": "get-phase-status"
+}
+```
+
+## STEP 2: DISPLAY CONTEXT INFORMATION
+
+Show the following information in a formatted display:
+
+### Current Session Info
+- Model being used (from session)
+- Context window size (from model config)
+- Tokens used so far (from session history)
+- Tokens remaining
+- Percentage used
+
+### Per-Phase Breakdown (if in Pakalon mode)
+
+If pipeline is initialized, show token usage per phase:
+- Phase 1 tokens used
+- Phase 2 tokens used
+- Phase 3 tokens used
+- Phase 4 tokens used
+- Phase 5 tokens used
+- Phase 6 tokens used
+
+### Token Budget
+
+Based on context-management.md (if exists):
+- Total allocated tokens
+- Buffer reserved (10%)
+- Available for use
+- Estimated cost
+
+## DISPLAY FORMAT
+
+```
+Context Window Status
+━━━━━━━━━━━━━━━━━━━━
+
+Model: [current model]
+Context Window: [total tokens] tokens
+
+Usage:
+  Used:      [used] tokens ([percentage]%)
+  Remaining: [remaining] tokens ([percentage]%)
+  Buffer:    [buffer] tokens (10%)
+
+Phase Breakdown:
+  Phase 1: [allocated] (used: [used])
+  Phase 2: [allocated] (used: [used])
+  Phase 3: [allocated] (used: [used])
+  Phase 4: [allocated] (used: [used])
+  Phase 5: [allocated] (used: [used])
+  Phase 6: [allocated] (used: [used])
+
+Estimated Cost: $[cost]
+```
+
+## WARNING THRESHOLDS
+
+Show warnings based on usage:
+- **< 50%**: ✅ Healthy usage
+- **50-75%**: ⚠️ Moderate, consider optimization
+- **75-90%**: 🟡 High, optimization recommended
+- **> 90%**: 🔴 Critical, compaction may trigger
+
+## OPTIMIZATION TIPS
+
+If usage is high (>50%), suggest:
+1. Use search (grep) instead of reading entire files
+2. Summarize completed work before next phase
+3. Reference files instead of inlining content
+4. Use subagents for independent tasks
+5. Clear old context when starting new phases
+
+## MODE STATUS
+
+Also show current mode:
+```json
+{
+  "action": "get-mode",
+  "sessionId": "[current session id]"
+}
+```
+
+Display:
+- Current mode (plan/edit/auto-accept/bypass)
+- Thinking mode status
+- Mode permissions
+
+Project path: ${path}

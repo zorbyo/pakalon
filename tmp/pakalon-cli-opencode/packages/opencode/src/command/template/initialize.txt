@@ -1,0 +1,69 @@
+Initialize Pakalon for this project in normal mode.
+
+Use the `pakalon` tool to create the `.pakalon/` directory structure for quick tasks.
+
+## INITIALIZATION
+
+First, check if normal mode is already initialized:
+
+```json
+{
+  "action": "init-normal-mode"
+}
+```
+
+## DIRECTORY STRUCTURE
+
+This creates:
+```
+.pakalon/
+├── agents/
+│   └── skills.md
+├── plan.md
+├── task.md
+├── user-stories.md
+└── context-management.md
+```
+
+## GENERATE ARTIFACTS
+
+After initializing the structure, generate the artifacts based on user's request:
+
+```json
+{
+  "action": "generate-normal-artifacts",
+  "prompt": "$ARGUMENTS"
+}
+```
+
+This creates:
+- **plan.md** - Project plan with tech stack decisions
+- **task.md** - Task breakdown with checkboxes
+- **user-stories.md** - User stories with acceptance criteria
+- **context-management.md** - Token budget allocation
+- **agents/skills.md** - Required agent capabilities
+
+## NEXT STEPS
+
+After initialization:
+1. Review the generated plan.md
+2. Start executing tasks from task.md using `/build`
+3. Track progress by checking off completed tasks
+
+## DIFFERENCE FROM /pakalon
+
+- `/init` creates `.pakalon/` for **normal mode** (quick tasks)
+- `/pakalon` creates `.pakalon-agents/` for **pipeline mode** (full 6-phase workflow)
+
+Normal mode is ideal for:
+- Quick fixes and modifications
+- Small feature additions
+- Bug fixes
+- Refactoring tasks
+
+Pipeline mode is ideal for:
+- Full application development
+- Complex multi-phase projects
+- Projects requiring wireframes, security testing, deployment
+
+Project path: ${path}

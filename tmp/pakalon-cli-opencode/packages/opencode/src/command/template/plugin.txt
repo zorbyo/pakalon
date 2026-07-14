@@ -1,0 +1,147 @@
+You are executing the /plugin command for Pakalon.
+
+## Task
+Manage Pakalon plugins for extended functionality.
+
+## Overview
+Plugins extend Pakalon with:
+- Custom tools and commands
+- Authentication providers
+- Event hooks
+- UI customization
+- Integration with external services
+
+## Available Commands
+\`\`\`
+/plugin                    # List installed plugins
+/plugin list               # List all installed plugins
+/plugin install <name>     # Install a plugin
+/plugin uninstall <name>   # Remove a plugin
+/plugin enable <name>      # Enable a disabled plugin
+/plugin disable <name>     # Disable an enabled plugin
+/plugin info <name>        # Show plugin details
+/plugin update             # Update all plugins
+/plugin create <name>      # Create a new plugin template
+\`\`\`
+
+## Plugin Configuration
+
+### Configuration Location
+- **Global:** ~/.pakalon/config.json
+- **Project:** .pakalon/config.json
+
+### Example Configuration
+\`\`\`json
+{
+  "plugin": [
+    "pakalon-anthropic-auth@0.0.13",
+    "pakalon-custom-theme@1.0.0",
+    "file://./my-local-plugin"
+  ]
+}
+\`\`\`
+
+## Built-in Plugins
+- **pakalon-anthropic-auth** - Anthropic API authentication
+- **pakalon-openai-codex** - OpenAI Codex integration
+- **pakalon-copilot** - GitHub Copilot integration
+
+## Popular Plugins
+- **pakalon-slack** - Slack integration
+- **pakalon-github** - GitHub integration
+- **pakalon-notion** - Notion integration
+- **pakalon-linear** - Linear integration
+
+## Plugin Development
+
+### Plugin Structure
+\`\`\`typescript
+import type { Hooks, PluginInput } from "@pakalon-ai/plugin"
+
+export default function myPlugin(input: PluginInput): Hooks {
+  return {
+    // Hook implementations
+    async message(input, output) {
+      // Called on every message
+    },
+    async session(input, output) {
+      // Called on session events
+    },
+  }
+}
+\`\`\`
+
+### Available Hooks
+| Hook | Description |
+|------|-------------|
+| message | Called on every message |
+| session | Called on session events |
+| config | Called when config changes |
+| event | Called on all events |
+| tool | Custom tool registration |
+| auth | Authentication provider |
+
+### Creating a Plugin
+1. Create new directory: \`mkdir my-plugin\`
+2. Initialize package: \`cd my-plugin && npm init\`
+3. Install SDK: \`npm install @pakalon-ai/plugin\`
+4. Create index.ts with plugin code
+5. Publish or use locally
+
+### Local Plugin Development
+Use file:// prefix for local plugins:
+\`\`\`json
+{
+  "plugin": [
+    "file://./path/to/my-plugin"
+  ]
+}
+\`\`\`
+
+## Plugin List Display
+
+\`\`\`
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Installed Plugins                                                          │
+├────────────────────────────────────────────────────────────────────────────┤
+│ > pakalon-anthropic-auth@0.0.13                                            │
+│   Status: Enabled                                                          │
+│   Type: Built-in                                                           │
+│   Hooks: auth                                                              │
+├────────────────────────────────────────────────────────────────────────────┤
+│ > pakalon-slack@2.1.0                                                      │
+│   Status: Enabled                                                          │
+│   Type: npm                                                                │
+│   Hooks: message, event                                                    │
+├────────────────────────────────────────────────────────────────────────────┤
+│ > my-custom-plugin@1.0.0                                                   │
+│   Status: Disabled                                                         │
+│   Type: Local                                                              │
+│   Hooks: tool                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+## Security Considerations
+- Only install plugins from trusted sources
+- Review plugin permissions before installation
+- Keep plugins updated for security patches
+- Use npm audit to check for vulnerabilities
+- Disable unused plugins
+
+## Troubleshooting
+
+### Plugin Not Loading
+- Check plugin name and version
+- Verify internet connection for npm packages
+- Check Pakalon logs for errors
+- Ensure dependencies are installed
+
+### Plugin Conflicts
+- Disable conflicting plugins
+- Check hook execution order
+- Update to latest versions
+
+### Performance Issues
+- Disable unused plugins
+- Check for memory leaks
+- Profile plugin execution time

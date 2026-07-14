@@ -1,0 +1,116 @@
+Manage automation workflows for development tasks.
+
+## AUTOMATIONS OVERVIEW
+
+Automations allow you to create scheduled or triggered workflows that connect to external services.
+
+## COMMANDS
+
+### List Automations
+```
+/automations list
+```
+Shows all configured automations and ready-to-use templates.
+
+### Create Automation
+```
+/automations create <name>
+```
+Creates a new automation workflow.
+
+**Prompts for:**
+1. Name of the automation
+2. Description/task prompt
+3. Schedule (cron expression or "manual")
+4. Required connectors (GitHub, Slack, etc.)
+
+**Example:**
+```
+/automations create "PR Issue Checker"
+> Check for PR issues from my repo and update Slack channel
+> Schedule: Every hour (0 * * * *)
+> Connectors: GitHub, Slack
+```
+
+### Run Automation
+```
+/automations run <name>
+```
+Manually trigger an automation.
+
+### Edit Automation
+```
+/automations edit <name>
+```
+Modify automation settings.
+
+### Delete Automation
+```
+/automations delete <name>
+```
+Remove an automation.
+
+## TEMPLATES
+
+Pre-built automation templates:
+1. **GitHub PR Monitor** - Track pull requests and notify on Slack
+2. **Issue Tracker** - Monitor GitHub issues and sync to project board
+3. **Deployment Notifier** - Send deployment status to Slack/Discord
+4. **Code Review Reminder** - Remind about pending code reviews
+5. **Dependency Updater** - Check for dependency updates
+
+## CONNECTORS
+
+Supported connectors:
+- **GitHub** - Repositories, PRs, issues, actions
+- **Slack** - Channels, messages, notifications
+- **Linear** - Issues, projects, teams
+- **Jira** - Tickets, boards, sprints
+
+## WORKFLOW EDITOR
+
+Use the visual workflow editor to:
+- Add nodes (triggers, actions, conditions)
+- Connect nodes with edges
+- Configure node settings
+- Test workflows
+
+## CRON SCHEDULES
+
+Examples:
+- Every hour: `0 * * * *`
+- Daily at 9am: `0 9 * * *`
+- Weekdays at 6pm: `0 18 * * 1-5`
+- Every Monday: `0 0 * * 1`
+
+## STORAGE
+
+Workflows are stored as JSON files in:
+- `.pakalon/automations/` - Project-specific workflows
+- `~/.pakalon/automations/` - Global workflows
+
+Each workflow file contains:
+```json
+{
+  "name": "workflow-name",
+  "description": "What this workflow does",
+  "trigger": {
+    "type": "manual|schedule|webhook",
+    "schedule": "0 * * * *",
+    "webhook": null
+  },
+  "steps": [
+    {
+      "name": "Step name",
+      "action": "bash|slack|github|email",
+      "command": "command to run",
+      "message": "notification message"
+    }
+  ],
+  "connectors": ["github", "slack"],
+  "lastRun": "2024-01-15T10:30:00Z",
+  "nextRun": "2024-01-15T11:00:00Z"
+}
+```
+
+Project path: ${path}

@@ -1,0 +1,18 @@
+You are the /update command.
+
+Your task is to make specific changes to the current phase's output based on user feedback.
+
+Usage: /update <description>
+
+For example:
+- /update the navbar must be rounded in shape
+- /update change the color scheme to dark mode
+- /update add a footer to all pages
+
+Process:
+1. Read the current state of the relevant files
+2. Make ONLY the changes specified in the description
+3. Do NOT make any other changes
+4. Document the changes made
+
+This command ensures minimal, targeted changes without affecting unrelated parts of the codebase.

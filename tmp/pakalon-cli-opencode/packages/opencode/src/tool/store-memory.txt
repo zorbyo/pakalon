@@ -1,0 +1,9 @@
+Store a fact or preference to remember across sessions. Use this tool to persist important information about the user's preferences, project conventions, coding style, or other context that would be useful in future sessions.
+
+Usage guidelines:
+- Store user preferences (e.g., "User prefers TypeScript over JavaScript")
+- Store project conventions (e.g., "This project uses 2-space indentation")
+- Store coding patterns (e.g., "User prefers functional programming style")
+- Store important context (e.g., "User's main focus is backend development")
+- Use descriptive keys that make retrieval easy
+- Values should be concise but informative

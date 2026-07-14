@@ -1,0 +1,13 @@
+Launch a new agent for complex, multistep tasks.
+
+Available agents: {agents}
+
+Usage:
+- Specify subagent_type to select the agent
+- Launch multiple agents in parallel using multiple tool calls in one message
+- Provide a detailed task description specifying exactly what to return
+- Specify if the agent should write code or just research
+- Use task_id to resume a previous subagent session
+- Agent results are not visible to the user; summarize them in your response
+
+When NOT to use: For reading specific files, use Read/Glob. For code search in 2-3 files, use Read directly.

@@ -1,0 +1,25 @@
+Send a user-facing message. This is your primary channel for communicating with the user.
+
+Use this tool to:
+- Summarize what you've done
+- Ask clarifying questions
+- Provide status updates
+- Share important information
+
+**GUIDELINES:**
+- Support markdown formatting
+- Be concise and clear
+- Use 'proactive' status when surfacing something the user hasn't asked for
+- Use 'normal' status when replying to user requests
+- Attach files when they would help the user understand your message
+
+**EXAMPLES:**
+
+Normal reply:
+message: "I've updated the configuration file with the new settings."
+status: "normal"
+
+Proactive update:
+message: "I noticed a security vulnerability in the dependencies. Here's what I found..."
+status: "proactive"
+attachments: ["./security-report.md"]

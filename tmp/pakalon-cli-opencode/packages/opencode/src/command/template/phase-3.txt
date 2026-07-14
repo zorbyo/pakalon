@@ -1,0 +1,69 @@
+You are executing the /phase-3 command for Pakalon.
+
+## Task
+Start Phase 3: Development & Implementation. Build the application using 5 parallel subagents.
+
+## Prerequisites
+- Phase 1 and Phase 2 must be completed
+- Check .pakalon-agents/ai-agents/phase-1/plan.md exists
+- Check .pakalon-agents/ai-agents/phase-2/Wireframe_generated.svg exists
+- If not complete, inform user to run /phase-1 and /phase-2 first
+
+## Instructions
+1. Read Phase 1 and Phase 2 documents to understand requirements
+2. Create the project structure based on technical-spec.md
+3. Deploy 5 subagents to work in parallel:
+
+### Subagent 1: Frontend Designing
+- Set up frontend project (React/Next.js/etc.)
+- Implement UI components based on wireframes
+- Style with CSS framework (Tailwind/etc.)
+- Create responsive layouts
+
+### Subagent 2: Backend Framing
+- Set up backend project structure
+- Implement API endpoints from API_reference.md
+- Set up database schema from Database_schema.md
+- Implement authentication
+
+### Subagent 3: Frontend & Backend Integration
+- Connect frontend to backend APIs
+- Implement data fetching and state management
+- Handle loading and error states
+- Implement real-time features if needed
+
+### Subagent 4: Bug Fixing & Debugging
+- Run the application
+- Identify and fix bugs
+- Optimize performance
+- Ensure code quality
+
+### Subagent 5: Feedback & Review
+- Review all implemented features
+- Test against user stories
+- Validate against requirements
+- Suggest improvements
+
+## Files to Create/Update
+1. phase-3/subagent-1.md - Frontend progress log
+2. phase-3/subagent-2.md - Backend progress log
+3. phase-3/subagent-3.md - Integration progress log
+4. phase-3/subagent-4.md - Bug fixes log
+5. phase-3/subagent-5.md - Review report
+6. phase-3/auditor.md - Overall progress audit
+7. phase-3/execution_log.md - Detailed execution log
+8. phase-3/test-evidence/ - Screenshots and test results
+
+## Execution Flow
+1. Create project structure
+2. Deploy all 5 subagents in parallel
+3. Monitor progress and update execution_log.md
+4. Run auditor checks
+5. Iterate until all features implemented
+6. Generate final report in auditor.md
+
+## Critical Rules
+- Follow existing codebase patterns
+- Don't use `as any` or `@ts-ignore`
+- Run tests after implementation
+- Document all changes in subagent logs

@@ -1,0 +1,54 @@
+Schedule a command to run on a cron schedule.
+
+Use this tool to schedule recurring tasks using cron expressions.
+
+**PARAMETERS:**
+- cron: Cron expression (e.g., "0 * * * *" for every hour)
+- command: The command to execute
+- name: A name for this scheduled task
+- enabled: Whether the schedule is active (default: true)
+
+**CRON FORMAT:**
+```
+┌─────────── minute (0-59)
+│ ┌───────── hour (0-23)
+│ │ ┌─────── day of month (1-31)
+│ │ │ ┌───── month (1-12)
+│ │ │ │ ┌─── day of week (0-6, Sunday=0)
+│ │ │ │ │
+* * * * *
+```
+
+**EXAMPLES:**
+
+Every hour:
+```
+cron: "0 * * * *"
+command: "npm run backup"
+name: "hourly-backup"
+```
+
+Every day at midnight:
+```
+cron: "0 0 * * *"
+command: "node cleanup.js"
+name: "daily-cleanup"
+```
+
+Every Monday at 9 AM:
+```
+cron: "0 9 * * 1"
+command: "npm run weekly-report"
+name: "weekly-report"
+```
+
+Disable a schedule:
+```
+name: "hourly-backup"
+enabled: false
+```
+
+**NOTES:**
+- Scheduled tasks persist across sessions
+- Use /tasks to view scheduled tasks
+- Timezone is system local time

@@ -1,0 +1,33 @@
+Read content from an MCP (Model Context Protocol) resource.
+
+Use this tool to fetch content from an MCP resource identified by its URI.
+
+**PARAMETERS:**
+- uri: The resource URI to read (e.g., "file:///path/to/file", "db://table/records")
+
+**USAGE:**
+
+Read a resource:
+```
+uri: "file:///home/user/data.json"
+```
+
+**OUTPUT:**
+Returns the resource content with:
+- uri: The resource URI
+- mimeType: Content MIME type
+- content: The actual content (text or base64 for binary)
+
+**EXAMPLES:**
+
+Read a file resource:
+```
+uri: "file:///project/config.json"
+```
+
+Read a database resource:
+```
+uri: "db://users/profile/123"
+```
+
+Use ListMcpResources first to discover available resources and their URIs.

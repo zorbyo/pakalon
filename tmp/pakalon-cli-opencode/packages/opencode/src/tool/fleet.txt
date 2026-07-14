@@ -1,0 +1,9 @@
+Dispatch multiple subagent tasks to run in parallel. Use this tool when you need to perform multiple independent tasks simultaneously for faster execution.
+
+This tool spawns multiple subagents that run concurrently. Each subagent works independently on its assigned task. Results are collected and returned once all subagents complete.
+
+Best for:
+- Processing multiple files independently
+- Running multiple independent tests
+- Searching across multiple locations simultaneously
+- Performing independent code analyses

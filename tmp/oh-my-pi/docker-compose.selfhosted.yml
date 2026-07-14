@@ -1,0 +1,97 @@
+# Pakalon self-hosted mode — single docker compose file that brings up
+# the entire stack: llm-proxy, vector store, mem0, MCP hub, and the
+# web companion behind caddy.
+#
+# Usage:
+#   docker compose -f docker-compose.selfhosted.yml up -d
+#   export PAKALON_BACKEND=http://localhost:8080
+#   pakalon
+#
+# The web companion's auth page detects PAKALON_BACKEND and skips
+# Clerk + 6-digit pairing; usage accounting stays local.
+
+services:
+  llm-proxy:
+    image: ghcr.io/pakalon/llm-proxy:latest
+    container_name: pakalon-llm-proxy
+    restart: unless-stopped
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+      - LMSTUDIO_HOST=http://host.docker.internal:1234
+      - VLLM_HOST=http://host.docker.internal:8000
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: pakalon-ollama
+    restart: unless-stopped
+    volumes:
+      - ollama_data:/root/.ollama
+    # No host port — accessed only through llm-proxy.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  vector:
+    image: chromadb/chroma:latest
+    container_name: pakalon-vector
+    restart: unless-stopped
+    volumes:
+      - vector_data:/chroma/.chroma
+
+  mem0:
+    image: ghcr.io/pakalon/mem0:latest
+    container_name: pakalon-mem0
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://pakalon:changeme@postgres:5432/pakalon
+    depends_on:
+      - postgres
+
+  mcp-hub:
+    image: ghcr.io/pakalon/mcp-hub:latest
+    container_name: pakalon-mcp
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - PAKALON_BACKEND=http://llm-proxy:8080
+
+  web:
+    image: caddy:2
+    container_name: pakalon-web
+    restart: unless-stopped
+    ports:
+      - "8443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - web_data:/data
+    depends_on:
+      - llm-proxy
+      - vector
+      - mem0
+      - mcp-hub
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: pakalon-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=pakalon
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=pakalon
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  ollama_data:
+  vector_data:
+  postgres_data:
+  web_data:
