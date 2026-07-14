@@ -70,3 +70,15 @@ bun.lockb
 
 # Git worktrees (for isolated development)
 .worktrees/
+
+# === Exclusions added for push to github.com/zorbyo/pakalon ===
+# Ignore ALL hidden (dot) directories everywhere (e.g. .claude, .vscode, .pytest_cache).
+# Already-tracked .github/ and .gitignore are unaffected (gitignore never untracks files).
+.*/
+
+# Ignore ALL real environment files everywhere
+.env
+.env.*
+# Keep non-secret example env files
+!.env.example
+!**/.env.example
